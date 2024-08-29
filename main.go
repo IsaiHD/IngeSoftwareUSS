@@ -1,24 +1,43 @@
 package main
 
 import (
-	"ingsoft/initializers"
-	"net/http"
+	"ingsoft/controllers"
+	"ingsoft/internal/initializers"
+	"ingsoft/middleware"
+	"ingsoft/services"
+
+	"io"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-func init() {
-	// loadEnvVariables()
-	initializers.LoadEnvVariables()
-	initializers.ConnectDB()
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 }
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	setupLogOutput()
+
+	// gin.SetMode(gin.ReleaseMode)
+	router := gin.Default()
+
+	db := initializers.InitDB()
+
+	if db == nil {
+		return
+	}
+
+	activityService := &services.ActivityService{}
+	activityService.InitService(db)
+
+	router.Use(gin.Recovery(), middleware.Logger(), middleware.BasicAuth())
+
+	router.Use(gin.Logger())
+
+	activitiesController := &controllers.ActivityController{}
+	activitiesController.InitActivityControllerRouters(router)
+
+	router.Run()
 }

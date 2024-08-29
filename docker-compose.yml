@@ -1,10 +1,4 @@
 services:
-  go:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
@@ -12,3 +6,8 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Inge1234@
+      - MSSQL_PID=Developer
+    volumes:
+      - dbdata:/var/opt/mssql
+volumes:
+  dbdata:
