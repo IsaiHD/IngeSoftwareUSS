@@ -11,4 +11,10 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 [GIN-debug] Environment variable PORT is undefined. Using port :8080 by default
 [GIN-debug] Listening and serving HTTP on :8080
 [GIN-debug] redirecting request 307: /activities/ --> /activities/
-[GIN] 2024/08/29 - 22:36:05 | 500 |     68.2806ms |             ::1 | POST     "/activities/"
+[GIN] 2024/09/01 - 14:05:32 | 200 |    100.6054ms |             ::1 | POST     "/activities/"
+::1 - [Sun, 01 Sep 2024 14:05:32 -04] "POST /activities/ HTTP/1.1 200 190.1935ms "PostmanRuntime/7.37.3" "
+[GIN] 2024/09/01 - 14:05:32 | 200 |    191.0949ms |             ::1 | POST     "/activities/"
+[GIN-debug] redirecting request 301: /activities/ --> /activities/
+[GIN] 2024/09/01 - 14:05:46 | 200 |     166.961ms |             ::1 | GET      "/activities/"
+::1 - [Sun, 01 Sep 2024 14:05:46 -04] "GET /activities/ HTTP/1.1 200 171.1031ms "PostmanRuntime/7.37.3" "
+[GIN] 2024/09/01 - 14:05:46 | 200 |    171.9049ms |             ::1 | GET      "/activities/"

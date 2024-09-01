@@ -5,7 +5,6 @@ import (
 	"ingsoft/internal/initializers"
 	"ingsoft/middleware"
 	"ingsoft/services"
-
 	"io"
 	"os"
 
@@ -22,8 +21,9 @@ func main() {
 
 	// gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-
 	db := initializers.InitDB()
+
+	println("DB: ", db)
 
 	if db == nil {
 		return
@@ -37,7 +37,7 @@ func main() {
 	router.Use(gin.Logger())
 
 	activitiesController := &controllers.ActivityController{}
-	activitiesController.InitActivityControllerRouters(router)
+	activitiesController.InitActivityControllerRouters(router, *activityService)
 
 	router.Run()
 }

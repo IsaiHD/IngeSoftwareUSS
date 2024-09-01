@@ -21,3 +21,7 @@ docker compose up
 ```
 Esto les abirira un docker con todas la dependecias que necesitan.
 
+# Base datos
+
+Name: Localhost
+Password: Inge1234@

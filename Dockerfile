@@ -10,4 +10,4 @@ RUN chmod +x /usr/src/app/restore_db.sh
 # Comando para ejecutar SQL Server y restaurar la base de datos
 CMD /bin/bash /usr/src/app/restore_db.sh & /opt/mssql/bin/sqlservr
 
-# docker exec -it ingesoftwareuss-db-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Inge1234@' -Q "BACKUP DATABASE IngeSoftware TO DISK='/var/opt/mssql/backup/gorm.bak'"  
+RUN docker exec -it ingesoftwareuss-db-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Inge1234@' -Q "BACKUP DATABASE IngeSoftware TO DISK='/var/opt/mssql/backup/gorm.bak'"  

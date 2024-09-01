@@ -12,11 +12,11 @@ type ActivityController struct {
 	activities services.ActivityService
 }
 
-func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine) {
+func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine, activitiyService services.ActivityService) {
 	activities := router.Group("/activities")
 	activities.GET("/", acti.GetActivities())
 	activities.POST("/", acti.CreateActivity())
-
+	acti.activities = activitiyService
 }
 
 func (acti *ActivityController) GetActivities() gin.HandlerFunc {
