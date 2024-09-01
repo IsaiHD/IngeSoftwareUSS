@@ -29,12 +29,10 @@ func InitDB() *gorm.DB {
 		log.Fatal("Missing required environment variables: DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME")
 	}
 
-	// Construir el DSN usando las variables de entorno
-	dsn := os.Getenv("DSN")
-	if dsn == "" {
-		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", dbUser, dbPassword, dbHost, dbPort, dbName)
-	}
+	// Construir el DSN usando las variables de entorno y deshabilitar TLS
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s&encrypt=disable", dbUser, dbPassword, dbHost, dbPort, dbName)
 
+	print(dsn)
 	// Abrir la conexión a la base de datos usando GORM
 	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
 	if err != nil {
