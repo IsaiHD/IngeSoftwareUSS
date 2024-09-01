@@ -59,15 +59,34 @@ func (acti *ActivityService) CreateActivityService(Name string, Description stri
 		Place:       Place,
 	}
 
-	println("hola cokmo estas " + activity.Name)
-	println("hola cokmo estas " + activity.Description)
-	println("hola cokmo estas " + activity.StartDate.Format("2006-01-02"))
-	println("hola cokmo estas " + activity.EndDate.Format("2006-01-02"))
-	println("hola cokmo estas " + activity.Place)
-
 	if err := acti.db.Create(activity).Error; err != nil {
 		return nil, err
 	}
 
 	return activity, nil
+}
+
+func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
+	activity := &models.Activity{
+		ID:          id,
+		Name:        Name,
+		Description: Description,
+		StartDate:   StartDate,
+		EndDate:     EndDate,
+		Place:       Place,
+	}
+
+	if err := acti.db.Save(activity).Error; err != nil {
+		return nil, err
+	}
+
+	return activity, nil
+}
+
+func (acti *ActivityService) DeleteActivityService(id int) error {
+	if err := acti.db.Delete(&models.Activity{}, id).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

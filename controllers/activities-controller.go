@@ -16,6 +16,8 @@ func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine
 	activities := router.Group("/activities")
 	activities.GET("/", acti.GetActivities())
 	activities.POST("/", acti.CreateActivity())
+	activities.PUT("/:id", acti.UpdateActivity())
+	activities.DELETE("/:id", acti.DeleteActivity())
 	acti.activities = activitiyService
 }
 
@@ -61,5 +63,24 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{"activity": activity})
+	}
+}
+
+func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
+	return nil
+}
+
+func (acti *ActivityController) DeleteActivity() gin.HandlerFunc {
+	type ActiBody struct {
+		ID int `json:"id"`
+	}
+
+	return func(c *gin.Context) {
+		var actiBody ActiBody
+
+		if err := c.BindJSON(&actiBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 }
