@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miuss Eventos - Admin</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #6200ea;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .header .account {
+            font-size: 18px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #6200ea;
+            font-size: 24px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .buttons {
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+        button {
+            padding: 12px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button.upload {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button.save {
+            background-color: #2196F3;
+            color: white;
+        }
+        button.delete {
+            background-color: #f44336;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #displayArea {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            min-height: 100px;
+        }
+        .event {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .event:last-child {
+            border-bottom: none;
+        }
+        .event h3 {
+            margin: 0;
+            color: #6200ea;
+        }
+        .event p {
+            margin: 5px 0;
+        }
+        .filters {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #eef;
+        }
+        .filters h2 {
+            margin-top: 0;
+            color: #6200ea;
+        }
+        .filters form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .filters label {
+            margin: 0;
+            font-weight: normal;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 50px;
+            background-color: #6200ea;
+            color: white;
+            font-size: 14px;
+        }
+        .hidden {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
+        @media (max-width: 600px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+            .filters form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="account">myAdmin</div>
+        <div class="title">Miuss Eventos</div>
+        <div class="account"></div>
+    </div>
+
+    <div class="container">
+        <h1>Lista de Eventos</h1>
+
+        <div class="filters">
+            <h2>Filtros de Eventos</h2>
+            <form id="filterForm">
+                <div style="flex: 1;">
+                    <label for="filterDate">Fecha de Publicación:</label>
+                    <input type="date" id="filterDate">
+                </div>
+                <div style="flex: 1;">
+                    <label for="filterType">Tipo de Evento:</label>
+                    <select id="filterType">
+                        <option value="">Todos los tipos</option>
+                        <option value="Comida">Comida</option>
+                        <option value="Deporte">Deporte</option>
+                        <option value="Arte">Arte</option>
+                        <option value="Académico">Académico</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Ventas">Ventas</option>
+                        <option value="Cultura">Cultura</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label for="filterTime">Hora de Publicación:</label>
+                    <input type="time" id="filterTime">
+                </div>
+                <div style="flex: 1;">
+                    <label for="filterKeyword">Palabra Clave:</label>
+                    <input type="text" id="filterKeyword" placeholder="Buscar por título o descripción">
+                </div>
+                <div class="full-width">
+                    <button type="button" onclick="applyFilters()">Aplicar Filtros</button>
+                    <button type="button" onclick="clearFilters()">Limpiar Filtros</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="displayArea"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="toggleEventForm()">Agregar Nuevo Evento</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="eventFormContainer">
+        <h1>Gestión de Eventos</h1>
+
+        <form id="eventForm">
+            <div>
+                <label for="eventTitle">Nombre del Evento:</label>
+                <input type="text" id="eventTitle" placeholder="Introduce el nombre del evento">
+            </div>
+            <div>
+                <label for="eventDate">Fecha:</label>
+                <input type="date" id="eventDate">
+            </div>
+            <div>
+                <label for="eventLocation">Lugar:</label>
+                <input type="text" id="eventLocation" placeholder="Introduce el lugar del evento">
+            </div>
+            <div>
+                <label for="eventType">Tipo de Evento:</label>
+                <select id="eventType">
+                    <option value="">Selecciona el tipo de evento</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Deporte">Deporte</option>
+                    <option value="Arte">Arte</option>
+                    <option value="Académico">Académico</option>
+                    <option value="Salud">Salud</option>
+                    <option value="Ventas">Ventas</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Networking">Networking</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="full-width">
+                <label for="eventDescription">Descripción:</label>
+                <textarea id="eventDescription" placeholder="Introduce una breve descripción del evento"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" class="upload" onclick="uploadData()">Subir</button>
+                <button type="button" class="save" onclick="saveData()">Guardar</button>
+                <button type="button" class="delete" onclick="deleteData
+                ()">Eliminar</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2024 Miuss Eventos. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        function toggleEventForm() {
+            const eventFormContainer = document.getElementById('eventFormContainer');
+            if (eventFormContainer.classList.contains('hidden')) {
+                eventFormContainer.classList.remove('hidden');
+                eventFormContainer.classList.add('show');
+                window.scrollTo(0, document.body.scrollHeight);
+            } else {
+                eventFormContainer.classList.remove('show');
+                eventFormContainer.classList.add('hidden');
+            }
+        }
+
+        function applyFilters() {
+            // Aquí puedes agregar el código para filtrar los eventos según los valores de los inputs
+            alert("Filtros aplicados (aquí agregar lógica de filtrado).");
+        }
+
+        function clearFilters() {
+            document.getElementById('filterForm').reset();
+            // Aquí puedes agregar el código para restablecer la lista de eventos completa
+            alert("Filtros limpiados (aquí agregar lógica para mostrar todos los eventos).");
+        }
+
+        function uploadData() {
+            // Lógica para subir datos del formulario de evento
+            alert("Datos subidos (aquí agregar lógica de subida de datos).");
+        }
+
+        function saveData() {
+            // Lógica para guardar los datos del formulario de evento
+            alert("Datos guardados (aquí agregar lógica de guardado de datos).");
+        }
+
+        function deleteData() {
+            // Lógica para eliminar los datos del formulario de evento
+            alert("Datos eliminados (aquí agregar lógica de eliminación de datos).");
+        }
+
+        // Ejemplo de cómo añadir eventos para mostrar en el área de visualización
+        const exampleEvents = [
+            { title: "Feria de Comida", date: "2024-09-05", location: "Plaza Central", type: "Comida" },
+            { title: "Maratón Universitaria", date: "2024-09-12", location: "Estadio Municipal", type: "Deporte" },
+            { title: "Exposición de Arte", date: "2024-09-18", location: "Galería de Arte", type: "Arte" }
+        ];
+
+        function displayEvents(events) {
+            const displayArea = document.getElementById('displayArea');
+            displayArea.innerHTML = '';
+            events.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.classList.add('event');
+                eventDiv.innerHTML = `
+                    <h3>${event.title}</h3>
+                    <p><strong>Fecha:</strong> ${event.date}</p>
+                    <p><strong>Lugar:</strong> ${event.location}</p>
+                    <p><strong>Tipo:</strong> ${event.type}</p>
+                `;
+                displayArea.appendChild(eventDiv);
+            });
+        }
+
+        // Muestra los eventos de ejemplo al cargar la página
+        displayEvents(exampleEvents);
+    </script>
+</body>
+</html>
