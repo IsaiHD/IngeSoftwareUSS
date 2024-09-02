@@ -34,6 +34,13 @@ DB_NAME = 'IngeSoftware'
 
 ```
 
+luego pongan este comando: \
+
+```
+go mod tidy
+```
+
+
 para iniciar la api deben correr este comando en la carpeta raiz
 ```
 go run main.go
