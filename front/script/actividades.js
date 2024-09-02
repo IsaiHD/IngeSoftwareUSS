@@ -5,9 +5,89 @@ const getCurrentDate = () => {
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Meses del 1 al 12
     const day = String(now.getDate()).padStart(2, '0'); // Día del mes
     return `${year}-${month}-${day}`;
-    console.log(getCurrentDate);
 };
 
+function showEditForm() {
+    document.getElementById('editFormContainer').classList.remove('hidden');
+}
+
+function hideEditForm() {
+    document.getElementById('editFormContainer').classList.add('hidden');
+}
+
+// Función para guardar los cambios en un evento
+const saveData = async () => {
+    try {
+        // Obtén el ID del evento que estás editando
+        const eventId = document.getElementById('eventId').value;
+        // Obtén los valores del formulario de edición
+        const name = document.getElementById('editEventTitle').value;
+        const endDate = document.getElementById('editEventDate').value;
+        const place = document.getElementById('editEventLocation').value;
+        const description = document.getElementById('editEventDescription').value;
+        const type = document.getElementById('editEventType').value;
+
+        // Realiza la solicitud PUT al servidor para actualizar el evento
+        const response = await fetch(`http://localhost:8080/activities/${eventId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                description,
+                startDate: getCurrentDate(),
+                endDate,
+                type,
+                place,
+            }),
+        });
+
+        // Verifica la respuesta del servidor
+        if (!response.ok) {
+            // Lee y muestra el contenido del error
+            const errorData = await response.json();
+            throw new Error(`Error ${response.status}: ${errorData.error || response.statusText}`);
+        }
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Evento actualizado exitosamente');
+            hideEditForm(); // Oculta el formulario de edición
+            fetchActivities(); // Recarga la lista de actividades
+        } else {
+            alert('No se pudo actualizar el evento');
+        }
+    } catch (error) {
+        console.error('Hubo un problema con la solicitud:', error);
+        alert('Error al actualizar el evento: ' + error.message);
+    }
+};
+
+
+
+const editEvent = async (eventId) => {
+    try {
+        const response = await fetch(`http://localhost:8080/activities/${eventId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const data = await response.json();
+        document.getElementById('eventId').value = data.activity.id;
+        document.getElementById('editEventTitle').value = data.activity.name;
+        document.getElementById('editEventDate').value = data.activity.startDate.split('T')[0];
+        document.getElementById('editEventLocation').value = data.activity.place;
+        document.getElementById('editEventDescription').value = data.activity.description;
+        document.getElementById('editEventType').value = data.activity.type;
+
+        // Muestra el formulario de edición
+        showEditForm();
+    } catch (error) {
+        console.error('Hubo un problema con la solicitud:', error);
+        alert('Error al cargar los detalles del evento');
+    }
+}
 
 // Listar eventos y poblar el menú desplegable de tipos de eventos
 const populateEventTypes = () => {
@@ -69,42 +149,12 @@ const fetchActivities = async () => {
     }
 };
 
-// Función para editar un evento
-const editEvent = async (eventId) => {
-    try {
-        const response = await fetch(`http://localhost:8080/activities/${eventId}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-
-        const data = await response.json();
-        document.getElementById('eventId').value = data.activity.id;
-        document.getElementById('eventTitle').value = data.activity.name;
-        document.getElementById('eventDate').value = data.activity.startDate.split('T')[0];
-        document.getElementById('eventLocation').value = data.activity.place;
-        document.getElementById('eventDescription').value = data.activity.description;
-        document.getElementById('eventType').value = data.activity.type;
-
-        // Muestra el botón de eliminar solo si el evento tiene un ID
-        const deleteButton = document.getElementById('deleteButton');
-        deleteButton.style.display = 'inline-block';
-        deleteButton.onclick = () => deleteEvent(eventId);
-
-        // Muestra el formulario de edición
-        toggleEventForm();
-    } catch (error) {
-        console.error('Hubo un problema con la solicitud:', error);
-        alert('Error al cargar los detalles del evento');
-    }
-};
-
-// Función para crear o actualizar un evento
 // Función para crear un nuevo evento
 const createData = async () => {
     try {
         // Obtén los valores del formulario
         const name = document.getElementById('eventTitle').value;
-        const startDate = getCurrentDate;
+        const startDate = getCurrentDate().toString();
         const endDate = document.getElementById('eventDate').value; 
         const place = document.getElementById('eventLocation').value;
         const description = document.getElementById('eventDescription').value;

@@ -8,10 +8,10 @@
     <script src="script/actividades.js" defer></script>
 </head>
 <body>
-
+    
     <div class="header">
-        <div class="account">myAdmin</div>
-        <div class="title">Miuss Eventos</div>
+        <!-- <div class="account">myAdmin</div> -->
+        <div class="title">MiUss Eventos</div>
         <div class="account"></div>
     </div>
 
@@ -49,6 +49,46 @@
             <button onclick="toggleEventForm()">Agregar Nuevo Evento</button>
         </div>
     </div>
+
+ <!-- Contenedor oculto (hidden container) para editar eventos -->
+ <div class="hidden" id="editFormContainer">
+    <div class="overlay" onclick="hideEditForm()"></div>
+    <div class="modal">
+        <h2>Editar Evento</h2>
+        <form id="editEventForm">
+            <input type="hidden" id="eventId">
+            <div>
+                <label for="editEventTitle">Nombre del Evento:</label>
+                <input type="text" id="editEventTitle">
+            </div>
+            <div>
+                <label for="editEventDate">Fecha de Término:</label>
+                <input type="date" id="editEventDate">
+            </div>
+            <div>
+                <label for="editEventLocation">Lugar:</label>
+                <input type="text" id="editEventLocation">
+            </div>
+            <div>
+                <label for="editEventType">Tipo de Evento:</label>
+                <select id="editEventType">
+                    <option value="">Selecciona el tipo de evento</option>
+                    <option value="conference">Conferencia</option>
+                    <option value="workshop">Taller</option>
+                    <option value="webinar">Webinar</option>
+                    <option value="meeting">Reunión</option>
+                </select>
+            </div>
+            <div class="full-width">
+                <label for="editEventDescription">Descripción:</label>
+                <textarea id="editEventDescription"></textarea>
+            </div>
+            <div class="buttons">
+                <button type="button" onclick="saveData()">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <div class="container hidden" id="eventFormContainer">
         <h1>Gestión de Eventos</h1>

@@ -52,6 +52,15 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 	return activitiesResponse
 }
 
+func (acti *ActivityService) GetActivityServiceById(id int) (*models.Activity, error) {
+	var activity models.Activity
+	if err := acti.db.First(&activity, id).Error; err != nil {
+		return nil, err
+	}
+
+	return &activity, nil
+}
+
 func (acti *ActivityService) CreateActivityService(Name string, Description string, ActvitiyType string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
 	activity := &models.Activity{
 		Name:        Name,

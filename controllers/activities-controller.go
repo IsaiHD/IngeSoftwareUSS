@@ -16,6 +16,7 @@ type ActivityController struct {
 func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine, activityService services.ActivityService) {
 	activities := router.Group("/activities")
 	activities.GET("/", acti.GetActivities())
+	activities.GET("/:id", acti.GetActivityById())
 	activities.POST("/", acti.CreateActivity())
 	activities.PUT("/:id", acti.UpdateActivity())
 	activities.DELETE("/:id", acti.DeleteActivity())
@@ -33,6 +34,27 @@ func (acti *ActivityController) GetActivities() gin.HandlerFunc {
 			"Actividades": acti.activities.GetActivitiesService(),
 		})
 
+	}
+}
+
+func (acti *ActivityController) GetActivityById() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		activityID, err := strconv.Atoi(id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+			return
+		}
+
+		activity, err := acti.activities.GetActivityServiceById(activityID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"success":  true,
+			"activity": activity,
+		})
 	}
 }
 
@@ -70,7 +92,10 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"activity": activity})
+		c.JSON(http.StatusOK, gin.H{
+			"success":  true,
+			"activity": activity,
+		})
 	}
 }
 
@@ -115,7 +140,10 @@ func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"activity": activity})
+		c.JSON(http.StatusOK, gin.H{
+			"success":  true,
+			"activity": activity,
+		})
 	}
 }
 
@@ -135,6 +163,9 @@ func (acti *ActivityController) DeleteActivity() gin.HandlerFunc {
 		}
 
 		// Asegúrate de devolver un mensaje de éxito
-		c.JSON(http.StatusOK, gin.H{"success": true, "message": "Activity deleted successfully"})
+		c.JSON(http.StatusOK, gin.H{
+			"success": true,
+			"message": "Activity deleted successfully",
+		})
 	}
 }
