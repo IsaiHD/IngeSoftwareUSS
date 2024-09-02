@@ -21,7 +21,7 @@ docker compose up
 ```
 Esto les abirira un docker con todas la dependecias que necesitan.
 Deben crear un arhivo que se llame 
-.evn \
+**.env**
 
 y dentro debe tener esto:
 
