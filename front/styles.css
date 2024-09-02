@@ -1,0 +1,160 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6200ea;
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.header .title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+.header .account {
+    font-size: 18px;
+}
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #6200ea;
+    font-size: 24px;
+}
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+.full-width {
+    grid-column: 1 / -1;
+}
+.buttons {
+    text-align: center;
+    grid-column: 1 / -1;
+}
+button {
+    padding: 12px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+button.upload {
+    background-color: #4CAF50;
+    color: white;
+}
+button.save {
+    background-color: #21f344;
+    color: white;
+}
+button.delete {
+    background-color: #f44336;
+    color: white;
+}
+button:hover {
+    opacity: 0.9;
+}
+#displayArea {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+}
+.event {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+.event:last-child {
+    border-bottom: none;
+}
+.event h3 {
+    margin: 0;
+    color: #6200ea;
+}
+.event p {
+    margin: 5px 0;
+}
+.filters {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #eef;
+}
+.filters h2 {
+    margin-top: 0;
+    color: #6200ea;
+}
+.filters form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.filters label {
+    margin: 0;
+    font-weight: normal;
+}
+footer {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 50px;
+    background-color: #6200ea;
+    color: white;
+    font-size: 14px;
+}
+.hidden {
+    display: none;
+}
+.show {
+    display: block;
+}
+@media (max-width: 600px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+    .filters form {
+        flex-direction: column;
+    }
+}

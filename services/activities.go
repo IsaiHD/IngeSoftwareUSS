@@ -16,6 +16,7 @@ type Activity struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
+	Atype       string `json:"type"`
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
 	Place       string `json:"place"`
@@ -40,6 +41,7 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ID,
 			Name:        activity.Name,
+			Atype:       activity.Atype,
 			Description: activity.Description,
 			StartDate:   activity.StartDate.Format("2006-01-02"),
 			EndDate:     activity.EndDate.Format("2006-01-02"),
@@ -50,10 +52,11 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 	return activitiesResponse
 }
 
-func (acti *ActivityService) CreateActivityService(Name string, Description string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
+func (acti *ActivityService) CreateActivityService(Name string, Description string, ActvitiyType string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
 	activity := &models.Activity{
 		Name:        Name,
 		Description: Description,
+		Atype:       ActvitiyType,
 		StartDate:   StartDate,
 		EndDate:     EndDate,
 		Place:       Place,
@@ -66,11 +69,12 @@ func (acti *ActivityService) CreateActivityService(Name string, Description stri
 	return activity, nil
 }
 
-func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
+func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
 	activity := &models.Activity{
 		ID:          id,
 		Name:        Name,
 		Description: Description,
+		Atype:       ActivityType,
 		StartDate:   StartDate,
 		EndDate:     EndDate,
 		Place:       Place,
@@ -84,7 +88,12 @@ func (acti *ActivityService) UpdateActivityService(id int, Name string, Descript
 }
 
 func (acti *ActivityService) DeleteActivityService(id int) error {
-	if err := acti.db.Delete(&models.Activity{}, id).Error; err != nil {
+	var activity models.Activity
+	if err := acti.db.First(&activity, id).Error; err != nil {
+		return err
+	}
+
+	if err := acti.db.Delete(&activity).Error; err != nil {
 		return err
 	}
 
