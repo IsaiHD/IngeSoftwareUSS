@@ -34,7 +34,7 @@ DB_NAME = 'IngeSoftware'
 
 ```
 
-luego pongan este comando: \
+luego pongan este comando:
 
 ```
 go mod tidy
