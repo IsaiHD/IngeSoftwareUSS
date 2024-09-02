@@ -21,9 +21,9 @@ docker compose up
 ```
 Esto les abirira un docker con todas la dependecias que necesitan.
 Deben crear un arhivo que se llame 
-.evn
+.evn \
 
-y dento debe tener esto
+y dentro debe tener esto:
 
 ```
 DB_USER = 'sa'
