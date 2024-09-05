@@ -92,10 +92,11 @@ const editEvent = async (eventId) => {
 // Listar eventos y poblar el menú desplegable de tipos de eventos
 const populateEventTypes = () => {
     const eventTypes = [
-        { value: 'conference', text: 'Conferencia' },
-        { value: 'workshop', text: 'Taller' },
-        { value: 'webinar', text: 'Webinar' },
-        { value: 'meeting', text: 'Reunión' },
+        { value: 'Comida', text: 'Deporte' },
+        { value: 'Arte', text: 'Académico' },
+        { value: 'Salud', text: 'Ventas' },
+        { value: 'Cultura', text: 'Tecnología' },
+        { value: 'Networking', text: 'Otro'}
         // Agrega más tipos de eventos aquí si es necesario
     ];
 
