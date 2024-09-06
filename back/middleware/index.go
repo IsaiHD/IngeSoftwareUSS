@@ -13,11 +13,11 @@ func CheckMiddleware(c *gin.Context) {
 
 	headers := c.GetHeader("Authorization")
 
-	fmt.Println(headers)
+	fmt.Println("Authorization Header:", headers)
 
 	if headers == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "No token provided",
+			"error": "Header not found",
 		})
 		return
 	}
@@ -26,16 +26,18 @@ func CheckMiddleware(c *gin.Context) {
 
 	if len(token) < 2 {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid token",
+			"error": "Token not provided",
 		})
 		return
 	}
 
 	data, err := utils.TokenCheck(token[1])
-	fmt.Println(data)
+
+	fmt.Println("Token Data:", data)
 	if err != nil {
+		fmt.Println("Error:", err) // Imprimir el error para depuración
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
+			"error": "Claims not Matched",
 		})
 		return
 	}

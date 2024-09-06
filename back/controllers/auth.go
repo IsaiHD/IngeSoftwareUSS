@@ -90,7 +90,7 @@ func (at *AuthController) Login() gin.HandlerFunc {
 
 		var token string
 
-		token, err = utils.GenerateToken(user.Email, user.UserID, user.Username)
+		token, err = utils.GenerateToken(user.Email, user.UserID)
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
