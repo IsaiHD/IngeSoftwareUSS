@@ -1,7 +1,7 @@
 # Programas
 
 https://code.visualstudio.com/ \
-https://www.docker.com/ \
+https://docs.docker.com/desktop/install/windows-install/ \
 https://go.dev/ \
 https://desktop.github.com/download/ 
 
