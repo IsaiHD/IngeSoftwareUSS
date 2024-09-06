@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"ingsoft/middleware"
 	"ingsoft/services"
 	"net/http"
 	"strconv"
@@ -15,6 +16,7 @@ type ActivityController struct {
 
 func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine, activityService services.ActivityService) {
 	activities := router.Group("/activities")
+	activities.Use(middleware.CheckMiddleware)
 	activities.GET("/", acti.GetActivities())
 	activities.GET("/:id", acti.GetActivityById())
 	activities.POST("/", acti.CreateActivity())

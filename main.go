@@ -35,15 +35,19 @@ func main() {
 		return
 	}
 
+	// Creación de las instancias de los servicios
 	activityService := &services.ActivityService{}
 	activityService.InitService(db)
-
+	// Creación de las instancias de los controladores
 	activitiesController := &controllers.ActivityController{}
 	activitiesController.InitActivityControllerRouters(router, *activityService)
+	// Creación de las instancias de auth
+	authService := services.InitAuthService(db)
 
-	// router.Use(gin.Recovery(), middleware.Logger(), middleware.BasicAuth())
+	authController := controllers.InitAuthController(authService)
+	authController.InitRoutes(router)
 
-	// router.Use(gin.Logger())
+	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
 
 	router.Run()
 }

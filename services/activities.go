@@ -39,7 +39,7 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 	var activitiesResponse []Activity
 	for _, activity := range activities {
 		activitiesResponse = append(activitiesResponse, Activity{
-			ID:          activity.ID,
+			ID:          activity.ActivityID,
 			Name:        activity.Name,
 			Atype:       activity.Atype,
 			Description: activity.Description,
@@ -80,7 +80,7 @@ func (acti *ActivityService) CreateActivityService(Name string, Description stri
 
 func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
 	activity := &models.Activity{
-		ID:          id,
+		ActivityID:  id,
 		Name:        Name,
 		Description: Description,
 		Atype:       ActivityType,

@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Activity struct {
-	ID          int       `gorm:"primaryKey" json:"id"`
+	ActivityID  int       `json:"id" gorm:"primaryKey;autoIncrement;not null"`
 	Name        string    `json:"name"`
 	Atype       string    `json:"type"`
 	Description string    `json:"description"`
