@@ -19,6 +19,7 @@ func CheckMiddleware(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": "No token provided",
 		})
+		return
 	}
 
 	token := strings.Split(headers, " ")
@@ -27,6 +28,7 @@ func CheckMiddleware(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid token",
 		})
+		return
 	}
 
 	data, err := utils.TokenCheck(token[1])
@@ -35,6 +37,7 @@ func CheckMiddleware(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
+		return
 	}
 
 	c.Next()

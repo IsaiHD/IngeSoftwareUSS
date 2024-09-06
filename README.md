@@ -50,3 +50,11 @@ Luego inician la pág web con LIVE SERVER (Extension de VS code)
 y prueban la pág 
 
 :D
+
+
+
+#CONSULTAS
+
+```
+CREATE DATABASE IngeSoftware
+```
