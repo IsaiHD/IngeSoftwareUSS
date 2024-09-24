@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Activity struct {
 	ActivityID  int       `json:"id" gorm:"primaryKey;autoIncrement;not null"`
@@ -10,4 +12,5 @@ type Activity struct {
 	StartDate   time.Time `json:"startDate"`
 	EndDate     time.Time `json:"endDate"`
 	Place       string    `json:"place"`
+	Users       []*User   `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
 }

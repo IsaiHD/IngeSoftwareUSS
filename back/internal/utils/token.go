@@ -45,7 +45,7 @@ func TokenCheck(tokenString string) (interface{}, error) {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		fmt.Println("Claims extracted successfully:", claims) // Imprimir las claims para depuración
+		// fmt.Println("Claims extracted successfully:", claims) // Imprimir las claims para depuración
 		return claims, nil
 	} else {
 		return nil, fmt.Errorf("unable to map claims or token is invalid")

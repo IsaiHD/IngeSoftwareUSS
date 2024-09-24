@@ -21,6 +21,7 @@ func main() {
 
 	// gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"http://127.0.0.1:5500"}, // Cambia esto según tu necesidad
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -38,11 +39,17 @@ func main() {
 	// Creación de las instancias de los servicios
 	activityService := &services.ActivityService{}
 	activityService.InitService(db)
-	// Creación de las instancias de los controladores
 	activitiesController := &controllers.ActivityController{}
 	activitiesController.InitActivityControllerRouters(router, *activityService)
+
 	// Creación de las instancias de auth
 	authService := services.InitAuthService(db)
+
+	// Creación de las instancias de los servicios personas
+	personService := &services.PersonService{}
+	personService.InitService(db)
+	personController := &controllers.PersonController{}
+	personController.InitPersonControllerRouters(router, *personService)
 
 	authController := controllers.InitAuthController(authService)
 	authController.InitRoutes(router)
