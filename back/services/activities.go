@@ -69,6 +69,54 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 // 	return activities, nil
 // }
 
+func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity, error) {
+	var activities []models.Activity
+	if err := acti.db.Where("name LIKE ?", "%"+name+"%").Find(&activities).Error; err != nil {
+		return nil, err // Maneja el error de la consulta
+	}
+
+	activitiesResponse := make([]Activity, 0, len(activities))
+	for _, activity := range activities {
+		activitiesResponse = append(activitiesResponse, Activity{
+			ID:          activity.ActivityID,
+			Name:        activity.Name,
+			Atype:       activity.Atype,
+			Asubtype:    activity.Asubtype,
+			Image:       activity.Image,
+			Description: activity.Description,
+			StartDate:   activity.StartDate.Format("2006-01-02"),
+			EndDate:     activity.EndDate.Format("2006-01-02"),
+			Place:       activity.Place,
+		})
+	}
+
+	return activitiesResponse, nil
+}
+
+func (acti *ActivityService) GetActivityByTypeFilter(atype string) ([]Activity, error) {
+	var activities []models.Activity
+	if err := acti.db.Where("atype = ?", atype).Find(&activities).Error; err != nil {
+		return nil, err
+	}
+
+	activitiesResponse := make([]Activity, 0, len(activities))
+	for _, activity := range activities {
+		activitiesResponse = append(activitiesResponse, Activity{
+			ID:          activity.ActivityID,
+			Name:        activity.Name,
+			Atype:       activity.Atype,
+			Asubtype:    activity.Asubtype,
+			Image:       activity.Image,
+			Description: activity.Description,
+			StartDate:   activity.StartDate.Format("2006-01-02"),
+			EndDate:     activity.EndDate.Format("2006-01-02"),
+			Place:       activity.Place,
+		})
+	}
+
+	return activitiesResponse, nil
+}
+
 func (acti *ActivityService) GetUserActivities(userID int) ([]models.Activity, error) {
 	var activities []models.Activity
 

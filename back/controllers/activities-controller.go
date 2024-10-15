@@ -19,6 +19,8 @@ func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine
 	activities.Use(middleware.CheckMiddleware)
 	// Rutas para las listar todas las actividades
 	activities.GET("/", acti.GetActivities())
+	activities.GET("/name", acti.GetActivityByName())
+	activities.GET("/type", acti.GetActivityByTypeFilter())
 
 	// activities.GET("/:id", acti.GetActivityById())
 	activities.POST("/", acti.CreateActivity())
@@ -41,6 +43,59 @@ func (acti *ActivityController) GetActivities() gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{
 			"Actividades": activities, // Utiliza la variable "activities"
 		})
+	}
+}
+
+func (acti *ActivityController) GetActivityByName() gin.HandlerFunc {
+	type ActiBody struct {
+		Name string `json:"name" binding:"required"` // Nombre de la actividad
+	}
+
+	return func(c *gin.Context) {
+
+		var actiBody ActiBody
+
+		if err := c.BindJSON(&actiBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		activies, err := acti.activities.GetActivitiesByNameFilter(actiBody.Name)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"Actividades": activies, // Utiliza la variable "activities"
+		})
+
+	}
+}
+
+func (acti *ActivityController) GetActivityByTypeFilter() gin.HandlerFunc {
+	type ActiBody struct {
+		Type string `json:"type" binding:"required"` // Tipo de la actividad
+	}
+
+	return func(c *gin.Context) {
+		var actiBody ActiBody
+
+		if err := c.BindJSON(&actiBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		activies, err := acti.activities.GetActivityByTypeFilter(actiBody.Type)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"Actividades": activies, // Utiliza la variable "activities"
+		})
+
 	}
 }
 
