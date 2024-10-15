@@ -6,10 +6,10 @@ import (
 
 type Activity struct {
 	ActivityID int    `json:"id" gorm:"primaryKey;autoIncrement;not null"`
-	Image      []byte `json:"image"`
+	Image      []byte `json:"image" gorm:"type:blob"`
 	Name       string `json:"name"`
 	Atype      string `json:"type"`
-	//Subcategoria
+	Asubtype   string `json:"subtype"`
 	//Personas Máximas
 	Description string    `json:"description"`
 	StartDate   time.Time `json:"startDate"`

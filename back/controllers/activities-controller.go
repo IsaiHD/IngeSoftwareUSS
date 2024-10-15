@@ -79,6 +79,8 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 		Name        string `json:"name"`
 		Description string `json:"description"`
 		Atype       string `json:"type"`
+		Asubtype    string `json:"subtype"`
+		Image       string `json:"image"`
 		StartDate   string `json:"startDate"`
 		EndDate     string `json:"endDate"`
 		Place       string `json:"place"`
@@ -86,8 +88,14 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		var actiBody ActiBody
+
 		if err := c.BindJSON(&actiBody); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if actiBody.Image == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Image is required"})
 			return
 		}
 
@@ -127,6 +135,8 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 			endDate,
 			actiBody.Place,
 			userIDInt, // Pasar el ID del usuario que se une a la actividad
+			actiBody.Asubtype,
+			actiBody.Image,
 		)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
