@@ -16,11 +16,12 @@ type ActivityController struct {
 
 func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine, activityService services.ActivityService) {
 	activities := router.Group("/activities")
-	activities.Use(middleware.CheckMiddleware)
+
 	// Rutas para las listar todas las actividades
 	activities.GET("/", acti.GetActivities())
 	activities.GET("/name", acti.GetActivityByName())
 	activities.GET("/type", acti.GetActivityByTypeFilter())
+	activities.Use(middleware.CheckMiddleware)
 
 	// activities.GET("/:id", acti.GetActivityById())
 	activities.POST("/", acti.CreateActivity())
