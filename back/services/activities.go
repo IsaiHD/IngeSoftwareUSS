@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/base64"
 	"errors"
 	"ingsoft/internal/models"
 	"log"
@@ -18,6 +19,8 @@ type Activity struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Atype       string `json:"type"`
+	Asubtype    string `json:"subtype"`
+	Image       []byte `json:"image"`
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
 	Place       string `json:"place"`
@@ -43,6 +46,8 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
 			Atype:       activity.Atype,
+			Asubtype:    activity.Asubtype,
+			Image:       activity.Image,
 			Description: activity.Description,
 			StartDate:   activity.StartDate.Format("2006-01-02"),
 			EndDate:     activity.EndDate.Format("2006-01-02"),
@@ -63,6 +68,54 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 
 // 	return activities, nil
 // }
+
+func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity, error) {
+	var activities []models.Activity
+	if err := acti.db.Where("name LIKE ?", "%"+name+"%").Find(&activities).Error; err != nil {
+		return nil, err // Maneja el error de la consulta
+	}
+
+	activitiesResponse := make([]Activity, 0, len(activities))
+	for _, activity := range activities {
+		activitiesResponse = append(activitiesResponse, Activity{
+			ID:          activity.ActivityID,
+			Name:        activity.Name,
+			Atype:       activity.Atype,
+			Asubtype:    activity.Asubtype,
+			Image:       activity.Image,
+			Description: activity.Description,
+			StartDate:   activity.StartDate.Format("2006-01-02"),
+			EndDate:     activity.EndDate.Format("2006-01-02"),
+			Place:       activity.Place,
+		})
+	}
+
+	return activitiesResponse, nil
+}
+
+func (acti *ActivityService) GetActivityByTypeFilter(atype string) ([]Activity, error) {
+	var activities []models.Activity
+	if err := acti.db.Where("atype = ?", atype).Find(&activities).Error; err != nil {
+		return nil, err
+	}
+
+	activitiesResponse := make([]Activity, 0, len(activities))
+	for _, activity := range activities {
+		activitiesResponse = append(activitiesResponse, Activity{
+			ID:          activity.ActivityID,
+			Name:        activity.Name,
+			Atype:       activity.Atype,
+			Asubtype:    activity.Asubtype,
+			Image:       activity.Image,
+			Description: activity.Description,
+			StartDate:   activity.StartDate.Format("2006-01-02"),
+			EndDate:     activity.EndDate.Format("2006-01-02"),
+			Place:       activity.Place,
+		})
+	}
+
+	return activitiesResponse, nil
+}
 
 func (acti *ActivityService) GetUserActivities(userID int) ([]models.Activity, error) {
 	var activities []models.Activity
@@ -107,17 +160,25 @@ func (acti *ActivityService) JoinActivity(userID, activityID int) error {
 	return nil
 }
 
-func (acti *ActivityService) CreateActivityService(name, description, atype string, startDate, endDate time.Time, place string, userID int) (*models.Activity, error) {
+func (acti *ActivityService) CreateActivityService(name, description, atype string, startDate, endDate time.Time, place string, userID int, asubtype string, image string) (*models.Activity, error) {
+
+	// Decodificar la imagen
+	imageData, err := base64.StdEncoding.DecodeString(image)
+	if err != nil {
+		return nil, err
+	}
+
 	// Crear la actividad
 	activity := models.Activity{
 		Name:        name,
 		Description: description,
 		Atype:       atype,
+		Asubtype:    asubtype,
 		StartDate:   startDate,
 		EndDate:     endDate,
 		Place:       place,
+		Image:       imageData,
 	}
-
 	// Guardar la actividad en la base de datos
 	if err := acti.db.Create(&activity).Error; err != nil {
 		return nil, err
@@ -137,12 +198,14 @@ func (acti *ActivityService) CreateActivityService(name, description, atype stri
 	return &activity, nil
 }
 
-func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string) (*models.Activity, error) {
+func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, Asubtype string, Image []byte) (*models.Activity, error) {
 	activity := &models.Activity{
 		ActivityID:  id,
 		Name:        Name,
 		Description: Description,
 		Atype:       ActivityType,
+		Asubtype:    Asubtype,
+		Image:       Image,
 		StartDate:   StartDate,
 		EndDate:     EndDate,
 		Place:       Place,
