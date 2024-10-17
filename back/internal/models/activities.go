@@ -15,5 +15,11 @@ type Activity struct {
 	StartDate   time.Time `json:"startDate"`
 	EndDate     time.Time `json:"endDate"`
 	Place       string    `json:"place"`
-	Users       []*User   `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
+	// Relaciones
+	// Usuarios
+	Users []*User `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
+	//Categoria
+	Category Category `gorm:"foreignKey:CategoryID" json:"category"`
+	//SubCategoria
+	SubCategory SubCategory `gorm:"foreignKey:SubCategoryID" json:"subCategory"`
 }
