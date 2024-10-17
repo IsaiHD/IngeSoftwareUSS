@@ -54,6 +54,21 @@ func main() {
 	authController := controllers.InitAuthController(authService)
 	authController.InitRoutes(router)
 
+	// Creación de las instancias de los servicios categorias
+	categoriesService := &services.CategoriesService{}
+	categoriesService.InitService(db)
+
+	categoriesController := &controllers.CategoriesController{}
+	categoriesController.InitCategoriesControllerRouters(router, *categoriesService)
+
+	// Creación de las instancias de los servicios subCategorias
+
+	subCategoriesService := &services.SubCategoriesService{}
+	subCategoriesService.InitSubCategoriesService(db)
+
+	subCategoriesController := &controllers.SubCategoriesController{}
+	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
+
 	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
 
 	router.Run()
