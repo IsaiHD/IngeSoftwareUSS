@@ -198,14 +198,23 @@ func (acti *ActivityService) CreateActivityService(name, description, atype stri
 	return &activity, nil
 }
 
-func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, Asubtype string, Image []byte) (*models.Activity, error) {
+func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, Asubtype string, Image string) (*models.Activity, error) {
+	imageData, err := base64.StdEncoding.DecodeString(Image)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := acti.db.First(&models.Activity{}, id).Error; err != nil {
+		return nil, err
+	}
+
 	activity := &models.Activity{
 		ActivityID:  id,
 		Name:        Name,
 		Description: Description,
 		Atype:       ActivityType,
 		Asubtype:    Asubtype,
-		Image:       Image,
+		Image:       imageData,
 		StartDate:   StartDate,
 		EndDate:     EndDate,
 		Place:       Place,
