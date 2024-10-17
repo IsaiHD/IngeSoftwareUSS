@@ -104,6 +104,15 @@
         return false;
     });
 
+    function confirmarYEliminar() {
+        const input = document.getElementById('eliminaractividad');
+        if (!input.value) {
+            alert('Por favor, sube una imagen antes de eliminar.');
+            return false;
+        }
+        return confirm('¿Estás seguro de que quieres eliminar esto?');
+    }
+
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
