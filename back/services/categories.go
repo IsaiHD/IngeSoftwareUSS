@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type CategoryService struct {
+type CategoriesService struct {
 	db *gorm.DB
 }
 
@@ -16,12 +16,12 @@ type Category struct {
 	Name string `json:"name"`
 }
 
-func (cat *CategoryService) InitService(database *gorm.DB) {
+func (cat *CategoriesService) InitService(database *gorm.DB) {
 	cat.db = database
 	cat.db.AutoMigrate(&models.Category{})
 }
 
-func (cat *CategoryService) GetCategoriesService() []Category {
+func (cat *CategoriesService) GetCategoriesService() []Category {
 
 	if cat.db == nil {
 		log.Fatal("Database connection is not initialized")

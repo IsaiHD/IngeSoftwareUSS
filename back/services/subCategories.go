@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type SubCategoryService struct {
+type SubCategoriesService struct {
 	db *gorm.DB
 }
 
@@ -15,12 +15,12 @@ type SubCategory struct {
 	Name string `json:"name"`
 }
 
-func (subCat *SubCategoryService) InitService(database *gorm.DB) {
+func (subCat *SubCategoriesService) InitSubCategoriesService(database *gorm.DB) {
 	subCat.db = database
 	subCat.db.AutoMigrate(&models.SubCategory{})
 }
 
-func (subCat *SubCategoryService) GetSubCategoriesService() []SubCategory {
+func (subCat *SubCategoriesService) GetSubCategoriesService() []SubCategory {
 
 	var subCategories []models.SubCategory
 	subCat.db.Find(&subCategories)

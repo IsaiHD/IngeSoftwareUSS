@@ -8,10 +8,10 @@ import (
 )
 
 type CategoriesController struct {
-	cate services.CategoryService
+	cate services.CategoriesService
 }
 
-func (cate *CategoriesController) InitActivityControllerRouters(router *gin.Engine, categoriesService services.CategoryService) {
+func (cate *CategoriesController) InitCategoriesControllerRouters(router *gin.Engine, categoriesService services.CategoriesService) {
 	categories := router.Group("/activities")
 
 	// Rutas para las listar todas las actividades
