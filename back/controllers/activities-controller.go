@@ -255,7 +255,6 @@ func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
 			"activity": activity,
 		})
 	}
-	return nil
 }
 
 func (acti *ActivityController) DeleteActivity() gin.HandlerFunc {
