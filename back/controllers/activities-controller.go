@@ -207,58 +207,54 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 }
 
 func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
-	// type ActiBody struct {
-	// 	Name        string `json:"name"`
-	// 	Atype       string `json:"type"`
-	// 	Description string `json:"description"`
-	// 	StartDate   string `json:"startDate"` // Fecha en formato string
-	// 	EndDate     string `json:"endDate"`   // Fecha en formato string
-	// 	Place       string `json:"place"`
-	// }
+	type ActiBody struct {
+		Name        string `json:"name"`
+		Atype       string `json:"type"`
+		Asubtype    string `json:"subtype"` // Subtipo de la actividad
+		Image       string `json:"image"`
+		Description string `json:"description"`
+		StartDate   string `json:"startDate"` // Fecha en formato string
+		EndDate     string `json:"endDate"`   // Fecha en formato string
+		Place       string `json:"place"`
+	}
 
-	// return func(c *gin.Context) {
+	return func(c *gin.Context) {
 
-	// 	var actiBody ActiBody
-	// 	if err := c.BindJSON(&actiBody); err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
+		var actiBody ActiBody
+		if err := c.BindJSON(&actiBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 
-	// 	startDate, err := time.Parse("2006-01-02", actiBody.StartDate)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid startDate format"})
-	// 		return
-	// 	}
+		startDate, err := time.Parse("2006-01-02", actiBody.StartDate)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid startDate format"})
+			return
+		}
 
-	// 	endDate, err := time.Parse("2006-01-02", actiBody.EndDate)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid endDate format"})
-	// 		return
-	// 	}
+		endDate, err := time.Parse("2006-01-02", actiBody.EndDate)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid endDate format"})
+			return
+		}
 
-	// 	id := c.Param("id")
-	// 	activityID, err := strconv.Atoi(id)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
-	// 		return
-	// 	}
-	// 	// Verificar si la actividad existe antes de actualizar
-	// 	existingActivity, err := acti.activities.GetActivityServiceById(activityID)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
+		id := c.Param("id")
+		activityID, err := strconv.Atoi(id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+			return
+		}
 
-	// 	activity, err := acti.activities.UpdateActivityService(existingActivity.ActivityID, actiBody.Name, actiBody.Description, actiBody.Atype, startDate, endDate, actiBody.Place)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"success":  true,
-	// 		"activity": activity,
-	// 	})
-	// }
+		activity, err := acti.activities.UpdateActivityService(activityID, actiBody.Name, actiBody.Description, actiBody.Atype, startDate, endDate, actiBody.Place, actiBody.Asubtype, actiBody.Image)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"success":  true,
+			"activity": activity,
+		})
+	}
 	return nil
 }
 
