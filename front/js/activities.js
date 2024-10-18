@@ -31,31 +31,17 @@ async function obtenerActividades() {
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('item');
                 itemDiv.innerHTML = `
-                <div class="item">
                     <a class="position-relative d-block overflow-hidden" href="">
                         <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt="${actividad.name}">
                         <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">${actividad.name}</div>
                         <div class="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">${actividad.description}</div>
                     </a>
-                </div>
                 `;
                 carouselContent.appendChild(itemDiv);
             } catch (error) {
                 console.error('Error al convertir la imagen a Base64:', error);
             }
         }
-
-        // Inicializar el carrusel después de agregar los elementos
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            responsive: {
-                0: { items: 1 },
-                600: { items: 3 },
-                1000: { items: 4 }
-            }
-        });
     } catch (error) {
         console.error('Error al obtener las actividades:', error);
         alert('Ocurrió un error al cargar las actividades. Por favor, intenta de nuevo más tarde.');
