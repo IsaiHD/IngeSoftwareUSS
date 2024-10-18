@@ -56,5 +56,25 @@ func main() {
 
 	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
 
+<<<<<<< Updated upstream
 	router.Run(":8080")
+=======
+	categoriesController := &controllers.CategoriesController{}
+	categoriesController.InitCategoriesControllerRouters(router, *categoriesService)
+
+	// Creación de las instancias de los servicios subCategorias
+
+	subCategoriesService := &services.SubCategoriesService{}
+	subCategoriesService.InitSubCategoriesService(db)
+
+	subCategoriesController := &controllers.SubCategoriesController{}
+	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
+
+	// Configuración para HTTPS
+	certFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\certificate.crt"
+	keyFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\private.key"
+
+	router.RunTLS(":443", certFile, keyFile)
+
+>>>>>>> Stashed changes
 }
