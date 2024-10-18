@@ -5,7 +5,7 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://ingesoftwareapi.ddns.net:443/activities');
+        const response = await fetch('https://alla.ns.cloudflare.com:443/activities');
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
