@@ -12,7 +12,7 @@ type CategoriesController struct {
 }
 
 func (cate *CategoriesController) InitCategoriesControllerRouters(router *gin.Engine, categoriesService services.CategoriesService) {
-	categories := router.Group("/activities")
+	categories := router.Group("/categories")
 
 	// Rutas para las listar todas las actividades
 	categories.GET("/", cate.GetActivities())

@@ -12,7 +12,7 @@ type SubCategoriesController struct {
 }
 
 func (subCat *SubCategoriesController) InitSubCategoriesControllerRouters(router *gin.Engine, subCategoriesService services.SubCategoriesService) {
-	categories := router.Group("/activities")
+	categories := router.Group("/subcategories")
 
 	// Rutas para las listar todas las actividades
 	categories.GET("/", subCat.GetSubCategories())
