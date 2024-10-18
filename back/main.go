@@ -72,7 +72,9 @@ func main() {
 	subCategoriesController := &controllers.SubCategoriesController{}
 	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
 
-	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
+	// Configuración para HTTPS
+	certFile := "/etc/letsencrypt/live/tu-dominio.com/fullchain.pem"
+	keyFile := "/etc/letsencrypt/live/tu-dominio.com/privkey.pem"
 
-	router.Run(":8080")
+	router.RunTLS(":443", certFile, keyFile)
 }
