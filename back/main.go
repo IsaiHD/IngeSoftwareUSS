@@ -26,7 +26,7 @@ func main() {
 		AllowOrigins:     []string{"https://recomendaciones-uss.vercel.app"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
-		ExposeHeaders:    []string{"Content-Length"},
+		ExposeHeaders:    []string{"Content-Lengthh"},
 		AllowCredentials: true,
 		MaxAge:           12 * 3600,
 	}))
