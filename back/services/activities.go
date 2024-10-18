@@ -18,8 +18,8 @@ type Activity struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
-	Atype       string `json:"type"`
-	Asubtype    string `json:"subtype"`
+	Category    int    `json:"type"`
+	SubCategory int    `json:"subtype"`
 	Image       []byte `json:"image"`
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
@@ -45,8 +45,8 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
-			Atype:       activity.Atype,
-			Asubtype:    activity.Asubtype,
+			Category:    activity.Category,
+			SubCategory: activity.SubCategory,
 			Image:       activity.Image,
 			Description: activity.Description,
 			StartDate:   activity.StartDate.Format("2006-01-02"),
@@ -80,8 +80,8 @@ func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity,
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
-			Atype:       activity.Atype,
-			Asubtype:    activity.Asubtype,
+			Category:    activity.Category,
+			SubCategory: activity.SubCategory,
 			Image:       activity.Image,
 			Description: activity.Description,
 			StartDate:   activity.StartDate.Format("2006-01-02"),
@@ -93,9 +93,9 @@ func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity,
 	return activitiesResponse, nil
 }
 
-func (acti *ActivityService) GetActivityByTypeFilter(atype string) ([]Activity, error) {
+func (acti *ActivityService) GetActivityByTypeFilter(Category string) ([]Activity, error) {
 	var activities []models.Activity
-	if err := acti.db.Where("atype = ?", atype).Find(&activities).Error; err != nil {
+	if err := acti.db.Where("Category = ?", Category).Find(&activities).Error; err != nil {
 		return nil, err
 	}
 
@@ -104,8 +104,8 @@ func (acti *ActivityService) GetActivityByTypeFilter(atype string) ([]Activity, 
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
-			Atype:       activity.Atype,
-			Asubtype:    activity.Asubtype,
+			Category:    activity.Category,
+			SubCategory: activity.SubCategory,
 			Image:       activity.Image,
 			Description: activity.Description,
 			StartDate:   activity.StartDate.Format("2006-01-02"),
@@ -121,7 +121,7 @@ func (acti *ActivityService) GetUserActivities(userID int) ([]models.Activity, e
 	var activities []models.Activity
 
 	if err := acti.db.Table("user_activities").
-		Select("activities.activity_id, activities.name, activities.atype, activities.description, activities.start_date, activities.end_date, activities.place").
+		Select("activities.activity_id, activities.name, activities.Category, activities.description, activities.start_date, activities.end_date, activities.place").
 		Joins("JOIN activities ON activities.activity_id = user_activities.activity_activity_id").
 		Where("user_activities.user_user_id = ?", userID).
 		Scan(&activities).Error; err != nil {
@@ -160,7 +160,7 @@ func (acti *ActivityService) JoinActivity(userID, activityID int) error {
 	return nil
 }
 
-func (acti *ActivityService) CreateActivityService(name, description, atype string, startDate, endDate time.Time, place string, userID int, asubtype string, image string) (*models.Activity, error) {
+func (acti *ActivityService) CreateActivityService(name string, description string, Category string, startDate, endDate time.Time, place string, userID int, SubCategory string, image string) (*models.Activity, error) {
 
 	// Decodificar la imagen
 	imageData, err := base64.StdEncoding.DecodeString(image)
@@ -168,18 +168,28 @@ func (acti *ActivityService) CreateActivityService(name, description, atype stri
 		return nil, err
 	}
 
+	var category models.Category
+	if err := acti.db.Where("name = ?", Category).First(&category).Error; err != nil {
+		return nil, errors.New("category not found")
+	}
+	var subcategory models.SubCategory
+	if err := acti.db.Where("name = ?", SubCategory).First(&subcategory).Error; err != nil {
+		return nil, errors.New("subcategory not found")
+	}
+
 	// Crear la actividad
 	activity := models.Activity{
 		Name:        name,
 		Description: description,
-		Atype:       atype,
-		Asubtype:    asubtype,
+		Category:    category.CategoryID,
+		SubCategory: subcategory.SubCategoryID,
 		StartDate:   startDate,
 		EndDate:     endDate,
 		Place:       place,
 		Image:       imageData,
 	}
 	// Guardar la actividad en la base de datos
+
 	if err := acti.db.Create(&activity).Error; err != nil {
 		return nil, err
 	}
@@ -198,10 +208,19 @@ func (acti *ActivityService) CreateActivityService(name, description, atype stri
 	return &activity, nil
 }
 
-func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, Asubtype string, Image string) (*models.Activity, error) {
+func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, SubCategory string, Image string) (*models.Activity, error) {
 	imageData, err := base64.StdEncoding.DecodeString(Image)
 	if err != nil {
 		return nil, err
+	}
+	var category models.Category
+	if err := acti.db.First(&models.Category{}, ActivityType).Error; err != nil {
+		return nil, errors.New("category not found")
+	}
+
+	var subcategory models.SubCategory
+	if err := acti.db.First(&models.SubCategory{}, SubCategory).Error; err != nil {
+		return nil, errors.New("subcategory not found")
 	}
 
 	if err := acti.db.First(&models.Activity{}, id).Error; err != nil {
@@ -212,8 +231,8 @@ func (acti *ActivityService) UpdateActivityService(id int, Name string, Descript
 		ActivityID:  id,
 		Name:        Name,
 		Description: Description,
-		Atype:       ActivityType,
-		Asubtype:    Asubtype,
+		Category:    category.CategoryID,
+		SubCategory: subcategory.SubCategoryID,
 		Image:       imageData,
 		StartDate:   StartDate,
 		EndDate:     EndDate,

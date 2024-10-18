@@ -134,8 +134,8 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 	type ActiBody struct {
 		Name        string `json:"name"`
 		Description string `json:"description"`
-		Atype       string `json:"type"`
-		Asubtype    string `json:"subtype"`
+		Category    string `json:"Category"` // Tipo de la actividad
+		SubCategory string `json:"subCategory"`
 		Image       string `json:"image"`
 		StartDate   string `json:"startDate"`
 		EndDate     string `json:"endDate"`
@@ -186,12 +186,12 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 		activity, err := acti.activities.CreateActivityService(
 			actiBody.Name,
 			actiBody.Description,
-			actiBody.Atype,
+			actiBody.Category,
 			startDate,
 			endDate,
 			actiBody.Place,
 			userIDInt, // Pasar el ID del usuario que se une a la actividad
-			actiBody.Asubtype,
+			actiBody.SubCategory,
 			actiBody.Image,
 		)
 		if err != nil {
@@ -209,8 +209,8 @@ func (acti *ActivityController) CreateActivity() gin.HandlerFunc {
 func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
 	type ActiBody struct {
 		Name        string `json:"name"`
-		Atype       string `json:"type"`
-		Asubtype    string `json:"subtype"` // Subtipo de la actividad
+		Category    string `json:"category"`
+		SubCategory string `json:"subCategory"` // Subtipo de la actividad
 		Image       string `json:"image"`
 		Description string `json:"description"`
 		StartDate   string `json:"startDate"` // Fecha en formato string
@@ -245,7 +245,7 @@ func (acti *ActivityController) UpdateActivity() gin.HandlerFunc {
 			return
 		}
 
-		activity, err := acti.activities.UpdateActivityService(activityID, actiBody.Name, actiBody.Description, actiBody.Atype, startDate, endDate, actiBody.Place, actiBody.Asubtype, actiBody.Image)
+		activity, err := acti.activities.UpdateActivityService(activityID, actiBody.Name, actiBody.Description, actiBody.Category, startDate, endDate, actiBody.Place, actiBody.SubCategory, actiBody.Image)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

@@ -23,9 +23,12 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://127.0.0.1:5500"}, // Cambia esto según tu necesidad
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
+		AllowOrigins:     []string{"http://127.0.0.1:5500", "http://localhost:5500"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * 3600,
 	}))
 
 	db := initializers.InitDB()
@@ -71,5 +74,5 @@ func main() {
 
 	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
 
-	router.Run()
+	router.Run(":8080")
 }

@@ -5,23 +5,14 @@ import (
 )
 
 type Activity struct {
-	ActivityID int    `json:"id" gorm:"primaryKey;autoIncrement;not null"`
-	Image      []byte `json:"image" gorm:"type:varbinary(MAX)"`
-	Name       string `json:"name"`
-	Atype      string `json:"type"`
-	Asubtype   string `json:"subtype"`
-	//Personas Máximas
-	Description string    `json:"description"`
+	ActivityID  int       `json:"id" gorm:"primaryKey;autoIncrement;not null"`
+	Image       []byte    `json:"image" gorm:"type:varbinary(MAX)"`
+	Name        string    `json:"name" binding:"required"` // Nombre de la actividad
+	Description string    `json:"description" binding:"required"`
 	StartDate   time.Time `json:"startDate"`
 	EndDate     time.Time `json:"endDate"`
-	Place       string    `json:"place"`
-	// Relaciones
-	// Usuarios
-	Users []*User `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
-	//Categoria
-	Category   Category `gorm:"foreignKey:CategoryID" json:"category"`
-	CategoryID int      `json:"categoryID"`
-	//SubCategoria
-	SubCategory   SubCategory `gorm:"foreignKey:SubCategoryID" json:"subCategory"`
-	SubCategoryID int         `json:"subCategoryID"`
+	Place       string    `json:"place" binding:"required"`
+	Users       []*User   `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
+	Category    int       `json:"type" binding:"required"`
+	SubCategory int       `json:"subtype" binding:"required"`
 }
