@@ -23,7 +23,7 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://127.0.0.1:5500"}, // Cambia esto según tu necesidad
+		AllowOrigins: []string{"https://recomendaciones-uss.vercel.app/"}, // Cambia esto según tu necesidad
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
 	}))
@@ -55,6 +55,8 @@ func main() {
 	authController.InitRoutes(router)
 
 	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
+	certFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\certificate.crt"
+	keyFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\private.key"
 
-	router.Run(":8080")
+	router.RunTLS(":443", certFile, keyFile)
 }
