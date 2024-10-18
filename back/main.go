@@ -73,8 +73,8 @@ func main() {
 	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
 
 	// Configuración para HTTPS
-	certFile := "/etc/letsencrypt/live/tu-dominio.com/fullchain.pem"
-	keyFile := "/etc/letsencrypt/live/tu-dominio.com/privkey.pem"
+	certFile := "C:\\Users\\seba1\\Desktop\\bin\bin\\certificate.crt"
+	keyFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\private.key"
 
 	router.RunTLS(":443", certFile, keyFile)
 }
