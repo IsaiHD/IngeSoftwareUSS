@@ -19,7 +19,9 @@ type Activity struct {
 	// Usuarios
 	Users []*User `gorm:"many2many:user_activities;" json:"users"` // Relación muchos a muchos
 	//Categoria
-	Category Category `gorm:"foreignKey:CategoryID" json:"category"`
+	Category   Category `gorm:"foreignKey:CategoryID" json:"category"`
+	CategoryID int      `json:"categoryID"`
 	//SubCategoria
-	SubCategory SubCategory `gorm:"foreignKey:SubCategoryID" json:"subCategory"`
+	SubCategory   SubCategory `gorm:"foreignKey:SubCategoryID" json:"subCategory"`
+	SubCategoryID int         `json:"subCategoryID"`
 }
