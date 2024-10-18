@@ -56,5 +56,5 @@ func main() {
 
 	// router.Use(gin.Recovery(), gin.Logger(), middleware.AuthMiddleware())
 
-	router.Run()
+	router.Run(":8080")
 }

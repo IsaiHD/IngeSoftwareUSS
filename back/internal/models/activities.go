@@ -6,7 +6,7 @@ import (
 
 type Activity struct {
 	ActivityID int    `json:"id" gorm:"primaryKey;autoIncrement;not null"`
-	Image      []byte `json:"image" gorm:"type:blob"`
+	Image      []byte `json:"image" gorm:"type:varbinary(MAX)"`
 	Name       string `json:"name"`
 	Atype      string `json:"type"`
 	Asubtype   string `json:"subtype"`
