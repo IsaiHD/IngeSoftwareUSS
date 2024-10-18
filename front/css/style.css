@@ -263,21 +263,52 @@
     cursor: pointer;
 }
 
+/*  */
+.owl-carousel .owl-stage {
+    display: flex;
+}
+
+.owl-carousel {
+    display: flex;
+    margin: auto;          /* Asegura que los elementos estén en fila */
+    flex-wrap: nowrap;      /* Evita que los elementos se envuelvan en otra fila */
+}
+
 /* Estilo para que las imágenes del carrusel no alarguen la página */
 .owl-carousel .item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 350px; /* Puedes ajustar la altura según sea necesario */
-    overflow: hidden;
+    display: inline-block;  
+    width: 250px;            /* Ajusta el ancho automáticamente */
+    vertical-align: top;    /* Alinea los elementos en la parte superior */
 }
+
 .owl-carousel .item img {
-    max-height: 100%;
     max-width: 100%;
-    object-fit: cover;
+    max-height: 100%;
+    object-fit: cover; /* Para mantener proporciones sin distorsión */
+    transition: transform 0.3s ease-in-out;
+}
+
+.item img {
+
+    width: 100%;            /* Ajusta las imágenes al ancho completo del contenedor */
+    height: auto;           /* Mantén la relación de aspecto */
 }
 
 
+.owl-carousel .item:hover img {
+    transform: scale(1.05); /* Efecto de zoom suave al hacer hover */
+}
+
+/* Título y subtítulo */
+.Ofertas .section-title {
+    color: var(--primary);
+}
+
+.Ofertas h1 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 20px;
+}
 
 
 /*** Package ***/

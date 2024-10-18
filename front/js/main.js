@@ -57,9 +57,9 @@
     $(document).ready(function(){
         // Inicializar OwlCarousel
         $('#carouselContent').owlCarousel({
-            items: 1, // Número de elementos visibles al mismo tiempo
+            items: 4, // Número de elementos visibles al mismo tiempo
             loop: true, // Hacer que el carrusel se repita en un bucle
-            margin: 10,
+            margin: 30,
             nav: false,
             dots: false,
             autoplay: true,
