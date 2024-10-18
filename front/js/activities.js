@@ -5,7 +5,7 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://181.43.108.54:8080/activities/');
+        const response = await fetch('https://181.43.108.54:443/activities/');
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
