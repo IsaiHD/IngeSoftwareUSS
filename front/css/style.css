@@ -65,6 +65,7 @@
     height: 48px;
 }
 
+ /*caja de busqueda? */
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
@@ -74,6 +75,7 @@
     justify-content: center;
     font-weight: normal;
     border-radius: 0px;
+
 }
 
 
