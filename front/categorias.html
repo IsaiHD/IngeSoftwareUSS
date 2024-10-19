@@ -8,6 +8,8 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -19,6 +21,8 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -42,7 +46,7 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
+    <!-- Topbar Start 
     <div class="container-fluid bg-dark px-5 d-none d-lg-block">
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
@@ -62,7 +66,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Topbar End -->
 
 
@@ -79,7 +83,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
                     <a href="index.html" class="nav-item nav-link ">Home</a>
-                    <a href="categorias.html" class="nav-item nav-link">Categorias</a>
+                    <a href="categorias.html" class="nav-item nav-link active">Categorias</a>
                     <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
                     <a href="comida.html" class="nav-item nav-link" >Restaurantes</a>
                     <a href="actividades.html" class="nav-item nav-link">Actividades</a>
@@ -99,7 +103,7 @@
             <div class="container py-5">
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                        <h1 class="display-3 text-white animated slideInDown">Tus Actividades</h1>
+                        <h1 class="display-3 text-white animated slideInDown">Categorias</h>
                     </div>
                 </div>
             </div>
@@ -107,107 +111,92 @@
     </div>
     <!-- Navbar & Hero End -->
 
-    <!-- Crear Start -->
-    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="booking p-5">
-                <div class="row g-5 align-items-center">
-                    <div class="col-md-6 text-white">
-                        <h6 class="text-white text-uppercase">Crear Actividad</h6>
-                        <p class="mb-4">Aqui podras subir tus actividades a la plataforma para que las demas personas las vean</p>
-                        <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Crearla</a>
-                        
-                    </div>
-                    <div class="col-md-6">
-                        <h1 class="text-white mb-4">Datos</h1>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control bg-transparent" id="nombreactividad" placeholder="NombreActividad">
-                                        <label for="name">Nombre actividad</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control bg-transparent" id="descripcionctividad" placeholder="Descripcion Actividad">
-                                        <label for="email">Descripcion</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-transparent datetimepicker-input" id="tipoactividad" placeholder="Date & Time" data-target="#date3" data-toggle="Tipo actividad" />
-                                        <label for="datetime">Tipo actividad</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-transparent datetimepicker-input" id="subtipoactividad" placeholder="Date & Time" data-target="#date3" data-toggle="Subtipo actividad" />
-                                        <label for="datetime">Subtipo actividad</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div  id="date3" data-target-input="nearest">
-                                        <label for="datetime">Subir Imagen</label>
-                                        <input type="file"  id="imagenactividades" />   
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select bg-transparent" id="select1">
-                                            <option value="1">Comida</option>
-                                            <option value="2">Actividad</option>
-                                            <option value="3">Interes</option>
-                                        </select>
-                                        <label for="select1">Categoria</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-transparent datetimepicker-input" id="lugaractividad" placeholder="Date & Time" data-target="#date3" data-toggle="Subtipo actividad" />
-                                        <label for="datetime">Lugar</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="date" class="form-control bg-transparent datetimepicker-input" id="fechainicioactividad" placeholder="Date & Time" data-target="#date3" data-toggle="Subtipo actividad" />
-                                        <label for="datetime">Fecha inicio</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="date" class="form-control bg-transparent datetimepicker-input" id="fechafinalctividad" placeholder="Date & Time" data-target="#date3" data-toggle="Subtipo actividad" />
-                                        <label for="datetime">Fecha Fin</label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <button class="btn btn-outline-light w-100 py-3" type="submit">Subirla a la plataforma</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
-        <div class="container py-5">
-            <div class="row justify-content-center py-5">
-                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Eliminar tu actividad</h1>
-                    <div class="position-relative w-75 mx-auto animated slideInDown">
-                        <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Ej: Museo Violeta Parra" id="eliminaractividad">
-                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px; background-color: red; border-color: red;" onclick="confirmarYEliminar()">Eliminar</button>
-                    </div>
+    <!-- Service Start -->
+    <div class="container-xxl py-5" style="display: flex; justify-content: center;">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Categorias</h6>
+                <h1 class="mb-5">Puntos de interés</h1>
+            </div>
+            <div class="row g-4" style="justify-content: center;">
+
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <a href="interes.html">
+                    <div class="service-item rounded pt-3">
+                        <div class="p-4">
+                            <i class="fa fa-3x fa-thumb-tack text-primary mb-4"></i>
+                            <h5>Lugares de interés</h5>
+                            <p>Encuentra todo lo entretenido y lo que te guste.</p>
+                        </div>
+                    </div></a>
                 </div>
+
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s" >
+                    <a href="comida.html">
+                    <div class="service-item rounded pt-3" onclick="redirigir()">
+                        <div class="p-4" >
+                            <i class="fa fa-3x fa-cutlery text-primary mb-4"></i> 
+                            <h5>Restaurantes</h5>
+                            <p>Lugares con las mejores comida que hay acá.</p>
+                        </div>
+                    </div></a>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <a href="actividades.html">
+                    <div class="service-item rounded pt-3">
+                        <div class="p-4">
+                            <i class="fa fa-3x fa-bicycle text-primary mb-4"></i>
+                            <h5 >Actividades</h5>
+                            <p>Encuentra algo para realizar que a ti más te guste.</p>
+                        </div>
+                    </div></a>
+                </div>
+                
             </div>
         </div>
     </div>
     
+    <!-- Service End -->
 
+
+    <!-- Testimonial Start 
+   <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
+                <h1 class="mb-5">Our Clients Say!!!</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel position-relative">
+                <div class="testimonial-item bg-white text-center border p-4">
+                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-1.jpg" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">John Doe</h5>
+                    <p>New York, USA</p>
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                </div>
+                <div class="testimonial-item bg-white text-center border p-4">
+                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-2.jpg" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">John Doe</h5>
+                    <p>New York, USA</p>
+                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                </div>
+                <div class="testimonial-item bg-white text-center border p-4">
+                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-3.jpg" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">John Doe</h5>
+                    <p>New York, USA</p>
+                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                </div>
+                <div class="testimonial-item bg-white text-center border p-4">
+                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-4.jpg" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">John Doe</h5>
+                    <p>New York, USA</p>
+                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Testimonial End -->
+        
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
