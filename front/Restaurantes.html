@@ -20,16 +20,64 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <style>
+        /* Estilos para el fondo oscuro */
+        #modalOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+            display: none; /* Oculto por defecto */
+            z-index: 999; /* Debajo del modal */
+        }
+
+        /* Estilos para el modal */
+        #modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; /* Tamaño fijo */
+            height: 700px; /* Tamaño fijo */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            display: none; /* Oculto por defecto */
+            z-index: 1000; /* Por encima del overlay */
+            opacity: 0; /* Empieza transparente */
+            transition: opacity 0.5s ease; /* Transición para hacer que aparezca */
+            overflow: auto; /* Habilita el scroll dentro del modal si es necesario */
+        }
+
+        /* Estilos para el botón de cerrar */
+        #closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Bloquear el scroll cuando el modal esté activo */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Evitar que la imagen cause parpadeos */
+        .package-item:hover {
+            cursor: pointer; /* Solo cambio el cursor sin efectos visuales adicionales */
+        }
+    </style>
 </head>
 
 <body>
@@ -46,7 +94,6 @@
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
-                <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
@@ -74,8 +121,6 @@
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white animated slideInDown">Restaurantes</h1>
-                        <nav aria-label="breadcrumb">
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -84,7 +129,7 @@
     <!-- Navbar & Hero End -->
 
 
-  <!-- Mcdonals container -->
+  <!-- Mcdonald's container -->
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -93,63 +138,50 @@
         </div>
         <div class="row g-4 justify-content-center">
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a href="#modal">
-                    <div class="package-item">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" id="imagencomida" src="img/marca-mcdonalds-logo.png" alt="">
-                        </div>
-                        <div class="d-flex border-bottom">
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2" id="nombrecomida"></i>McDonald</small>
-                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2" id="fechacomida"></i>Lunes a sabado</small>
-                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2" id="direccioncomida"></i>Local 89, Bellavista 52</small>
-                        </div>
-                        <div class="text-center p-4">
-                            <h3 class="mb-0" id="nombrecomida">McDonald´s</h3>
-                            <div class="mb-3">
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                                <small class="fa fa-star text-primary"></small>
-                            </div>
-                            <p class="text-body mb-3" id="descripcioncomida">¡Las mejores hamburguesas en tu ciudad!</p>
-                        </div>
-
-                        <!-- Modal (mover dentro del container) -->
-                        <div id="modal">
-                            <a href="#cerrar" id="closeModal"></a>
-                            <div id="modalContent">
-                                <a href="#cerrar" id="closeBtn">X</a>
-                                <h1 style="color: #86B817; text-align:center;">McDonald's</h1>
-                                <!-- Fecha del evento o apertura -->
-                                <p><strong>Abierto:</strong> Lunes a Sábado</p>
-
-                                <!-- Ubicación con Google Maps -->
-                                <p><strong>Ubicación:</strong></p>
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.2557880709477!2d-122.42142858512952!3d37.76480217975952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f7e31dbb1f983%3A0x36c1cd5ba86e2d0a!2sMcDonald&#39;s!5e0!3m2!1sen!2sus!4v1636402456007!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-
-                                <!-- Descripción -->
-                                <p><strong>Descripción:</strong> Local especializado en comida rápida y conocida por sus hamburguesas.</p>
-
-                                <!-- Horario -->
-                                <p><strong>Horario:</strong> 9:00 AM - 10:00 PM</p>
-
-                                <!-- Categoría como link a Restaurantes.html -->
-                                <p><strong>Categoría:</strong> <a href="Restaurantes.html" style="color: #86B817;">Restaurantes</a></p>
-
-                                <!-- Precios -->
-                                <p><strong>Precios:</strong> Varían según el menú</p>
-                            </div>
-                        </div>
-                        <!-- Modal End -->
-
+                <div class="package-item" id="openModalButton">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" id="imagencomida" src="img/marca-mcdonalds-logo.png" alt="">
                     </div>
-                </a>
+                    <div class="d-flex border-bottom">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2" id="nombrecomida"></i>McDonald</small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2" id="fechacomida"></i>Lunes a sabado</small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2" id="direccioncomida"></i>Local 89, Bellavista 52</small>
+                    </div>
+                    <div class="text-center p-4">
+                        <h3 class="mb-0" id="nombrecomida">McDonald´s</h3>
+                        <div class="mb-3">
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                            <small class="fa fa-star text-primary"></small>
+                        </div>
+                        <p class="text-body mb-3" id="descripcioncomida">¡Las mejores hamburguesas en tu ciudad!</p>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="modal">
+                        <a href="#" id="closeBtn">X</a>
+                        <h1 style="color: #86B817; text-align:center;">McDonald's</h1>
+                        <p><strong>Abierto:</strong> Lunes a Sábado</p>
+                        <p><strong>Ubicación:</strong></p>      
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416.19542425762666!2d-70.63523538077561!3d-33.43462546407143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c59ae80af997%3A0x4b83675199d1a37f!2sMcDonald&#39;s!5e0!3m2!1sen!2scl!4v1729478464054!5m2!1sen!2scl" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <p><strong>Descripción:</strong> Local especializado en comida rápida y conocida por sus hamburguesas.</p>
+                        <p><strong>Horario:</strong> 9:00 AM - 10:00 PM</p>
+                        <p><strong>Categoría:</strong> <a href="Restaurantes.html" style="color: #86B817;">Restaurantes</a></p>
+                        <p><strong>Precios:</strong> Varían según el menú</p>
+                    </div>
+                    
+                    <!-- Modal End -->
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Overlay para el modal -->
+<div id="modalOverlay"></div>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-3 mt-3 wow fadeIn" data-wow-delay="0.1s">
@@ -194,7 +226,42 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    
+    <!-- Script para abrir y cerrar el modal -->
+    <script>
+        const modal = document.getElementById('modal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openModalButton = document.getElementById('openModalButton');
+        const closeModalButton = document.getElementById('closeBtn');
+
+        openModalButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'block';  // Mostrar el overlay primero
+            document.body.classList.add('modal-open'); // Bloquear el scroll
+
+            setTimeout(() => {
+                modal.style.display = 'block';  // Mostrar el modal después de un retraso
+                modal.style.opacity = '1';  // Transición para que aparezca
+            }, 200); // 200ms de retraso para que el overlay aparezca primero
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            modal.style.opacity = '0';  // Hacer que el modal desaparezca
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+                document.body.classList.remove('modal-open'); // Habilitar el scroll
+            }, 300);  // Esperar a que la transición termine antes de ocultar completamente
+        });
+
+        modalOverlay.addEventListener('click', () => {
+            modal.style.opacity = '0';  // Hacer que el modal desaparezca
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+                document.body.classList.remove('modal-open'); // Habilitar el scroll
+            }, 300);  // Esperar a que la transición termine antes de ocultar completamente
+        });
+    </script>
+
 </body>
 
 </html>

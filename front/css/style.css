@@ -517,12 +517,6 @@
             text-decoration: none;
         }
 
-        .btn:hover {
-            background: #86B817;
-            box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.22);
-            color: #fff;
-        }
-
         #modalContent {
             position: absolute;
             top: 30%;
@@ -574,10 +568,6 @@
         /* Animation for hover */
         .package-item {
             transition: transform 0.3s ease-in-out;
-        }
-
-        .package-item:hover {
-            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {

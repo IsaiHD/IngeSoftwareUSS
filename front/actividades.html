@@ -30,6 +30,55 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Estilos para el modal -->
+    <style>
+        /* Estilos para el fondo oscuro */
+        #modalOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+            display: none; /* Oculto por defecto */
+            z-index: 999; /* Debajo del modal */
+        }
+
+        /* Estilos para el modal */
+        #modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 700px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            display: none; /* Oculto por defecto */
+            z-index: 1000; /* Por encima del overlay */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow: auto;
+        }
+
+        /* Estilos para el botón de cerrar */
+        #closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Bloquear el scroll cuando el modal esté activo */
+        body.modal-open {
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,31 +91,11 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
-                <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
@@ -94,15 +123,12 @@
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white animated slideInDown">Actividades</h1>
-                        <nav aria-label="breadcrumb">
-                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Navbar & Hero End -->
-
 
     <!-- Package Start -->
     <div class="container-xxl py-5">
@@ -113,9 +139,9 @@
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="package-item">
+                    <div class="package-item" id="openModalButton">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" id="imagenactividades" src="img/mcDonald.png" alt="">
+                            <img class="img-fluid" id="imagenactividades" src="img/libreria.jpg" alt="">
                         </div>
                         <div class="d-flex border-bottom">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2" id="nombreactividades"></i>Nombre</small>
@@ -133,12 +159,27 @@
                             </div>
                             <p id="subcategoriacomida">subcategoria</p>
                         </div>
+
+                        <!-- Modal para Feria del Libro -->
+                        <div id="modal">
+                            <a href="#" id="closeBtn">X</a>
+                            <h1 style="color: #86B817; text-align:center;">Feria del Libro</h1>
+                            <p><strong>Fecha:</strong> Del 15 al 20 de Diciembre</p>
+                            <p><strong>Ubicación:</strong> Plaza de Armas, Santiago</p>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d208.10074263107293!2d-70.63454039298674!3d-33.433361684129515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c59abb8923f5%3A0xe8c7abb4eb1ef533!2sBellavista%20Library!5e0!3m2!1sen!2scl!4v1729479561255!5m2!1sen!2scl" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            <p><strong>Descripción:</strong> La Feria del Libro reúne autores, editoriales y amantes de la lectura en un evento cultural imperdible. ¡Descubre novedades literarias y participa en actividades interactivas!</p>
+                            <p><strong>Horario:</strong> 10:00 AM - 8:00 PM</p>
+                            <p><strong>Categoría:</strong> <a href="actividades.html" style="color: #86B817;">Actividades</a></p>
+                        </div>
+                        <!-- Modal End -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Package End -->
+
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-3 mt-3 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-3">
@@ -165,8 +206,10 @@
             </div>
         </div>
     </div>
-    
     <!-- Footer End -->
+
+    <!-- Overlay para el modal -->
+    <div id="modalOverlay"></div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -181,7 +224,33 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/comida.js"></script>
+
+    <!-- Script para abrir y cerrar el modal -->
+    <script>
+        const modal = document.getElementById('modal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openModalButton = document.getElementById('openModalButton');
+        const closeModalButton = document.getElementById('closeBtn');
+
+        openModalButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'block';  // Mostrar el overlay primero
+            modal.style.display = 'block';  // Mostrar el modal
+            setTimeout(() => {
+                modal.style.opacity = '1';  // Transición para que aparezca el modal
+            }, 10); // Reducimos el tiempo de espera para que la transición sea suave
+            document.body.classList.add('modal-open'); // Bloquear el scroll
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            modal.style.opacity = '0';  // Hacer que el modal desaparezca
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+                document.body.classList.remove('modal-open'); // Habilitar el scroll
+            }, 500);  // Esperar a que la transición termine antes de ocultar completamente
+        });
+    </script>
+
 </body>
 
 </html>
