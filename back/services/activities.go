@@ -24,6 +24,7 @@ type Activity struct {
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
 	Place       string `json:"place"`
+	User	    int    `json:"user"`
 }
 
 func (acti *ActivityService) InitService(database *gorm.DB) {
@@ -187,6 +188,7 @@ func (acti *ActivityService) CreateActivityService(name string, description stri
 		EndDate:     endDate,
 		Place:       place,
 		Image:       imageData,
+		
 	}
 	// Guardar la actividad en la base de datos
 
