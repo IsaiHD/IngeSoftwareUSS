@@ -65,6 +65,7 @@
     height: 48px;
 }
 
+ /*caja de busqueda? */
 .btn-square,
 .btn-sm-square,
 .btn-lg-square {
@@ -74,6 +75,7 @@
     justify-content: center;
     font-weight: normal;
     border-radius: 0px;
+
 }
 
 
@@ -314,6 +316,7 @@
 /*** Package ***/
 .package-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+    position: relative;
 }
 
 .package-item img {
@@ -500,4 +503,104 @@
     padding-right: 0;
     border-right: none;
 }
+
+
+.package-item {
+    position: relative; /* El modal se posiciona en relación a este contenedor */
+}
+
+        /* Modal Styles */
+        .btn {
+            position: relative;
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: none;
+            border-radius: 0px;
+            background: #86B817;
+            box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.22);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #86B817;
+            box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.22);
+            color: #fff;
+        }
+
+        #modalContent {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            z-index: 6;
+            width: 80%;
+            max-width: 700px;
+            color: #888888;
+            padding: 15px;
+            border-radius: 5px;
+            background: #ffffff;
+            border: 1px solid #86B817;
+            box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.22);
+         }
+
+        #modal {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 5;
+            float: left;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            display: none;
+            opacity: 0;
+        }
+
+
+
+        :target {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        #modalContent > a {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            color: #fff;
+            border-radius: 2px;
+            background: #86B817;
+            padding: 10px;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        /* Animation for hover */
+        .package-item {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .package-item:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            #modalContent {
+                width: 90%;
+            }
+         }
+         
+         @media (max-width: 480px) {
+            #modalContent {
+                width: 95%;
+                padding: 10px;
+            }
+         }
+
+.overflow-hidden {
+    overflow: hidden;
+        }
+        
+
 

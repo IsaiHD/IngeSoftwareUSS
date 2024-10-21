@@ -135,6 +135,25 @@
             }
         }
     });
+
+        // Seleccionamos los elementos necesarios
+        const modal = $('#modal'); // El modal
+        const openModalLink = $('.package-item a'); // El enlace en el contenedor
+        const closeButtons = $('#closeModal, #closeBtn'); // Botones de cierre
+    
+        // Abrir el modal
+        openModalLink.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'block', opacity: 1 }); // Mostrar el modal
+            $('body').addClass('overflow-hidden'); // Desactivar el scroll del body
+        });
+    
+        // Cerrar el modal
+        closeButtons.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'none', opacity: 0 }); // Ocultar el modal
+            $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
+        });
+    
     
 })(jQuery);
-
