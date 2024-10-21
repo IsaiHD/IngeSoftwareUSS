@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Tourist - Travel Agency HTML Template</title>
+    <title>Miuss Actividades</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -41,26 +41,6 @@
     </div>
     <!-- Spinner End -->
 
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -73,20 +53,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link ">Home</a>
-                    <a href="categorias.html" class="nav-item nav-link">Categorias</a>
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="Categorias.html" class="nav-item nav-link">Categorias</a>
                     <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
-                    <a href="comida.html" class="nav-item nav-link active" >Restaurantes</a>
+                    <a href="Restaurantes.html" class="nav-item nav-link active" >Restaurantes</a>
                     <a href="actividades.html" class="nav-item nav-link">Actividades</a>
-                    <a href="mapa.html" class="nav-item nav-link">Mapa</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Páginas</a>
                         <div class="dropdown-menu m-0">
                             <a href="crudactividad.html" class="dropdown-item">Tus actividades</a>
                         </div>
                     </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" >Registro</a>
+                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Registro</a>
             </div>
         </nav>
         <div class="container-fluid bg-primary py-5 mb-5 hero-header">
@@ -104,18 +84,19 @@
     <!-- Navbar & Hero End -->
 
 
-    <!-- Package Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3" id="categoria">Restaurantes</h6>
-                <h1 class="mb-5">Mejores sitios de comida</h1>
-            </div>
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+  <!-- Mcdonals container -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3" id="categoria">Restaurantes</h6>
+            <h1 class="mb-5">Mejores sitios de comida</h1>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <a href="#modal">
                     <div class="package-item">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" id="imagencomida" src="img/mcDonald.png" alt="">
+                            <img class="img-fluid" id="imagencomida" src="img/marca-mcdonalds-logo.png" alt="">
                         </div>
                         <div class="d-flex border-bottom">
                             <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2" id="nombrecomida"></i>McDonald</small>
@@ -131,14 +112,43 @@
                                 <small class="fa fa-star text-primary"></small>
                                 <small class="fa fa-star text-primary"></small>
                             </div>
-                            <p id="subcategoriacomida">Local de comida</p>
+                            <p class="text-body mb-3" id="descripcioncomida">¡Las mejores hamburguesas en tu ciudad!</p>
                         </div>
+
+                        <!-- Modal (mover dentro del container) -->
+                        <div id="modal">
+                            <a href="#cerrar" id="closeModal"></a>
+                            <div id="modalContent">
+                                <a href="#cerrar" id="closeBtn">X</a>
+                                <h1 style="color: #86B817; text-align:center;">McDonald's</h1>
+                                <!-- Fecha del evento o apertura -->
+                                <p><strong>Abierto:</strong> Lunes a Sábado</p>
+
+                                <!-- Ubicación con Google Maps -->
+                                <p><strong>Ubicación:</strong></p>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.2557880709477!2d-122.42142858512952!3d37.76480217975952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f7e31dbb1f983%3A0x36c1cd5ba86e2d0a!2sMcDonald&#39;s!5e0!3m2!1sen!2sus!4v1636402456007!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+                                <!-- Descripción -->
+                                <p><strong>Descripción:</strong> Local especializado en comida rápida y conocida por sus hamburguesas.</p>
+
+                                <!-- Horario -->
+                                <p><strong>Horario:</strong> 9:00 AM - 10:00 PM</p>
+
+                                <!-- Categoría como link a Restaurantes.html -->
+                                <p><strong>Categoría:</strong> <a href="Restaurantes.html" style="color: #86B817;">Restaurantes</a></p>
+
+                                <!-- Precios -->
+                                <p><strong>Precios:</strong> Varían según el menú</p>
+                            </div>
+                        </div>
+                        <!-- Modal End -->
+
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
-    <!-- Package End -->
+</div>
 
 
     <!-- Back to Top -->
@@ -155,10 +165,12 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/comida.js"></script>
+
+    
 </body>
 
 </html>
