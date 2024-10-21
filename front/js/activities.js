@@ -5,7 +5,7 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://alla.ns.cloudflare.com:443/activities');
+        const response = await fetch('https://ingesoftware.online:443/activities');
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
@@ -22,7 +22,7 @@ async function obtenerActividades() {
             throw new TypeError('La respuesta no es un arreglo.');
         }
 
-        const carouselContent = document.getElementById('carouselContent');
+        const carouselContent = document.getElementById('ImagesTextContent');
         carouselContent.innerHTML = ''; // Limpiar el carrusel
 
         // Iterar sobre las actividades y crear los elementos del carrusel
@@ -32,7 +32,7 @@ async function obtenerActividades() {
                 itemDiv.classList.add('item');
                 itemDiv.innerHTML = `
                     <a class="position-relative d-block overflow-hidden" href="">
-                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt="${actividad.name}">
+                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt>
                         <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">${actividad.name}</div>
                         <div class="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">${actividad.description}</div>
                     </a>
