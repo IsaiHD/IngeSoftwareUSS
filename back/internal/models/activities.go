@@ -12,7 +12,7 @@ type Activity struct {
 	StartDate   time.Time `json:"startDate"`
 	EndDate     time.Time `json:"endDate"`
 	Place       string    `json:"place" binding:"required"`
-	Users       int       `json:"users" binding:"required"` // Relación muchos a muchos
+	Users       []*User   `gorm:"many2many:user_activities;constraint:OnDelete:CASCADE;" json:"users"`
 	Category    int       `json:"type" binding:"required"`
 	SubCategory int       `json:"subtype" binding:"required"`
 }

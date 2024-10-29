@@ -73,8 +73,9 @@ func main() {
 	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
 
 	// Configuración para HTTPS
-	certFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\certificate.crt"
-	keyFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\private.key"
+	// certFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\certificate.crt"
+	// keyFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\private.key"
 
-	router.RunTLS(":443", certFile, keyFile)
+	// router.RunTLS(":443", certFile, keyFile)
+	router.Run(":8080")
 }

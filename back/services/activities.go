@@ -24,7 +24,7 @@ type Activity struct {
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
 	Place       string `json:"place"`
-	User	    int    `json:"user"`
+	User        int    `json:"user"`
 }
 
 func (acti *ActivityService) InitService(database *gorm.DB) {
@@ -188,25 +188,23 @@ func (acti *ActivityService) CreateActivityService(name string, description stri
 		EndDate:     endDate,
 		Place:       place,
 		Image:       imageData,
-		User:        userID,
-		
 	}
 	// Guardar la actividad en la base de datos
 
-	//if err := acti.db.Create(&activity).Error; err != nil {
-	//	return nil, err
-	//}
+	if err := acti.db.Create(&activity).Error; err != nil {
+		return nil, err
+	}
 
 	// Cargar el usuario para asociarlo a la actividad
-	//var user models.User
-	//if err := acti.db.First(&user, userID).Error; err != nil {
-	//	return nil, err
-	//}
+	var user models.User
+	if err := acti.db.First(&user, userID).Error; err != nil {
+		return nil, err
+	}
 
 	// Asociar el usuario a la actividad
-	//if err := acti.db.Model(&activity).Association("Users").Append(&user); err != nil {
-	//	return nil, err
-	//}
+	if err := acti.db.Model(&activity).Association("Users").Append(&user); err != nil {
+		return nil, err
+	}
 
 	return &activity, nil
 }
@@ -251,11 +249,12 @@ func (acti *ActivityService) UpdateActivityService(id int, Name string, Descript
 
 func (acti *ActivityService) DeleteActivityService(id int) error {
 	var activity models.Activity
-	if err := acti.db.First(&activity, id).Error; err != nil {
+
+	if err := acti.db.Exec("DELETE FROM user_activities WHERE activity_activity_id = ?", id).Error; err != nil {
 		return err
 	}
 
-	if err := acti.db.Delete(&activity).Error; err != nil {
+	if err := acti.db.Delete(&activity, id).Error; err != nil {
 		return err
 	}
 
