@@ -155,6 +155,20 @@
             $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
         });
     
-    
+        document.addEventListener('DOMContentLoaded', function() {
+            var isRegistered = true; // Cambia esto según el estado real del usuario
+        
+            var registerButton = document.getElementById('registrarbtn');
+            var profileIcon = document.getElementById('profileIcon');
+        
+            if (isRegistered) {
+                registerButton.style.display = 'none';
+                profileIcon.style.display = 'block';
+            } else {
+                registerButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+            }
+        });
+        
 })(jQuery);
 
