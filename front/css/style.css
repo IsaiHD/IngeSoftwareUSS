@@ -17,7 +17,6 @@
 
 
 
-
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -592,10 +591,5 @@
                 padding: 10px;
             }
          }
-
-.overflow-hidden {
-    overflow: hidden;
-        }
-        
 
 
