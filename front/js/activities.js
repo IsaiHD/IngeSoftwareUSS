@@ -5,7 +5,12 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://181.43.108.54:443/activities/');
+        const response = await fetch('https://4c3d1d1addf8bc86b4c968254b8173d8.serveo.net/activities/', {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+        
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
