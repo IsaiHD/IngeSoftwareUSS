@@ -1,3 +1,5 @@
+import { apiUrl } from './config.js';
+
 async function obtenerActividades() {
     const spinner = document.getElementById('spinner');
     try {
@@ -5,7 +7,7 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://4c3d1d1addf8bc86b4c968254b8173d8.serveo.net/activities/', {
+        const response = await fetch(`${apiUrl}/activities/`, {
             headers: {
                 'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
             }

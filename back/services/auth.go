@@ -19,16 +19,27 @@ func InitAuthService(db *gorm.DB) *AuthService {
 }
 
 func (as *AuthService) Login(email *string, password *string, username *string) (*models.User, error) {
-	if password == nil {
+	if password == nil || *password == "" {
 		return nil, errors.New("password is required")
 	}
 
 	var user models.User
+	var err error
 
-	if err := as.db.Where("email = ?", *email).First(&user).Error; err != nil {
+	// Busca al usuario por email o username según cuál esté presente
+	if email != nil && *email != "" {
+		err = as.db.Where("email = ?", *email).First(&user).Error
+	} else if username != nil && *username != "" {
+		err = as.db.Where("username = ?", *username).First(&user).Error
+	} else {
+		return nil, errors.New("email or username is required")
+	}
+
+	if err != nil {
 		return nil, errors.New("user not found")
 	}
 
+	// Verifica la contraseña
 	if !utils.CheckPasswordHash(*password, user.Password) {
 		return nil, errors.New("invalid password")
 	}
