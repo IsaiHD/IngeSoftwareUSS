@@ -151,3 +151,136 @@ $(document).ready(function() {
 });
 
 
+// ---------------------crudactividad-----------------------------
+
+
+// Función para obtener todas las actividades
+async function fetchActivities() {
+    try {
+        const response = await fetch(`${apiUrl}/`);
+        if (!response.ok) throw new Error("Error al obtener actividades");
+        const data = await response.json();
+        console.log("Actividades obtenidas:", data.Actividades);
+        // Aquí puedes manejar los datos para mostrarlos en tu HTML
+        renderActivities(data.Actividades);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+// Función para crear una nueva actividad
+async function createActivity(activityData) {
+    try {
+        const response = await fetch(`${apiUrl}/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(activityData),
+        });
+        if (!response.ok) throw new Error("Error al crear actividad");
+        const data = await response.json();
+        console.log("Actividad creada:", data.activity);
+        alert("¡Actividad creada con éxito!");
+        fetchActivities(); // Refrescar la lista de actividades
+    } catch (error) {
+        console.error(error.message);
+        alert("Hubo un error al crear la actividad.");
+    }
+}
+
+// Función para eliminar una actividad
+async function deleteActivity(activityName) {
+    try {
+        const response = await fetch(`${apiUrl}/name`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: activityName }),
+        });
+        if (!response.ok) throw new Error("Error al eliminar actividad");
+        const data = await response.json();
+        console.log(data.message);
+        alert("¡Actividad eliminada con éxito!");
+        fetchActivities(); // Refrescar la lista de actividades
+    } catch (error) {
+        console.error(error.message);
+        alert("Hubo un error al eliminar la actividad.");
+    }
+}
+
+// Manejo de eventos para el formulario de creación de actividad
+document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault(); // Evitar que el formulario recargue la página
+
+    // Obtener valores del formulario
+    const activityData = {
+        name: document.getElementById("nombreactividad").value,
+        description: document.getElementById("descripcionctividad").value,
+        category: document.getElementById("select1").value,
+        subCategory: document.getElementById("subtipoactividad").value,
+        image: document.getElementById("imagenactividades").files[0]?.name || "", // Obtener nombre del archivo
+        startDate: document.getElementById("fechainicioactividad").value,
+        endDate: document.getElementById("fechafinalctividad").value,
+        place: document.getElementById("lugaractividad").value,
+    };
+
+    createActivity(activityData);
+});
+
+// Manejo de eventos para el botón de eliminación de actividad
+// Asegura que la función esté disponible globalmente
+window.confirmarYEliminar = function () {
+    const activityName = document.getElementById("eliminaractividad").value;
+
+    if (!activityName.trim()) {
+        alert("Por favor, ingresa el nombre de una actividad.");
+        return;
+    }
+
+    if (confirm(`¿Estás seguro de que deseas eliminar la actividad: "${activityName}"?`)) {
+        deleteActivity(activityName);
+    }
+};
+
+// 
+
+// Función auxiliar para enviar la solicitud de eliminación al backend
+//async function deleteActivity(activityName) {
+//    try {
+//        const response = await fetch("http://localhost:8080/activities/name", {
+//            method: "DELETE",
+//            headers: { "Content-Type": "application/json" },
+//            body: JSON.stringify({ name: activityName }),
+//        });
+//
+//        if (!response.ok) {
+//            throw new Error("No se pudo eliminar la actividad.");
+//        }
+//
+//        const data = await response.json();
+//        alert(data.message); // Mostrar mensaje de éxito
+//    } catch (error) {
+//       console.error(error);
+//        alert("Hubo un error al intentar eliminar la actividad.");
+//    }
+//}
+
+// Función para renderizar las actividades en la página (puedes personalizarla según tu diseño)
+function renderActivities(activities) {
+    const activitiesContainer = document.querySelector(".activities-container");
+    activitiesContainer.innerHTML = ""; // Limpiar el contenedor
+    activities.forEach((activity) => {
+        const activityCard = document.createElement("div");
+        activityCard.classList.add("activity-card");
+        activityCard.innerHTML = `
+            <h3>${activity.name}</h3>
+            <p>${activity.description}</p>
+            <p><strong>Lugar:</strong> ${activity.place}</p>
+            <p><strong>Fecha:</strong> ${activity.startDate} - ${activity.endDate}</p>
+        `;
+        activitiesContainer.appendChild(activityCard);
+    });
+}
+
+// Cargar actividades al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    fetchActivities();
+});
