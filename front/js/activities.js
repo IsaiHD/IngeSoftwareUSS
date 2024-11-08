@@ -96,6 +96,45 @@ async function cargarCategorias() {
     }
 }
 
+async function cargarSubCategorias() {
+    try {
+        const categoriaId = document.getElementById("select1").value;
+        const response = await fetch(`${apiUrl}/categories/${categoriaId}`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log(data); // Para verificar la respuesta completa
+        
+        // Asegúrate de que 'Subcategorias' sea un arreglo en la respuesta
+        const subcategorias = data.Subcategorias; 
+        if (!Array.isArray(subcategorias)) {
+            throw new TypeError('La respuesta no contiene un arreglo de subcategorías.');
+        }
+
+        const selectElement = document.getElementById("select2");
+        selectElement.innerHTML = ''; // Limpiar el select
+
+        // Iterar sobre las subcategorías y añadirlas al select
+        subcategorias.forEach(subcategoria => {
+            const option = document.createElement("option");
+            option.value = subcategoria.id;
+            option.textContent = subcategoria.name;
+            selectElement.appendChild(option);
+        });
+        
+    } catch (error) {
+        console.error("Error al obtener subcategorías:", error);
+        alert("Ocurrió un error al cargar las subcategorías. Por favor, intenta de nuevo más tarde.");
+    }
+}
+
 
 
 $(document).ready(function() {
@@ -106,7 +145,7 @@ $(document).ready(function() {
 
     }else if (window.location.pathname === '/front/crudactividad.html') {
         cargarCategorias();
-
+        document.getElementById('select1').addEventListener('change', cargarSubCategorias);
     }
 
 });
