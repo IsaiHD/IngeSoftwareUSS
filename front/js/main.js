@@ -57,9 +57,9 @@
     $(document).ready(function(){
         // Inicializar OwlCarousel
         $('#carouselContent').owlCarousel({
-            items: 1, // Número de elementos visibles al mismo tiempo
+            items: 4, // Número de elementos visibles al mismo tiempo
             loop: true, // Hacer que el carrusel se repita en un bucle
-            margin: 10,
+            margin: 30,
             nav: false,
             dots: false,
             autoplay: true,
@@ -104,6 +104,15 @@
         return false;
     });
 
+    function confirmarYEliminar() {
+        const input = document.getElementById('eliminaractividad');
+        if (!input.value) {
+            alert('Por favor, sube una imagen antes de eliminar.');
+            return false;
+        }
+        return confirm('¿Estás seguro de que quieres eliminar esto?');
+    }
+
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
@@ -126,6 +135,39 @@
             }
         }
     });
-    
-})(jQuery);
 
+        // Seleccionamos los elementos necesarios
+        const modal = $('#modal'); // El modal
+        const openModalLink = $('.package-item a'); // El enlace en el contenedor
+        const closeButtons = $('#closeModal, #closeBtn'); // Botones de cierre
+    
+        // Abrir el modal
+        openModalLink.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'block', opacity: 1 }); // Mostrar el modal
+            $('body').addClass('overflow-hidden'); // Desactivar el scroll del body
+        });
+    
+        // Cerrar el modal
+        closeButtons.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'none', opacity: 0 }); // Ocultar el modal
+            $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
+        });
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            var isRegistered = true; // Cambia esto según el estado real del usuario
+        
+            var registerButton = document.getElementById('registrarbtn');
+            var profileIcon = document.getElementById('profileIcon');
+        
+            if (isRegistered) {
+                registerButton.style.display = 'none';
+                profileIcon.style.display = 'block';
+            } else {
+                registerButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+            }
+        });
+        
+})(jQuery);
