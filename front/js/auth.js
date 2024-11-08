@@ -72,7 +72,18 @@ async function registerUser(event) {
     }
 }
 
-document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
-    console.log('Register button clicked');
-    registerUser(event);
+
+$(document).ready(function() {
+    if (window.location.pathname !== '/registrar.html') {
+        document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
+            registerUser(event);
+        });
+    } else if (window.location.pathname !== '/Login.html') {
+        document.getElementById('botonIniciarSesion').addEventListener('click', function(event) {
+            loginUser(event);
+        });
+    }
+    
+
 });
+

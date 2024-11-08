@@ -58,7 +58,55 @@ async function obtenerActividades() {
     }
 }
 
+async function cargarCategorias() {
+    try {
+        const response = await fetch(`${apiUrl}/categories/`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log(data); // Para verificar la respuesta completa
+        
+        // Asegúrate de que 'Categorias' sea un arreglo en la respuesta
+        const categorias = data.Categorias; 
+        if (!Array.isArray(categorias)) {
+            throw new TypeError('La respuesta no contiene un arreglo de categorías.');
+        }
+
+        const selectElement = document.getElementById("select1");
+        selectElement.innerHTML = ''; // Limpiar el select
+
+        // Iterar sobre las categorías y añadirlas al select
+        categorias.forEach(categoria => {
+            const option = document.createElement("option");
+            option.value = categoria.id;
+            option.textContent = categoria.name;
+            selectElement.appendChild(option);
+        });
+        
+    } catch (error) {
+        console.error("Error al obtener categorías:", error);
+        alert("Ocurrió un error al cargar las categorías. Por favor, intenta de nuevo más tarde.");
+    }
+}
+
+
 
 $(document).ready(function() {
-    obtenerActividades();
+    console.log(window.location.pathname);
+
+    if (window.location.pathname == '/index.html') {
+        obtenerActividades();
+
+    }else if (window.location.pathname === '/front/crudactividad.html') {
+        cargarCategorias();
+
+    }
+
 });
