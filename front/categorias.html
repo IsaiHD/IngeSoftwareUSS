@@ -59,10 +59,15 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
                 <a href="index.html" class="nav-item nav-link ">Home</a>
-                <a href="categorias.html" class="nav-item nav-link active">Categorias</a>
-                <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
-                <a href="restaurantes.html" class="nav-item nav-link" >Restaurantes</a>
-                <a href="actividades.html" class="nav-item nav-link">Actividades</a>
+                <div class="nav-item dropdown" >
+                <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="categorias.html" class="dropdown-item">Todas las categorias</a>
+                        <a href="interes.html" class="dropdown-item">Lugares de interes</a>
+                        <a href="restaurantes.html" class="dropdown-item">Restaurantes</a>
+                        <a href="actividades.html" class="dropdown-item">Actividades</a>
+                    </div>
+                </div>
                 <a href="mapa.html" class="nav-item nav-link">Mapa</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
@@ -71,7 +76,10 @@
                     </div>
                 </div>
             </div>
-            <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" >Registro</a>
+            <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+            <div id="profileIcon">
+                <img src="images\icons\perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
+            </div>    
         </div>
     </nav>
     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
