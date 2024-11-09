@@ -1,7 +1,7 @@
 import { apiUrl } from './config.js';
 
 async function obtenerActividades() {
-    const spinner = document.getElementById('spinner');
+    const spinner = document.getElementById('ImagesTextContent');
     try {
         // Mostrar el spinner mientras se cargan las actividades
         spinner.classList.add('show');
@@ -96,10 +96,11 @@ async function cargarCategorias() {
     }
 }
 
-async function cargarSubCategorias() {
+async function cargarSubCategorias(idCategoria) {
     try {
-        const categoriaId = document.getElementById("select1").value;
-        const response = await fetch(`${apiUrl}/categories/${categoriaId}`, {
+        // const categoriaId = document.getElementById("select1").value;
+        // console.log('Categoría seleccionada:', categoria);
+        const response = await fetch(`${apiUrl}/subcategories/${idCategoria}`, {
             headers: {
                 'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
             }
@@ -113,7 +114,7 @@ async function cargarSubCategorias() {
         console.log(data); // Para verificar la respuesta completa
         
         // Asegúrate de que 'Subcategorias' sea un arreglo en la respuesta
-        const subcategorias = data.Subcategorias; 
+        const subcategorias = data.SubCategorias; 
         if (!Array.isArray(subcategorias)) {
             throw new TypeError('La respuesta no contiene un arreglo de subcategorías.');
         }
@@ -135,17 +136,46 @@ async function cargarSubCategorias() {
     }
 }
 
+async function inicializarCategoriasYSubcategorias() {
+    await cargarCategorias(); // Carga las categorías
+    const select1 = document.getElementById('select1');
+    console.log('Categoría seleccionada:', select1.value);
+
+    // Si hay categorías, seleccionar la primera y cargar sus subcategorías
+    if (select1.options.length > 0) {
+        select1.selectedIndex = 0; // Selecciona la primera categoría
+        cargarSubCategorias(select1.value); // Carga las subcategorías de la primera categoría seleccionada
+    }
+}
 
 
 $(document).ready(function() {
     console.log(window.location.pathname);
 
-    if (window.location.pathname == '/index.html') {
+    const tipoSelector = document.getElementById('tipo');
+    const formFields = document.getElementById('formFields');
+
+    // Evento para mostrar campos y cargar categorías/subcategorías si se selecciona "Actividad"
+    tipoSelector.addEventListener('change', function() {
+        const selectedType = tipoSelector.value;
+        if (selectedType === 'actividad') {
+            formFields.style.display = 'block';
+            inicializarCategoriasYSubcategorias();
+            
+            // Cambia el evento `change` para que pase el `id` de la categoría seleccionada
+            document.getElementById('select1').addEventListener('change', function() {
+                cargarSubCategorias(this.value); // Pasa el `id` de la categoría
+            });
+        } else {
+            formFields.style.display = 'none';
+        }
+    });
+
+    if (window.location.pathname == '/front/index.html') {
         obtenerActividades();
 
     }else if (window.location.pathname === '/front/crudactividad.html') {
-        cargarCategorias();
-        document.getElementById('select1').addEventListener('change', cargarSubCategorias);
+
     }
 
 });

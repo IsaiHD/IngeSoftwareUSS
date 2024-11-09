@@ -170,11 +170,8 @@
                                 <!-- Categoría y Subcategoría -->
                                 <div class="col-md-6 mb-4">
                                     <div class="form-floating">
-                                        <select class="form-select bg-transparent" id="categoria" name="categoria">
+                                        <select class="form-select bg-transparent" id="select1" name="categoria">
                                             <option selected>Selecciona categoría...</option>
-                                            <option value="comida">Comida</option>
-                                            <option value="entretenimiento">Entretenimiento</option>
-                                            <option value="cultura">Cultura</option>
                                         </select>
                                         <label for="categoria">Categoría</label>
                                     </div>
@@ -182,7 +179,7 @@
 
                                 <div class="col-md-6 mb-4">
                                     <div class="form-floating">
-                                        <select class="form-select bg-transparent" id="subcategoria" name="subcategoria">
+                                        <select class="form-select bg-transparent" id="select2" name="subcategoria">
                                             <!-- Estas opciones se actualizarán dinámicamente según la categoría seleccionada -->
                                             <option selected>Selecciona subcategoría...</option>
                                         </select>
@@ -232,24 +229,23 @@
                                 <!-- Subir archivo -->
                                  
                                 <!-- Subir imagen -->
-<div class="col-md-12 mb-4">
-    <!-- Mensaje de advertencia -->
-    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
-        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
-        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
-    </div>
+                                <div class="col-md-12 mb-4">
+                                    <!-- Mensaje de advertencia -->
+                                    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
+                                        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
+                                        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
+                                    </div>
 
-    <!-- Cuadro de arrastre para subir imagen -->
-    <div class="form-group">
-        <label for="archivo">Subir imagen</label>
-        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
-            Arrastra tu imagen aquí o haz clic para seleccionar
-        </div>
-        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
-        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
-    </div>
-</div>
-
+                                    <!-- Cuadro de arrastre para subir imagen -->
+                                    <div class="form-group">
+                                        <label for="archivo">Subir imagen</label>
+                                        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
+                                            Arrastra tu imagen aquí o haz clic para seleccionar
+                                        </div>
+                                        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
+                                        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Botón de envío -->
@@ -311,8 +307,9 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    <script src="js/crear_acti.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/crear_acti.js"></script>
+    <script type="module" src="js/activities.js"></script>
     
 </body>
 
