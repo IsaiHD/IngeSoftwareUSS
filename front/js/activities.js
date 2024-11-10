@@ -1,4 +1,5 @@
 import { apiUrl } from './config.js';
+import { convertirImagenABase64 } from './utils.js';
 
 async function obtenerActividades() {
     const spinner = document.getElementById('ImagesTextContent');
@@ -148,6 +149,65 @@ async function inicializarCategoriasYSubcategorias() {
     }
 }
 
+async function crearActividad() {
+    // Verificar que todos los campos están llenos
+    const name = document.getElementById('name').value;
+    const description = document.getElementById('description').value;
+    const category = document.getElementById('category').value;
+    const subCategory = document.getElementById('subCategory').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const place = document.getElementById('place').value;
+    const imageFile = document.getElementById('image').files[0];
+
+    if (!name || !description || !category || !subCategory || !startDate || !endDate || !place || !imageFile) {
+        document.getElementById('error-message').style.display = 'block';
+        return;
+    } else {
+        document.getElementById('error-message').style.display = 'none';
+    }
+
+    try {
+        // Convertir la imagen a base64
+        const imageBase64 = await convertirImagenABase64(imageFile);
+
+        // Crear el objeto actividad
+        const actividad = {
+            name,
+            description,
+            category,
+            subCategory,
+            image: imageBase64,
+            startDate,
+            endDate,
+            place
+        };
+
+        // Enviar la solicitud POST a la API
+        const response = await fetch(`${apiUrl}/activities/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(actividad)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la creación de la actividad: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Actividad creada exitosamente:', data);
+        alert('Actividad creada exitosamente');
+    } catch (error) {
+        console.error('Error al crear la actividad:', error);
+        alert('Ocurrió un error al crear la actividad. Por favor, intenta de nuevo.');
+    }
+}
+
+
+
+// Evento para cargar las actividades al cargar la página
 
 $(document).ready(function() {
     console.log(window.location.pathname);
@@ -171,11 +231,10 @@ $(document).ready(function() {
         }
     });
 
+
+
     if (window.location.pathname == '/front/index.html') {
         obtenerActividades();
-
-    }else if (window.location.pathname === '/front/crudactividad.html') {
-
     }
 
 });
