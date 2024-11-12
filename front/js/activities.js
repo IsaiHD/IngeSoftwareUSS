@@ -224,8 +224,6 @@ $(document).ready(function() {
     if (window.location.pathname == '/front/index.html') {
         obtenerActividades();
 
-    }else if (window.location.pathname === '/front/crudactividad.html') {
-
     }
 
 });
