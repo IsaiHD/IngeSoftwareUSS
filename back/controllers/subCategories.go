@@ -29,7 +29,10 @@ func (subCat *SubCategoriesController) GetSubCategories() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
 			return
 		}
-
+		if categoryID < 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
+			return
+		}
 		subCategories := subCat.subCat.GetSubCategoriesService(categoryID)
 		if subCategories == nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting subcategories"})

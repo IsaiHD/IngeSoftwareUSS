@@ -63,7 +63,7 @@ async function cargarCategorias() {
     try {
         const response = await fetch(`${apiUrl}/categories/`, {
             headers: {
-                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+                'Content-Type': 'application/json',
             }
         });
 
@@ -72,9 +72,6 @@ async function cargarCategorias() {
         }
         
         const data = await response.json();
-        console.log(data); // Para verificar la respuesta completa
-        
-        // Asegúrate de que 'Categorias' sea un arreglo en la respuesta
         const categorias = data.Categorias; 
         if (!Array.isArray(categorias)) {
             throw new TypeError('La respuesta no contiene un arreglo de categorías.');
@@ -83,6 +80,13 @@ async function cargarCategorias() {
         const selectElement = document.getElementById("select1");
         selectElement.innerHTML = ''; // Limpiar el select
 
+        // Añadir opción predeterminada
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.id = "default-option"; // Asignar id específico
+        defaultOption.textContent = "Selecciona una categoría...";
+        selectElement.appendChild(defaultOption);
+
         // Iterar sobre las categorías y añadirlas al select
         categorias.forEach(categoria => {
             const option = document.createElement("option");
@@ -90,17 +94,20 @@ async function cargarCategorias() {
             option.textContent = categoria.name;
             selectElement.appendChild(option);
         });
-        
+
     } catch (error) {
         console.error("Error al obtener categorías:", error);
         alert("Ocurrió un error al cargar las categorías. Por favor, intenta de nuevo más tarde.");
     }
 }
 
+
 async function cargarSubCategorias(idCategoria) {
+    if (!idCategoria) {
+        console.error('Selecciona una categoria válida.');
+        return;
+    }
     try {
-        // const categoriaId = document.getElementById("select1").value;
-        // console.log('Categoría seleccionada:', categoria);
         const response = await fetch(`${apiUrl}/subcategories/${idCategoria}`, {
             headers: {
                 'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
@@ -138,16 +145,25 @@ async function cargarSubCategorias(idCategoria) {
 }
 
 async function inicializarCategoriasYSubcategorias() {
-    await cargarCategorias(); // Carga las categorías
-    const select1 = document.getElementById('select1');
-    console.log('Categoría seleccionada:', select1.value);
+    await cargarCategorias(); // Cargar las categorías desde la BD
 
-    // Si hay categorías, seleccionar la primera y cargar sus subcategorías
-    if (select1.options.length > 0) {
-        select1.selectedIndex = 0; // Selecciona la primera categoría
-        cargarSubCategorias(select1.value); // Carga las subcategorías de la primera categoría seleccionada
-    }
+    const select1 = document.getElementById('select1');
+
+    // Añadir evento para cargar subcategorías solo cuando haya datos disponibles
+    select1.addEventListener('change', async function() {
+        const categoriaId = select1.value;
+        console.log('Categoría seleccionada:', categoriaId.value);
+
+        // Solo hacer la solicitud si se ha seleccionado una categoría válida
+        if (categoriaId && categoriaId !== " ") { // Verifica si se ha seleccionado una categoría válida
+            await cargarSubCategorias(categoriaId); // Carga las subcategorías si se seleccionó una categoría válida
+        } else {
+            // Limpia las subcategorías cuando se selecciona la opción por defecto
+            document.getElementById('select2').innerHTML = '<option>Selecciona una subcategoría...</option>';
+        }
+    });
 }
+
 
 async function crearActividad() {
     try {
@@ -201,29 +217,28 @@ async function crearActividad() {
 
 $(document).ready(function() {
     console.log(window.location.pathname);
-
-    const tipoSelector = document.getElementById('tipo');
-    const formFields = document.getElementById('formFields');
-
-    // Evento para mostrar campos y cargar categorías/subcategorías si se selecciona "Actividad"
-    tipoSelector.addEventListener('change', function() {
-        const selectedType = tipoSelector.value;
-        if (selectedType === 'actividad') {
-            formFields.style.display = 'block';
-            inicializarCategoriasYSubcategorias();
-            
-            // Cambia el evento `change` para que pase el `id` de la categoría seleccionada
-            document.getElementById('select1').addEventListener('change', function() {
-                cargarSubCategorias(this.value); // Pasa el `id` de la categoría
-            });
-        } else {
-            formFields.style.display = 'none';
-        }
-    });
-
+    console.log(apiUrl);
     if (window.location.pathname == '/front/index.html') {
         obtenerActividades();
 
-    }
+    }else if (window.location.pathname == '/front/crudactividad.html') {
+        const tipoSelector = document.getElementById('tipo');
+        const formFields = document.getElementById('formFields');
 
+        // Evento para mostrar campos y cargar categorías/subcategorías si se selecciona "Actividad"
+        tipoSelector.addEventListener('change', function() {
+            const selectedType = tipoSelector.value;
+            if (selectedType === 'actividad') {
+                formFields.style.display = 'block';
+                inicializarCategoriasYSubcategorias();
+                
+                // Cambia el evento `change` para que pase el `id` de la categoría seleccionada
+                document.getElementById('select1').addEventListener('change', function() {
+                    cargarSubCategorias(this.value); // Pasa el `id` de la categoría
+                });
+            } else {
+                formFields.style.display = 'none';
+            }
+        });
+    }
 });
