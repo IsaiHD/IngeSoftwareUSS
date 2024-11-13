@@ -1,6 +1,3 @@
-// utils.js
-
-// Función para convertir una imagen a Base64
 export function convertirImagenABase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
