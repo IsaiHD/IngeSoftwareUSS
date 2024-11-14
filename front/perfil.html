@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
-    <title>Miuss Actividades</title>
-
+    <title>Miuss Actividades - Perfil</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -41,18 +40,17 @@
     </div>
     <!-- Spinner End -->
 
-    <!-- Navbar & Hero Start -->
+    <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="index.html" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
-                <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
                     <a href="index.html" class="nav-item nav-link ">Home</a>
                     <div class="nav-item dropdown">
-                    <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
+                        <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
                         <div class="dropdown-menu m-0">
                             <a href="categorias.html" class="dropdown-item">Todas las categorias</a>
                             <a href="interes.html" class="dropdown-item">Lugares de interes</a>
@@ -68,68 +66,49 @@
                         </div>
                     </div>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
-                <div id="profileIcon" class="profile-container">
-                    <a href="perfil.html" id="profileIconLink">
-                        <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
-                    </a>
-                    <!-- Botón Cerrar sesión debajo del perfil -->
-                    <button id="logout-btn" class="btn btn-danger rounded-pill py-2 px-4 mt-2">Cerrar sesión</button>
-                </div>
-                
-                
-                
+                <a href="index.html" class="btn btn-primary rounded-pill py-2 px-4" id="volverbtn">Volver</a>  
             </div>
         </nav>
+    </div>
+    <!-- Navbar End -->
 
-        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
-        <div class="container py-5">
-            <div class="row justify-content-center py-5">
-                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Descubre lo mejor de tu día</h1>
-                    <p class="fs-4 text-white mb-4 animated slideInDown">Explora, selecciona y disfruta de tu próxima aventura.</p>
-                    <div class="position-relative w-75 mx-auto animated slideInDown">
-                        <input id="search-input" class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Ej: Sushi">
-                        <button id="search-btn" type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+    <!-- Perfil Start -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-4 mb-3">Tu Perfil</h2>
+                <div class="profile-card">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <img src="images/icons/perfil.png" alt="Imagen de Perfil" class="rounded-circle" style="width: 150px; height: 150px;" id="profile-image">
                     </div>
+                    <h3 class="mb-2" id="username">Nombre de Usuario</h3>
+                    <p class="text-muted mb-3" id="email">Email: usuario@example.com</p>
+                    <p class="text-muted mb-3" id="location">Ubicación: Ciudad, País</p>
+                    <p class="text-muted mb-3" id="registration-date">Fecha de Registro: Enero 2023</p>
+                    <a href="editar-perfil.html" class="btn btn-primary rounded-pill">Editar Perfil</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Navbar & Hero End -->
+    
+    <!-- Perfil End -->
 
-
-    <!-- Ofertas Start -->
+    <!-- Actividades del Usuario Start -->
     <div class="container-xxl py-5 Ofertas">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Lo más Popular</h6>
-                <h1 class="mb-5">Engánchate a lo clásico</h1>
+                <h1 class="section-title bg-white text-center text-primary px-3">Tus actividades</h1>
+                <h6 class="mb-5">Aquí puedes ver las actividades que has creado o marcado como favoritas.</h6>
             </div>
     
             <!-- Contenedor dinámico para las actividades -->
             <div id="ImagesTextContent" class="activity-container"></div>
         </div>
     </div>
-    <!-- Ofertas End -->
-
-    <!-- Modal (Popup) -->
-    <div id="modal" class="modal">
-        <div id="modalContent">
-        <a href="#!" class="close-modal">×</a>
-        <h3 id="modalActivityName">Actividad Nombre</h3>
-        <img id="modalActivityImage" src="" alt="Imagen de actividad" class="img-fluid">
-        <p id="modalActivityDescription">Descripción de la actividad.</p>
-        <p><strong>Fecha de inicio:</strong> <span id="modalStartDate">Fecha inicio</span></p>
-        <p><strong>Fecha de fin:</strong> <span id="modalEndDate">Fecha fin</span></p>
-        <p><strong>Ubicación:</strong> <span id="modalPlace">Ubicación</span></p>
-        </div>
-    </div>
-  
-  <!-- Modal END -->
+    <!-- Actividades del Usuario End -->
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer pt-3 mt-3 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark text-light footer pt-3 mt-3">
         <div class="container py-3">
             <div class="row g-3">
                 <!-- Footer content -->
@@ -156,23 +135,14 @@
     </div>
     <!-- Footer End -->
 
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
     <script type="module" src="js/activities.js"></script>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/auth.js"></script>
-    
 </body>
 
 </html>
