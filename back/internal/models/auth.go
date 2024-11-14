@@ -19,10 +19,10 @@ type User struct {
 	Bio         string `json:"bio"`
 	// IsEmailVerified bool        `json:"isemailverified"`
 	// TwoFactorEnabled bool       `json:"twofactor_enabled"`
-	Status      string      `json:"status"`
-	Preferences string      `json:"preferences"`
-	IsDeleted   bool        `json:"isdeleted"`
-	Activities  []*Activity `gorm:"many2many:user_activities;constraint:OnDelete:CASCADE;" json:"activities"`
+	Status string `json:"status"`
+	// Preferences string      `json:"preferences"`
+	IsDeleted  bool        `json:"isdeleted"`
+	Activities []*Activity `gorm:"many2many:user_activities;constraint:OnDelete:CASCADE;" json:"activities"`
 }
 
 func (User) TableName() string {
