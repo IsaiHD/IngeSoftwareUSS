@@ -34,22 +34,164 @@ async function obtenerActividades() {
         carouselContent.innerHTML = ''; // Limpiar el carrusel
 
         // Iterar sobre las actividades y crear los elementos del carrusel
+        // Suponiendo que ya tienes el array de actividades
         for (const actividad of actividades) {
             try {
                 const itemDiv = document.createElement('div');
-                itemDiv.classList.add('item');
+                itemDiv.classList.add('activity-card');  // Clase para el contenedor de la tarjeta
+        
+                // Eliminar las clases aleatorias de tamaño
+                // No agregamos 'large' o 'extra-large'
+        
                 itemDiv.innerHTML = `
-                    <a class="position-relative d-block overflow-hidden" href="">
-                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt>
-                        <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">${actividad.name}</div>
-                        <div class="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">${actividad.description}</div>
+                    <a class="position-relative d-block overflow-hidden">
+                        <!-- Imagen de la actividad -->
+                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt="${actividad.name}">
+                        
+                        <!-- Título de la actividad -->
+                        <div class="activity-title bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">
+                            ${actividad.name}
+                        </div>
+                        
+                        <!-- Descripción corta -->
+                        <div class="activity-description bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">
+                            ${actividad.description}
+                        </div>
                     </a>
                 `;
-                carouselContent.appendChild(itemDiv);
+        
+                // Agregar la tarjeta al contenedor principal (ImagesTextContent)
+                document.getElementById('ImagesTextContent').appendChild(itemDiv);
+        
+                itemDiv.querySelector('a').addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+                
+                    // Verifica si los datos están presentes
+                    console.log(document.getElementById('modal')); // Verifica si está devolviendo el modal
+
+                
+                    // Llenar el modal con la información de la actividad
+                    document.getElementById('modalActivityName').innerText = actividad.name;
+                    document.getElementById('modalActivityImage').src = `data:image/png;base64,${actividad.image}`;
+                    document.getElementById('modalActivityDescription').innerText = actividad.description;
+                    document.getElementById('modalStartDate').innerText = actividad.start_date;
+                    document.getElementById('modalEndDate').innerText = actividad.end_date;
+                    document.getElementById('modalPlace').innerText = actividad.place;
+                
+                    // Mostrar el modal
+                    document.getElementById('modal').classList.add('show');
+                    console.log(modal.classList); // Verifica las clases del modal en la consola
+                });
+                
+                
+                
             } catch (error) {
                 console.error('Error al convertir la imagen a Base64:', error);
             }
         }
+
+        
+    } catch (error) {
+        console.error('Error al obtener las actividades:', error);
+        alert('Ocurrió un error al cargar las actividades. Por favor, intenta de nuevo más tarde.');
+    } finally {
+        // Ocultar el spinner
+        spinner.classList.remove('show');
+    }
+}
+
+async function obtenerActividadesPorUsuario() {
+    const spinner = document.getElementById('ImagesTextContent');
+    const authToken = `bearer: ${localStorage.getItem('authToken')}`;
+    try {
+        // Mostrar el spinner mientras se cargan las actividades
+        spinner.classList.add('show');
+
+        // Realizar la solicitud a la API
+        const response = await fetch(`${apiUrl}/activities/user`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+                'Authorization': authToken
+            }
+        });
+        
+
+        // Comprobar si la respuesta fue exitosa
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+
+        // Obtener el JSON de la respuesta
+        const data = await response.json();
+        console.log(data); // Verificar la respuesta completa
+
+        // Asegúrate de que 'Actividades' sea un arreglo
+        const actividades = data.Actividades; // Cambia 'data.Actividades' según la estructura de tu respuesta
+        if (!Array.isArray(actividades)) {
+            throw new TypeError('La respuesta no es un arreglo.');
+        }
+
+        const carouselContent = document.getElementById('ImagesTextContent');
+        carouselContent.innerHTML = ''; // Limpiar el carrusel
+
+        // Iterar sobre las actividades y crear los elementos del carrusel
+        // Suponiendo que ya tienes el array de actividades
+        for (const actividad of actividades) {
+            try {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('activity-card');  // Clase para el contenedor de la tarjeta
+        
+                // Eliminar las clases aleatorias de tamaño
+                // No agregamos 'large' o 'extra-large'
+        
+                itemDiv.innerHTML = `
+                    <a class="position-relative d-block overflow-hidden">
+                        <!-- Imagen de la actividad -->
+                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt="${actividad.name}">
+                        
+                        <!-- Título de la actividad -->
+                        <div class="activity-title bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">
+                            ${actividad.name}
+                        </div>
+                        
+                        <!-- Descripción corta -->
+                        <div class="activity-description bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">
+                            ${actividad.description}
+                        </div>
+                    </a>
+                `;
+        
+                // Agregar la tarjeta al contenedor principal (ImagesTextContent)
+                document.getElementById('ImagesTextContent').appendChild(itemDiv);
+        
+                itemDiv.querySelector('a').addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+                
+                    // Verifica si los datos están presentes
+                    console.log(document.getElementById('modal')); // Verifica si está devolviendo el modal
+
+                
+                    // Llenar el modal con la información de la actividad
+                    document.getElementById('modalActivityName').innerText = actividad.name;
+                    document.getElementById('modalActivityImage').src = `data:image/png;base64,${actividad.image}`;
+                    document.getElementById('modalActivityDescription').innerText = actividad.description;
+                    document.getElementById('modalStartDate').innerText = actividad.start_date;
+                    document.getElementById('modalEndDate').innerText = actividad.end_date;
+                    document.getElementById('modalPlace').innerText = actividad.place;
+                
+                    // Mostrar el modal
+                    document.getElementById('modal').classList.add('show');
+                    console.log(modal.classList); // Verifica las clases del modal en la consola
+                });
+                
+                
+                
+            } catch (error) {
+                console.error('Error al convertir la imagen a Base64:', error);
+            }
+        }
+
+        
     } catch (error) {
         console.error('Error al obtener las actividades:', error);
         alert('Ocurrió un error al cargar las actividades. Por favor, intenta de nuevo más tarde.');
@@ -221,7 +363,11 @@ $(document).ready(function() {
     if (window.location.pathname == '/front/index.html') {
         obtenerActividades();
 
-    }else if (window.location.pathname == '/front/crudactividad.html') {
+    }
+    if (window.location.pathname == '/front/perfil.html') {
+        obtenerActividadesPorUsuario();
+    }
+    if (window.location.pathname == '/front/crudactividad.html') {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
@@ -241,4 +387,15 @@ $(document).ready(function() {
             }
         });
     }
+});
+
+document.getElementById('modal').addEventListener('click', (event) => {
+    if (event.target === document.getElementById('modal')) {
+        document.getElementById('modal').classList.remove('show');
+    }
+});
+
+// Cerrar el modal
+document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('modal').classList.remove('show');
 });

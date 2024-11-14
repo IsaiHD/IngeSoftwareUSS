@@ -1,2 +1,2 @@
 // config.js
-export const apiUrl = 'https://theft-salvation-susan-cotton.trycloudflare.com';
+export const apiUrl = 'https://pit-striking-plants-attack.trycloudflare.com';
