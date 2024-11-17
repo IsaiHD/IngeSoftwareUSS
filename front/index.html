@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Miuss Actividades</title>
+
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -43,20 +44,22 @@
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="" class="navbar-brand p-0">
+            <a href="index.html" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active ">Home</a>
-                    <a href="categorias.html" class="nav-item nav-link">Categorias</a>
-                    <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
-                    <a href="restaurantes.html" class="nav-item nav-link" >Restaurantes</a>
-                    <a href="actividades.html" class="nav-item nav-link">Actividades</a>
+                    <a href="index.html" class="nav-item nav-link ">Home</a>
+                    <div class="nav-item dropdown">
+                    <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="categorias.html" class="dropdown-item">Todas las categorias</a>
+                            <a href="interes.html" class="dropdown-item">Lugares de interes</a>
+                            <a href="restaurantes.html" class="dropdown-item">Restaurantes</a>
+                            <a href="actividades.html" class="dropdown-item">Actividades</a>
+                        </div>
+                    </div>
                     <a href="mapa.html" class="nav-item nav-link">Mapa</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
@@ -65,7 +68,17 @@
                         </div>
                     </div>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" >Registro</a>
+                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+                <div id="profileIcon" class="profile-container">
+                    <a href="perfil.html" id="profileIconLink">
+                        <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
+                    </a>
+                    <!-- Botón Cerrar sesión debajo del perfil -->
+                    <button id="logout-btn" class="btn btn-danger rounded-pill py-2 px-4 mt-2">Cerrar sesión</button>
+                </div>
+                
+                
+                
             </div>
         </nav>
 
@@ -87,20 +100,33 @@
 
 
     <!-- Ofertas Start -->
-<div class="container-xxl py-5 Ofertas">
+    <div class="container-xxl py-5 Ofertas">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center text-primary px-3">Lo más Popular</h6>
-                <h1 class="mb-5">Enganchate a lo clásico</h1>
+                <h1 class="mb-5">Engánchate a lo clásico</h1>
             </div>
-            
-            <div class="position-relative d-block overflow-hidden" id="ImagesTextContent"></div>
-
-
-
+    
+            <!-- Contenedor dinámico para las actividades -->
+            <div id="ImagesTextContent" class="activity-container"></div>
         </div>
     </div>
     <!-- Ofertas End -->
+
+    <!-- Modal (Popup) -->
+    <div id="modal" class="modal">
+        <div id="modalContent">
+        <a href="#!" class="close-modal">×</a>
+        <h3 id="modalActivityName">Actividad Nombre</h3>
+        <img id="modalActivityImage" src="" alt="Imagen de actividad" class="img-fluid">
+        <p id="modalActivityDescription">Descripción de la actividad.</p>
+        <p><strong>Fecha de inicio:</strong> <span id="modalStartDate">Fecha inicio</span></p>
+        <p><strong>Fecha de fin:</strong> <span id="modalEndDate">Fecha fin</span></p>
+        <p><strong>Ubicación:</strong> <span id="modalPlace">Ubicación</span></p>
+        </div>
+    </div>
+  
+  <!-- Modal END -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-3 mt-3 wow fadeIn" data-wow-delay="0.1s">
@@ -143,8 +169,9 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/activities.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/activities.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/auth.js"></script>
     
 </body>
 

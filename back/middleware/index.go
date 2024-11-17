@@ -12,34 +12,35 @@ import (
 func CheckMiddleware(c *gin.Context) {
 	headers := c.GetHeader("Authorization")
 
+	// Verificar si el header está presente
 	if headers == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "Header not found",
+			"error": "Authorization header not found",
 		})
 		return
 	}
 
-	token := strings.Split(headers, " ")
-
-	if len(token) < 2 {
+	// Dividir el header en 'Bearer' y el token
+	tokenParts := strings.Split(headers, " ")
+	if len(tokenParts) < 2 {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": "Token not provided",
 		})
 		return
 	}
 
-	data, err := utils.TokenCheck(token[1])
-
+	// Validar el token usando la función de utilidad
+	data, err := utils.TokenCheck(tokenParts[1])
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": "Claims not Matched",
+			"error": "Token is invalid or expired",
 		})
 		return
 	}
 
-	// Extraer el userID del token y almacenarlo en el contexto
+	// Extraer el userID de los claims del token
 	if userID, ok := data.(jwt.MapClaims)["id"]; ok {
-		// Convertir de float64 a int
+		// Verificar que el userID sea un número y convertirlo
 		if idFloat, ok := userID.(float64); ok {
 			c.Set("userID", int(idFloat))
 		} else {
@@ -47,16 +48,11 @@ func CheckMiddleware(c *gin.Context) {
 			c.Abort()
 			return
 		}
+	} else {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "User ID not found in token"})
+		c.Abort()
+		return
 	}
 
-	c.SetCookie(
-		"Authorization",
-		token[1],
-		3600*24*30,
-		"",
-		"",
-		false,
-		true,
-	)
 	c.Next()
 }

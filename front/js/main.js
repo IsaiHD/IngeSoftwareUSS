@@ -155,6 +155,35 @@
             $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
         });
     
-    
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para obtener el valor de una clave de localStorage
+            function getLocalStorageItem(key) {
+                return localStorage.getItem(key);
+            }
+        
+            // Obtener el valor de la clave 'auth_token' de localStorage
+            var authToken = getLocalStorageItem('authToken');
+            if (authToken) {
+                // Si hay un token, el usuario está logueado
+                console.log('Usuario logueado');
+            }else{
+                console.log('Usuario no logueado');
+            }
+        
+            // Obtener los elementos del DOM
+            var registerButton = document.getElementById('registrarbtn');
+            var profileIcon = document.getElementById('profileIcon');
+        
+            // Si hay un token en localStorage, el usuario está logueado
+            if (authToken) {
+                // Mostrar el icono de perfil y ocultar el botón de registro
+                registerButton.style.display = 'none';
+                profileIcon.style.display = 'block';
+            } else {
+                // Mostrar el botón de registro y ocultar el icono de perfil
+                registerButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+            }
+        });
 })(jQuery);
 

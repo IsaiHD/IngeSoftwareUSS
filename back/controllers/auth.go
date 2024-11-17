@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"ingsoft/internal/utils"
+	"ingsoft/middleware"
 	"ingsoft/services"
 	"net/http"
 
@@ -22,12 +23,44 @@ func (ac *AuthController) InitRoutes(router *gin.Engine) {
 	routes := router.Group("/auth")
 	routes.POST("/login", ac.Login())
 	routes.POST("/register", ac.Register())
+	routes.GET("/profile", middleware.CheckMiddleware, ac.Profile())
+	routes.PATCH("/profile", middleware.CheckMiddleware, ac.UpdateProfile())        // Ruta para actualizar perfil
+	routes.POST("/changepassword", middleware.CheckMiddleware, ac.ChangePassword()) // Ruta para cambiar la contraseña
+	routes.DELETE("/deleteaccount", middleware.CheckMiddleware, ac.DeleteAccount()) // Ruta para eliminar cuenta
 }
 
 func (*AuthController) Nope() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Connected",
+		})
+	}
+}
+
+// Método para obtener el perfil del usuario
+func (at *AuthController) Profile() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Obtiene el userID desde el contexto, que fue establecido en el middleware al verificar el token JWT
+		userID, exists := c.Get("userID")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "No authentication token found",
+			})
+			return
+		}
+
+		// Llama al servicio para obtener el perfil del usuario
+		user, err := at.authService.Profile(userID.(int))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		// Devuelve la información del usuario
+		c.JSON(http.StatusOK, gin.H{
+			"message": user,
 		})
 	}
 }
@@ -98,9 +131,131 @@ func (at *AuthController) Login() gin.HandlerFunc {
 			})
 			return
 		}
+
+		// Almacenar el token en la cookie de forma segura (HttpOnly: true)
+		c.SetCookie(
+			"Auth_Cookie", // Nombre de la cookie
+			token,         // Valor de la cookie (el token)
+			3600*24*30,    // Duración en segundos (30 días)
+			"/",           // Ruta (disponible para toda la aplicación)
+			"",            // Dominio (vacío significa que se aplica al dominio actual)
+			true,          // Secure: solo se enviará a través de HTTPS
+			true,          // HttpOnly: no accesible desde JavaScript (más seguro)
+		)
+
 		c.JSON(http.StatusOK, gin.H{
 			"message": user,
 			"token":   token,
+		})
+	}
+}
+
+// Método para actualizar el perfil del usuario
+func (at *AuthController) UpdateProfile() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Obtiene el userID desde el contexto, que fue establecido en el middleware al verificar el token JWT
+		userID, exists := c.Get("userID")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "No authentication token found",
+			})
+			return
+		}
+
+		// Define la estructura para el cuerpo de la solicitud
+		type UpdateProfileBody struct {
+			Name        *string `json:"name"`
+			Email       *string `json:"email"`
+			Username    *string `json:"username"`
+			Place       *string `json:"place"`
+			PhoneNumber *string `json:"phonenumber"`
+			Bio         *string `json:"bio"`
+		}
+
+		var updateBody UpdateProfileBody
+		if err := c.BindJSON(&updateBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Llama al servicio para actualizar el perfil del usuario
+		user, err := at.authService.UpdateProfile(userID.(int), updateBody.Name, updateBody.Email, updateBody.Username, updateBody.Place, updateBody.PhoneNumber, updateBody.Bio)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		// Devuelve la información actualizada del usuario
+		c.JSON(http.StatusOK, gin.H{
+			"message": user,
+		})
+	}
+}
+
+// Método para cambiar la contraseña del usuario
+func (at *AuthController) ChangePassword() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Obtiene el userID desde el contexto, que fue establecido en el middleware al verificar el token JWT
+		userID, exists := c.Get("userID")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "No authentication token found",
+			})
+			return
+		}
+
+		// Define la estructura para el cuerpo de la solicitud
+		type ChangePasswordBody struct {
+			CurrentPassword string `json:"current_password" binding:"required"`
+			NewPassword     string `json:"new_password" binding:"required"`
+		}
+
+		var changePasswordBody ChangePasswordBody
+		if err := c.BindJSON(&changePasswordBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// Llama al servicio para cambiar la contraseña
+		err := at.authService.ChangePassword(userID.(int), &changePasswordBody.CurrentPassword, &changePasswordBody.NewPassword)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Password changed successfully",
+		})
+	}
+}
+
+// Método para eliminar la cuenta del usuario
+func (at *AuthController) DeleteAccount() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Obtiene el userID desde el contexto, que fue establecido en el middleware al verificar el token JWT
+		userID, exists := c.Get("userID")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": "No authentication token found",
+			})
+			return
+		}
+
+		// Llama al servicio para eliminar la cuenta del usuario
+		err := at.authService.DeleteAccount(userID.(int))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Account deleted successfully",
 		})
 	}
 }

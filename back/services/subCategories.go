@@ -20,10 +20,14 @@ func (subCat *SubCategoriesService) InitSubCategoriesService(database *gorm.DB) 
 	subCat.db.AutoMigrate(&models.SubCategory{})
 }
 
-func (subCat *SubCategoriesService) GetSubCategoriesService() []SubCategory {
-
+func (subCat *SubCategoriesService) GetSubCategoriesService(categoryID int) []SubCategory {
 	var subCategories []models.SubCategory
-	subCat.db.Find(&subCategories)
+
+	if categoryID < 0 {
+		return nil
+	}
+	// Filtra por CategoryID e incluye la información de Category
+	subCat.db.Preload("Category").Where("category_id = ?", categoryID).Find(&subCategories)
 
 	var subCategoriesResponse []SubCategory
 	for _, subCategory := range subCategories {
