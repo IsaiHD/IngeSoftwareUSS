@@ -1,3 +1,5 @@
+import { apiUrl } from './config.js';
+
 async function obtenerActividades() {
     const spinner = document.getElementById('spinner');
     try {
@@ -5,7 +7,12 @@ async function obtenerActividades() {
         spinner.classList.add('show');
 
         // Realizar la solicitud a la API
-        const response = await fetch('https://alla.ns.cloudflare.com:443/activities');
+        const response = await fetch(`${apiUrl}/activities/`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+        
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
@@ -22,7 +29,7 @@ async function obtenerActividades() {
             throw new TypeError('La respuesta no es un arreglo.');
         }
 
-        const carouselContent = document.getElementById('carouselContent');
+        const carouselContent = document.getElementById('ImagesTextContent');
         carouselContent.innerHTML = ''; // Limpiar el carrusel
 
         // Iterar sobre las actividades y crear los elementos del carrusel
@@ -32,7 +39,7 @@ async function obtenerActividades() {
                 itemDiv.classList.add('item');
                 itemDiv.innerHTML = `
                     <a class="position-relative d-block overflow-hidden" href="">
-                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt="${actividad.name}">
+                        <img class="img-fluid" src="data:image/png;base64,${actividad.image}" alt>
                         <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">${actividad.name}</div>
                         <div class="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">${actividad.description}</div>
                     </a>
@@ -51,7 +58,94 @@ async function obtenerActividades() {
     }
 }
 
+async function cargarCategorias() {
+    try {
+        const response = await fetch(`${apiUrl}/categories/`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log(data); // Para verificar la respuesta completa
+        
+        // Asegúrate de que 'Categorias' sea un arreglo en la respuesta
+        const categorias = data.Categorias; 
+        if (!Array.isArray(categorias)) {
+            throw new TypeError('La respuesta no contiene un arreglo de categorías.');
+        }
+
+        const selectElement = document.getElementById("select1");
+        selectElement.innerHTML = ''; // Limpiar el select
+
+        // Iterar sobre las categorías y añadirlas al select
+        categorias.forEach(categoria => {
+            const option = document.createElement("option");
+            option.value = categoria.id;
+            option.textContent = categoria.name;
+            selectElement.appendChild(option);
+        });
+        
+    } catch (error) {
+        console.error("Error al obtener categorías:", error);
+        alert("Ocurrió un error al cargar las categorías. Por favor, intenta de nuevo más tarde.");
+    }
+}
+
+async function cargarSubCategorias() {
+    try {
+        const categoriaId = document.getElementById("select1").value;
+        const response = await fetch(`${apiUrl}/categories/${categoriaId}`, {
+            headers: {
+                'Content-Type': 'application/json', // Asegúrate de que el servidor acepta JSON
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log(data); // Para verificar la respuesta completa
+        
+        // Asegúrate de que 'Subcategorias' sea un arreglo en la respuesta
+        const subcategorias = data.Subcategorias; 
+        if (!Array.isArray(subcategorias)) {
+            throw new TypeError('La respuesta no contiene un arreglo de subcategorías.');
+        }
+
+        const selectElement = document.getElementById("select2");
+        selectElement.innerHTML = ''; // Limpiar el select
+
+        // Iterar sobre las subcategorías y añadirlas al select
+        subcategorias.forEach(subcategoria => {
+            const option = document.createElement("option");
+            option.value = subcategoria.id;
+            option.textContent = subcategoria.name;
+            selectElement.appendChild(option);
+        });
+        
+    } catch (error) {
+        console.error("Error al obtener subcategorías:", error);
+        alert("Ocurrió un error al cargar las subcategorías. Por favor, intenta de nuevo más tarde.");
+    }
+}
+
+
 
 $(document).ready(function() {
-    obtenerActividades();
+    console.log(window.location.pathname);
+
+    if (window.location.pathname == '/index.html') {
+        obtenerActividades();
+
+    }else if (window.location.pathname === '/front/crudactividad.html') {
+        cargarCategorias();
+        document.getElementById('select1').addEventListener('change', cargarSubCategorias);
+    }
+
 });

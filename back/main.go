@@ -23,11 +23,12 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://recomendaciones-uss.vercel.app"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
+		AllowWildcard:    true,
 		MaxAge:           12 * 3600,
 	}))
 
@@ -73,8 +74,9 @@ func main() {
 	subCategoriesController.InitSubCategoriesControllerRouters(router, *subCategoriesService)
 
 	// Configuración para HTTPS
-	certFile := "C:\\Users\\seba1\\Desktop\\bin\bin\\certificate.crt"
-	keyFile := "C:\\Users\\seba1\\Desktop\\bin\\bin\\private.key"
+	// certFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\certificate.crt"
+	// keyFile := "C:\\Users\\seba1\\Desktop\\Certificado SSL\\Certificado SSL\\private.key"
 
-	router.RunTLS(":443", certFile, keyFile)
+	// router.RunTLS(":443", certFile, keyFile)
+	router.Run(":8080")
 }

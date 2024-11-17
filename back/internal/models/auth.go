@@ -8,7 +8,7 @@ type User struct {
 	Password string `json:"password"`
 	RoleID   int    `json:"roleid"`
 	//img usuario
-	Activities []*Activity `gorm:"many2many:user_activities;" json:"activities"` // Relación muchos a muchos
+	Activities []*Activity `gorm:"many2many:user_activities;constraint:OnDelete:CASCADE;" json:"activities"`
 }
 
 func (User) TableName() string {

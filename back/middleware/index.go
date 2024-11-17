@@ -49,5 +49,14 @@ func CheckMiddleware(c *gin.Context) {
 		}
 	}
 
+	c.SetCookie(
+		"Authorization",
+		token[1],
+		3600*24*30,
+		"",
+		"",
+		false,
+		true,
+	)
 	c.Next()
 }

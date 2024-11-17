@@ -24,6 +24,7 @@ type Activity struct {
 	StartDate   string `json:"startDate"`
 	EndDate     string `json:"endDate"`
 	Place       string `json:"place"`
+	User        int    `json:"user"`
 }
 
 func (acti *ActivityService) InitService(database *gorm.DB) {
@@ -248,11 +249,12 @@ func (acti *ActivityService) UpdateActivityService(id int, Name string, Descript
 
 func (acti *ActivityService) DeleteActivityService(id int) error {
 	var activity models.Activity
-	if err := acti.db.First(&activity, id).Error; err != nil {
+
+	if err := acti.db.Exec("DELETE FROM user_activities WHERE activity_activity_id = ?", id).Error; err != nil {
 		return err
 	}
 
-	if err := acti.db.Delete(&activity).Error; err != nil {
+	if err := acti.db.Delete(&activity, id).Error; err != nil {
 		return err
 	}
 
