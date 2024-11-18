@@ -10,11 +10,9 @@
         }, 1);
     };
     spinner();
-    
-    
+
     // Initiate the wowjs
     new WOW().init();
-
 
     // Sticky Navbar
     $(window).scroll(function () {
@@ -24,72 +22,59 @@
             $('.navbar').removeClass('sticky-top shadow-sm');
         }
     });
-    
-    
+
     // Dropdown on mouse hover
     const $dropdown = $(".dropdown");
     const $dropdownToggle = $(".dropdown-toggle");
     const $dropdownMenu = $(".dropdown-menu");
     const showClass = "show";
-    
+
     $(window).on("load resize", function() {
         if (this.matchMedia("(min-width: 992px)").matches) {
             $dropdown.hover(
-            function() {
-                const $this = $(this);
-                $this.addClass(showClass);
-                $this.find($dropdownToggle).attr("aria-expanded", "true");
-                $this.find($dropdownMenu).addClass(showClass);
-            },
-            function() {
-                const $this = $(this);
-                $this.removeClass(showClass);
-                $this.find($dropdownToggle).attr("aria-expanded", "false");
-                $this.find($dropdownMenu).removeClass(showClass);
-            }
+                function() {
+                    const $this = $(this);
+                    $this.addClass(showClass);
+                    $this.find($dropdownToggle).attr("aria-expanded", "true");
+                    $this.find($dropdownMenu).addClass(showClass);
+                },
+                function() {
+                    const $this = $(this);
+                    $this.removeClass(showClass);
+                    $this.find($dropdownToggle).attr("aria-expanded", "false");
+                    $this.find($dropdownMenu).removeClass(showClass);
+                }
             );
         } else {
             $dropdown.off("mouseenter mouseleave");
         }
     });
 
-    //botones de carrusel main
+    // Carousel functionality
     $(document).ready(function(){
-        // Inicializar OwlCarousel
         $('#carouselContent').owlCarousel({
-            items: 4, // Número de elementos visibles al mismo tiempo
-            loop: true, // Hacer que el carrusel se repita en un bucle
+            items: 4,
+            loop: true,
             margin: 30,
             nav: false,
             dots: false,
             autoplay: true,
-            autoplayTimeout: 5000, // Cambia cada 5 segundos
+            autoplayTimeout: 5000,
             responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 2
-                },
-                1000: {
-                    items: 3
-                }
+                0: { items: 1 },
+                600: { items: 2 },
+                1000: { items: 3 }
             }
         });
-    
-        // Funcionalidad para los botones de navegación
+
         $('#nextBtn').click(function() {
             $('#carouselContent').trigger('next.owl.carousel');
         });
-    
+
         $('#prevBtn').click(function() {
             $('#carouselContent').trigger('prev.owl.carousel');
         });
     });
-    
-    
-
-
 
     // Back to top button
     $(window).scroll(function () {
@@ -113,7 +98,6 @@
         return confirm('¿Estás seguro de que quieres eliminar esto?');
     }
 
-
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
         autoplay: true,
@@ -124,15 +108,9 @@
         loop: true,
         nav : false,
         responsive: {
-            0:{
-                items:1
-            },
-            768:{
-                items:2
-            },
-            992:{
-                items:3
-            }
+            0: { items: 1 },
+            768: { items: 2 },
+            992: { items: 3 }
         }
     });
 
@@ -154,21 +132,39 @@
             modal.css({ display: 'none', opacity: 0 }); // Ocultar el modal
             $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
         });
-    
-         document.addEventListener('DOMContentLoaded', function() {
-             var isLoged = false; // Empezar sin logear
+
+=======
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para obtener el valor de una clave de localStorage
+            function getLocalStorageItem(key) {
+                return localStorage.getItem(key);
+            }
         
-             var btnLogin = document.getElementById('loginbtn');
-             var profileIcon = document.getElementById('profileIcon');
+            // Obtener el valor de la clave 'auth_token' de localStorage
+            var authToken = getLocalStorageItem('authToken');
+            if (authToken) {
+                // Si hay un token, el usuario está logueado
+                console.log('Usuario logueado');
+            }else{
+                console.log('Usuario no logueado');
+            }
         
-             if (isLoged) {
-                btnLogin.style.display = 'none';
+            // Obtener los elementos del DOM
+            var registerButton = document.getElementById('registrarbtn');
+            var profileIcon = document.getElementById('profileIcon');
+
+        
+            // Si hay un token en localStorage, el usuario está logueado
+            if (authToken) {
+                // Mostrar el icono de perfil y ocultar el botón de registro
+                registerButton.style.display = 'none';
                 profileIcon.style.display = 'block';
-             } else {
-                btnLogin.style.display = 'block';
-                 profileIcon.style.display = 'none';
-             }
-         });
-        
+            } else {
+                // Mostrar el botón de registro y ocultar el icono de perfil
+                registerButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+            }
+        });
 })(jQuery);
+
 

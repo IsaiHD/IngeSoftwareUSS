@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Miuss Actividades</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link ">Home</a>
+                    <a href="categorias.html" class="nav-item nav-link active">Categorias</a>
+                    <a href="mapa.html" class="nav-item nav-link">Mapa</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="crudactividad.html" class="dropdown-item">Tus actividades</a>
+                            <a href="mactividad.html" class="dropdown-item">Mis actividades</a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4">Registro</a>
+            </div>
+        </nav>
+        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row justify-content-center py-5">
+                    <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                        <h1 class="display-3 text-white animated slideInDown">Mis Actividades</h1>
+                        <nav aria-label="breadcrumb"></nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->
+
+
+    <body>
+        <!-- Cards Section for Activities -->
+        <div class="container my-5">
+            <div class="row">
+                <!-- Card for Activity 1 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 1', 'Abierto', 'Dirección o ciudad', 'Breve descripción de la Actividad 1.', '9:00 AM - 5:00 PM', 'Cultura', 'Desde $10')">
+                        <div class="card-body">
+                            <h5 class="card-title">Actividad 1</h5>
+                            <p class="card-text">Breve descripción de la Actividad 1.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card for Activity 2 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 2', 'Abierto', 'Otra dirección o ciudad', 'Breve descripción de la Actividad 2.', '10:00 AM - 6:00 PM', 'Deporte', 'Desde $15')">
+                        <div class="card-body">
+                            <h5 class="card-title">Actividad 2</h5>
+                            <p class="card-text">Breve descripción de la Actividad 2.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card for Activity 3 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 3', 'Abierto', 'Otra ubicación', 'Breve descripción de la Actividad 3.', '11:00 AM - 7:00 PM', 'Entretenimiento', 'Desde $20')">
+                        <div class="card-body">
+                            <h5 class="card-title">Actividad 3</h5>
+                            <p class="card-text">Breve descripción de la Actividad 3.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+ <!-- Modal -->
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityModalLabel">Detalles de la Actividad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="activityDetails">
+                <!-- Content will be dynamically filled -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" style="position: absolute; left: 15px;" onclick="deleteActivity()">Borrar</button>
+                <button type="button" class="btn btn-primary mx-auto" id="editButton" onclick="toggleEditMode()">Editar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentActivity = {}; // Object to store the current activity details
+    let isEditMode = false; // Flag to track edit mode
+
+    function showActivity(title, status, location, description, schedule, category, prices) {
+        currentActivity = { title, status, location, description, schedule, category, prices };
+        updateModalContent();
+        const modal = new bootstrap.Modal(document.getElementById("activityModal"));
+        modal.show();
+    }
+
+    function updateModalContent() {
+        if (isEditMode) {
+            // Create editable form
+            const activityForm = `
+                <form id="activityForm">
+                    <div class="mb-3">
+                        <label for="activityTitle" class="form-label"><strong>Título:</strong></label>
+                        <input type="text" class="form-control" id="activityTitle" value="${currentActivity.title}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityStatus" class="form-label"><strong>Estado:</strong></label>
+                        <input type="text" class="form-control" id="activityStatus" value="${currentActivity.status}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityLocation" class="form-label"><strong>Ubicación:</strong></label>
+                        <input type="text" class="form-control" id="activityLocation" value="${currentActivity.location}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityDescription" class="form-label"><strong>Descripción:</strong></label>
+                        <textarea class="form-control" id="activityDescription" rows="3">${currentActivity.description}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="activitySchedule" class="form-label"><strong>Horario:</strong></label>
+                        <input type="text" class="form-control" id="activitySchedule" value="${currentActivity.schedule}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityCategory" class="form-label"><strong>Categoría:</strong></label>
+                        <input type="text" class="form-control" id="activityCategory" value="${currentActivity.category}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityPrices" class="form-label"><strong>Precios:</strong></label>
+                        <input type="text" class="form-control" id="activityPrices" value="${currentActivity.prices}">
+                    </div>
+                </form>
+            `;
+            document.getElementById("activityDetails").innerHTML = activityForm;
+            document.getElementById("editButton").innerText = "Guardar";
+        } else {
+            // Display activity details
+            const activityDetails = `
+                <div class="d-flex flex-column align-items-center">
+                    <h3>${currentActivity.title}</h3>
+                    <p><strong>Estado:</strong> ${currentActivity.status}</p>
+                    <p><strong>Ubicación:</strong> ${currentActivity.location}</p>
+                    <p><strong>Descripción:</strong> ${currentActivity.description}</p>
+                    <p><strong>Horario:</strong> ${currentActivity.schedule}</p>
+                    <p><strong>Categoría:</strong> ${currentActivity.category}</p>
+                    <p><strong>Precios:</strong> ${currentActivity.prices}</p>
+                </div>
+            `;
+            document.getElementById("activityDetails").innerHTML = activityDetails;
+            document.getElementById("editButton").innerText = "Editar";
+        }
+    }
+
+    function toggleEditMode() {
+        if (isEditMode) {
+            // Save the changes
+            currentActivity.title = document.getElementById("activityTitle").value;
+            currentActivity.status = document.getElementById("activityStatus").value;
+            currentActivity.location = document.getElementById("activityLocation").value;
+            currentActivity.description = document.getElementById("activityDescription").value;
+            currentActivity.schedule = document.getElementById("activitySchedule").value;
+            currentActivity.category = document.getElementById("activityCategory").value;
+            currentActivity.prices = document.getElementById("activityPrices").value;
+        }
+        isEditMode = !isEditMode; // Toggle the mode
+        updateModalContent(); // Refresh the modal content
+    }
+
+    function deleteActivity() {
+        alert("Actividad borrada");
+    }
+</script>
+
+    
+    
+    </html>
+    
+    <!-- Footer Start -->
+    <style>
+        /* CSS para asegurar que el footer esté al final */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .container-fluid.footer {
+            margin-top: auto; /* Empuja el footer al final */
+        }
+    
+        .footer {
+            background-color: #1c1c1c;
+            color: #ccc;
+            padding: 20px 0;
+        }
+    
+        .footer .copyright {
+            padding: 10px 0;
+            border-top: 1px solid #444;
+        }
+    
+        .footer .footer-menu a {
+            color: #ccc;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+    
+        .footer .footer-menu a:hover {
+            color: #ffffff;
+        }
+    
+        .footer .copyright div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    
+        .footer .copyright .text-center {
+            margin-bottom: 10px;
+        }
+    
+        .footer .footer-menu {
+            display: flex;
+            justify-content: center;
+        }
+    
+        @media (max-width: 768px) {
+            .footer .copyright .text-center {
+                flex-direction: column;
+            }
+        }
+    </style>
+    
+    <div class="container-fluid bg-dark text-light footer pt-3 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-3">
+            <div class="row g-3">
+                <!-- Footer content here -->
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Miuss Actividades</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Script to Hide Spinner -->
+    <script>
+        window.addEventListener("load", function () {
+            document.getElementById("spinner").style.display = "none";
+        });
+    </script>
+</body>
+
+</html>

@@ -22,6 +22,10 @@ func (subCat *SubCategoriesService) InitSubCategoriesService(database *gorm.DB) 
 
 func (subCat *SubCategoriesService) GetSubCategoriesService(categoryID int) []SubCategory {
 	var subCategories []models.SubCategory
+
+	if categoryID < 0 {
+		return nil
+	}
 	// Filtra por CategoryID e incluye la información de Category
 	subCat.db.Preload("Category").Where("category_id = ?", categoryID).Find(&subCategories)
 

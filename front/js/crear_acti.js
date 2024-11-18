@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function() {
     const tipoField = document.getElementById("tipo");
     const formFields = document.getElementById("formFields");
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Oculta los botones y el submit al cargar la página
-    submitButton.style.display = "none";
+    // submitButton.style.display = "none";
     volverButton.style.display = "none";
     subirOtroButton.style.display = "none";
 
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
     
-
+if (submitButton) {
     // Validación antes de enviar el formulario
     submitButton.addEventListener("click", function(e) {
         e.preventDefault();
@@ -70,12 +69,10 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             errorMessage.style.display = "block";
         }
-
-
-        
-
     });
-
+}else{
+    console.log("No se encontró el botón de submit");
+}
     // Validación en tiempo real al rellenar los campos
     formFields.addEventListener("input", function() {
         let allFieldsFilled = true;
@@ -99,30 +96,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const categoriaField = document.getElementById("categoria");
-    const subcategoriaField = document.getElementById("subcategoria");
+// document.addEventListener("DOMContentLoaded", function() {
+//     const categoriaField = document.getElementById("categoria");
+//     const subcategoriaField = document.getElementById("subcategoria");
 
-    const subcategorias = {
-        comida: ["Restaurante de Sushi", "Restaurante de comida rápida", "Restaurante de comida coreana", "Carrito de comida", "Restaurante Mexicano"],
-        entretenimiento: ["Cine", "Parque de diversiones", "Escape room", "Concierto", "Arcade", "Festival de música"],
-        cultura: ["Teatro", "Museo", "Feria del Libro", "Arte", "Exposición de fotografía"]
-    };
+//     // categoriaField.addEventListener("change", function() {
+//     //     const categoriaSeleccionada = categoriaField.value;
+//     //     subcategoriaField.innerHTML = '<option selected>Selecciona subcategoría...</option>';
 
-    categoriaField.addEventListener("change", function() {
-        const categoriaSeleccionada = categoriaField.value;
-        subcategoriaField.innerHTML = '<option selected>Selecciona subcategoría...</option>';
-
-        if (subcategorias[categoriaSeleccionada]) {
-            subcategorias[categoriaSeleccionada].forEach(subcategoria => {
-                const option = document.createElement("option");
-                option.value = subcategoria.toLowerCase().replace(/\s+/g, '-');
-                option.textContent = subcategoria;
-                subcategoriaField.appendChild(option);
-            });
-        }
-    });
-});
+//     //     if (subcategorias[categoriaSeleccionada]) {
+//     //         subcategorias[categoriaSeleccionada].forEach(subcategoria => {
+//     //             const option = document.createElement("option");
+//     //             option.value = subcategoria.toLowerCase().replace(/\s+/g, '-');
+//     //             option.textContent = subcategoria;
+//     //             subcategoriaField.appendChild(option);
+//     //         });
+//     //     }
+//     // });
+// });
 
 document.addEventListener("DOMContentLoaded", function() {
     const archivoInput = document.getElementById("archivo");

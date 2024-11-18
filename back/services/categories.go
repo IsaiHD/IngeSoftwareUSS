@@ -28,6 +28,7 @@ func (cat *CategoriesService) GetCategoriesService() []Category {
 	}
 
 	var categories []models.Category
+
 	cat.db.Find(&categories)
 
 	var categoriesResponse []Category

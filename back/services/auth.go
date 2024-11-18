@@ -1,9 +1,11 @@
 package services
 
 import (
+	"encoding/base64"
 	"errors"
 	"ingsoft/internal/models"
 	"ingsoft/internal/utils"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -48,6 +50,7 @@ func (as *AuthService) Login(email *string, password *string, username *string) 
 }
 
 func (as *AuthService) Register(name *string, email *string, password *string, nickname *string, roleID *int) (*models.User, error) {
+	// Validación de los campos obligatorios
 	if name == nil {
 		return nil, errors.New("name is required")
 	}
@@ -64,31 +67,133 @@ func (as *AuthService) Register(name *string, email *string, password *string, n
 		return nil, errors.New("roleID is required")
 	}
 
+	// Comprobación si el rol existe
 	var role models.Role
 	if err := as.db.First(&role, roleID).Error; err != nil {
 		return nil, errors.New("role not found")
 	}
 
+	// Verificar si el correo electrónico o el nombre de usuario ya existen
 	if err := as.db.Where("email = ? OR username = ?", *email, *nickname).First(&models.User{}).Error; err == nil {
 		return nil, errors.New("user already exists")
 	}
 
+	// Cifrado de la contraseña
 	hashedPassword, err := utils.HashPassword(*password)
 	if err != nil {
 		return nil, err
 	}
 
+	// Crear el usuario con los valores proporcionados y los valores predeterminados
 	user := models.User{
-		Name:     *name,
-		Email:    *email,
-		Password: hashedPassword,
-		Username: *nickname,
-		RoleID:   *roleID,
+		Name:        *name,
+		Email:       *email,
+		Password:    hashedPassword,
+		Username:    *nickname,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+		RoleID:      *roleID,
+		Active:      true,     // valor predeterminado
+		Image:       "",       // valor predeterminado (sin imagen por defecto)
+		Place:       "",       // valor predeterminado (sin ubicación por defecto)
+		PhoneNumber: "",       // valor predeterminado (sin teléfono por defecto)
+		Bio:         "",       // valor predeterminado (sin biografía por defecto)
+		Status:      "active", // valor predeterminado
+		IsDeleted:   false,    // valor predeterminado
 	}
 
+	// Guardar el usuario en la base de datos
 	if err := as.db.Create(&user).Error; err != nil {
 		return nil, err
 	}
 
+	return &user, nil
+}
+
+func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string, image *string) (*models.User, error) {
+	decodedImage, err := base64.StdEncoding.DecodeString(*image)
+	if err != nil {
+		return nil, err
+	}
+	imageStr := string(decodedImage)
+
+	// Buscar al usuario por el ID proporcionado
+	var user models.User
+	if err := as.db.First(&user, userID).Error; err != nil {
+		return nil, errors.New("user not found")
+	}
+
+	var userCheck models.User
+	if err := as.db.Where("email = ? OR username = ?", *email, *nickname).First(&userCheck).Error; err == nil && userCheck.UserID != userID {
+		return nil, errors.New("user already exists")
+	}
+
+	// Actualizar los campos proporcionados
+	user = models.User{
+		Name:        *name,
+		Email:       *email,
+		Username:    *nickname,
+		Place:       *place,
+		PhoneNumber: *phoneNumber,
+		Bio:         *bio,
+		Image:       imageStr,
+		UpdatedAt:   time.Now(),
+	}
+
+	// Guardar los cambios en la base de datos
+	if err := as.db.Save(&user).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (as *AuthService) ChangePasswordLogged(userID int, currentPassword *string, newPassword *string) error {
+	// Buscar al usuario por el ID proporcionado
+	var user models.User
+	if err := as.db.First(&user, userID).Error; err != nil {
+		return errors.New("user not found")
+	}
+
+	// Verificar la contraseña actual
+	if !utils.CheckPasswordHash(*currentPassword, user.Password) {
+		return errors.New("invalid current password")
+	}
+
+	// Cifrar la nueva contraseña
+	hashedPassword, err := utils.HashPassword(*newPassword)
+	if err != nil {
+		return err
+	}
+
+	// Actualizar la contraseña en la base de datos
+	if err := as.db.Model(&user).Update("password", hashedPassword).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (as *AuthService) DeleteAccount(userID int) error {
+	// Buscar al usuario por el ID proporcionado
+	var user models.User
+	if err := as.db.First(&user, userID).Error; err != nil {
+		return errors.New("user not found")
+	}
+
+	// Actualizar el estado de la cuenta a eliminado
+	if err := as.db.Model(&user).Update("is_deleted", true).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (as *AuthService) Profile(userID int) (*models.User, error) {
+	var user models.User
+	// Buscar al usuario por el ID proporcionado
+	if err := as.db.First(&user, userID).Error; err != nil {
+		return nil, errors.New("user not found")
+	}
 	return &user, nil
 }

@@ -17,7 +17,6 @@
 
 
 
-
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -286,11 +285,11 @@
 }
 
 .item img {
-
-    width: 20%;            /* Ajusta las imágenes al ancho completo del contenedor */
-    height: auto;           /* Mantén la relación de aspecto */
+    width: 100%;            /* Las imágenes ocuparán el 100% de su contenedor */
+    height: auto;           /* Mantendrán la relación de aspecto */
+    object-fit: cover;      /* Para que no se deformen */
+    transition: transform 0.3s ease-in-out;
 }
-
 
 .owl-carousel .item:hover img {
     transform: scale(1.05); /* Efecto de zoom suave al hacer hover */
@@ -503,7 +502,6 @@
 .package-item {
     position: relative; /* El modal se posiciona en relación a este contenedor */
 }
-
         /* Modal Styles */
         .btn {
             position: relative;
@@ -582,3 +580,186 @@
                 padding: 10px;
             }
          }
+
+
+         /* ACTIFIDADES */
+.activity-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Cuatro columnas */
+    gap: 20px; /* Espacio entre las tarjetas */
+    margin: 30px 0;
+        }
+
+/* Tarjeta de actividad */
+.activity-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Efecto hover en la tarjeta */
+.activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+/* Imagen dentro de la tarjeta */
+.activity-card img {
+    width: 100%;
+    height: 200px; /* Ajusta la altura de la imagen */
+    object-fit: contain; /* Mantiene la proporción de la imagen sin deformarla */
+    border-radius: 10px;
+}
+
+/* Estilo para el título de la actividad */
+.activity-title {
+    padding: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--dark);
+    background-color: var(--primary);
+    border-radius: 5px;
+}
+
+/* Estilo para la descripción */
+.activity-description {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--dark);
+    background-color: var(--light);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.activity-place {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--dark);
+    background-color: var(--light);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Efecto hover en el título y la descripción */
+.activity-card .activity-title:hover,
+.activity-card .activity-description:hover {
+    background-color: var(--secondary); /* Cambia el fondo en hover */
+}
+
+/* Variantes para tarjetas más grandes */
+.activity-card.large {
+    grid-column: span 2; /* Ocupa 2 columnas */
+    grid-row: span 2; /* Ocupa 2 filas */
+}
+
+.activity-card.extra-large {
+    grid-column: span 3; /* Ocupa 3 columnas */
+    grid-row: span 2; /* Ocupa 2 filas */
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .activity-container {
+        grid-template-columns: repeat(2, 1fr); /* En pantallas pequeñas, las tarjetas ocupan dos columnas */
+    }
+
+    .activity-card.large {
+        grid-column: span 2; /* Ocupa 2 columnas en pantallas pequeñas */
+    }
+
+    .activity-card.extra-large {
+        grid-column: span 2; /* Ocupa 2 columnas en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .activity-container {
+        grid-template-columns: 1fr; /* En pantallas muy pequeñas, las tarjetas se apilan una encima de otra */
+    }
+
+    .activity-card.large,
+    .activity-card.extra-large {
+        grid-column: span 1; /* Se adapta a una columna en pantallas muy pequeñas */
+    }
+}
+        /* ACTIVIDADES END */
+
+/* Hacer que el contenedor sea más grande y el área de hover más amplia */
+.profile-container {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    width: 60px; /* Aumentar el tamaño del contenedor para mayor área de hover */
+    height: 60px; /* Igual que el tamaño de la imagen y el botón */
+}
+
+/* El botón está oculto por defecto */
+#logout-btn {
+    display: none; /* Ocultar el botón por defecto */
+    position: absolute; /* Posiciona el botón justo debajo de la imagen */
+    top: 50px; /* Coloca el botón justo debajo de la imagen */
+    left: 50%;
+    width: max-content; /* Igual que el tamaño del contenedor */
+    font-size: 15px;
+    transform: translateX(-50%);
+    z-index: 9999; /* Asegura que el botón esté encima de otros elementos */
+}
+
+/* Mostrar el botón cuando el contenedor recibe el hover */
+.profile-container:hover #logout-btn {
+    display: block; /* Muestra el botón solo cuando el contenedor recibe hover */
+}
+
+/* Estilos del Modal */
+.modal {
+    display: none; /* Inicialmente oculto */
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 1; /* Asegura que el modal esté sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Centra el modal */
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+/* Estilo de la X para cerrar el modal */
+.close {
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Botón de guardar cambios */
+#saveChangesBtn {
+    margin-top: 20px;
+}
+
+
+
+

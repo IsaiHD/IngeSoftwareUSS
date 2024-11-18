@@ -231,28 +231,29 @@
                                 <!-- Subir archivo -->
                                  
                                 <!-- Subir imagen -->
-                                <div class="col-md-12 mb-4">
-                                    <!-- Mensaje de advertencia -->
-                                    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
-                                        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
-                                        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
-                                    </div>
+<div class="col-md-12 mb-4">
+    <!-- Mensaje de advertencia -->
+    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
+        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
+        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
+    </div>
 
-                                    <!-- Cuadro de arrastre para subir imagen -->
-                                    <div class="form-group">
-                                        <label for="archivo">Subir imagen</label>
-                                        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
-                                            Arrastra tu imagen aquí o haz clic para seleccionar
-                                        </div>
-                                        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
-                                        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
-                                    </div>
-                                </div>
+    <!-- Cuadro de arrastre para subir imagen -->
+    <div class="form-group">
+        <label for="archivo">Subir imagen</label>
+        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
+            Arrastra tu imagen aquí o haz clic para seleccionar
+        </div>
+        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
+        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
+    </div>
+</div>
+
                             </div>
 
                             <!-- Botón de envío -->
                             <div class="col-12">
-                                <button class="btn btn-outline-light w-100 py-3" type="button" id="submitButton" onclick="crearActividad()">Subir</button>
+                                <button class="btn btn-outline-light w-100 py-3" id="submitButton" type="button" onclick="crearActividad()">Subir</button>
                                 <p id="error-message" style="display: none; color: red; font-size: 0.9rem;">Todos los campos deben estar llenos antes de enviar.</p>
                             </div>
                             <div class="col-12 mt-3">

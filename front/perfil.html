@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Miuss Actividades - Perfil</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a class="nav-item nav-link "></a>
+                    <div class="nav-item dropdown">
+                    </div>
+                </div>
+                <a href="index.html" class="btn btn-primary rounded-pill py-2 px-4" id="volverbtn">Volver</a>  
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Perfil Start -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-4 mb-3">Tu Perfil</h2>
+                <div class="profile-card">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <img src="images/icons/perfil.png" alt="Imagen de Perfil" class="rounded-circle" style="width: 150px; height: 150px;" id="profile-image">
+                    </div>
+                    <h3 class="mb-2" id="username">Nombre de Usuario</h3>
+                    <p class="text-muted mb-3" id="email">Email: -</p>
+                    <p class="text-muted mb-3" id="location">Ubicación: -</p>
+                    <p class="text-muted mb-3" id="registration-date">Fecha de Registro: -</p>
+                    <button id="openModalBtn" class="btn btn-primary rounded-pill">Editar Perfil</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <!-- Perfil End -->
+
+    <!-- Modal para editar perfil -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Perfil</h2>
+            <form id="loginForm">
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="editUsername" name="username"class="form-control bg-transparent">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="editEmail" name="email" class="form-control bg-transparent">          
+                <label for="place">Ubicación:</label>
+                <input type="place" id="editLocation" name="place" class="form-control bg-transparent">
+                <button id="saveChangesBtn" class="btn btn-primary rounded-pill">Confirmar</button>
+            </form>
+        </div>
+    </div>
+    <!-- Modal End -->
+
+
+    <!-- Perfil Edit End -->
+    <!-- Actividades del Usuario Start -->
+    <div class="container-xxl py-5 Ofertas">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="section-title bg-white text-center text-primary px-3">Tus actividades</h1>
+                <h6 class="mb-5">Aquí puedes ver las actividades que has creado o marcado como favoritas.</h6>
+            </div>
+    
+            <!-- Contenedor dinámico para las actividades -->
+            <div id="ImagesTextContent" class="activity-container"></div>
+        </div>
+    </div>
+    <!-- Actividades del Usuario End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-3 mt-3">
+        <div class="container py-3">
+            <div class="row g-3">
+                <!-- Footer content -->
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Miuss Actividades</a>, All Right Reserved.
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script type="module" src="js/activities.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
+
+    
+</body>
+
+</html>
