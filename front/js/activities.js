@@ -301,14 +301,19 @@ async function inicializarCategoriasYSubcategorias() {
 async function crearActividad() {
     try {
         // Recoger los datos del formulario
-        const name = document.getElementById('name').value;
-        const description = document.getElementById('description').value;
-        const category = document.getElementById('category').value;
-        const subCategory = document.getElementById('subCategory').value;
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
+        const name = document.getElementById('nombre').value;
         const place = document.getElementById('place').value;
-        const imageFile = document.getElementById('image').files[0];
+        const description = document.getElementById('descripcion').value;
+        const category = document.getElementById('select1').value;
+        const subCategory = document.getElementById('select2').value;
+        const startDate = document.getElementById('fechaInicio').value;
+        const endDate = document.getElementById('fechaFin').value;  
+
+        console.log('Datos del formulario:', name, place, description, category, subCategory, startDate, endDate);
+
+        const imageFile = document.getElementById('archivo').files[0];
+
+
 
         // Convertir la imagen a base64
         const imageBase64 = await convertirImagenABase64(imageFile);
@@ -325,23 +330,24 @@ async function crearActividad() {
             place
         };
 
+
         // Enviar la solicitud POST a la API
-        const response = await fetch(`${apiUrl}/activities/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(actividad)
-        });
+        // const response = await fetch(`${apiUrl}/activities/`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(actividad)
+        // });
 
-        // Verificar la respuesta
-        if (!response.ok) {
-            throw new Error(`Error en la creación de la actividad: ${response.status}`);
-        }
+        // // Verificar la respuesta
+        // if (!response.ok) {
+        //     throw new Error(`Error en la creación de la actividad: ${response.status}`);
+        // }
 
-        const data = await response.json();
-        console.log('Actividad creada exitosamente:', data);
-        alert('Actividad creada exitosamente');
+        // const data = await response.json();
+        // console.log('Actividad creada exitosamente:', data);
+        // alert('Actividad creada exitosamente');
     } catch (error) {
         console.error('Error al crear la actividad:', error);
         alert('Ocurrió un error al crear la actividad. Por favor, intenta de nuevo.');
@@ -362,6 +368,8 @@ $(document).ready(function() {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
+        const crearActividadBtn = document.getElementById('submitButton');
+        
         // Evento para mostrar campos y cargar categorías/subcategorías si se selecciona "Actividad"
         tipoSelector.addEventListener('change', function() {
             const selectedType = tipoSelector.value;
@@ -376,6 +384,10 @@ $(document).ready(function() {
             } else {
                 formFields.style.display = 'none';
             }
+        });
+
+        crearActividadBtn.addEventListener('click', function(){
+            crearActividad();
         });
     }
 });

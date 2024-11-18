@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tipoField = document.getElementById("tipo");
-    const formFields = document.getElementById("formFields");
-    const submitButton = document.getElementById("submitButton");
-    const errorMessage = document.getElementById("error-message");
     const fechaInicioField = document.getElementById("fechaInicioField");
     const fechaFinField = document.getElementById("fechaFinField");
-    const horaInicioField = document.getElementById("horaInicioField");
-    const horaFinField = document.getElementById("horaFinField");
     const tituloDatos = document.querySelector("h1.text-white.mb-4");
     const volverButton = document.querySelector('button[onclick="volverSeleccion()"]');
     const subirOtroButton = document.querySelector('button[onclick="subirOtroEvento()"]');
@@ -20,100 +15,100 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Asignar la función limpiarCampos a todos los botones, incluyendo el de "Subir"
-    document.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", limpiarCampos);
-    });
+    // document.querySelectorAll("button").forEach(button => {
+    //     button.addEventListener("click", limpiarCampos);
+    // });
 
     // Oculta los botones y el submit al cargar la página
-    // submitButton.style.display = "none";
     volverButton.style.display = "none";
     subirOtroButton.style.display = "none";
 
     // Función para manejar el cambio de tipo y mostrar el formulario
     tipoField.addEventListener("change", function() {
-        if (tipoField.value === "evento" || tipoField.value === "actividad") {
+        if (tipoField.value === "actividad") {
             formFields.style.display = "block";
             submitButton.style.display = "block";
             volverButton.style.display = "block";
             subirOtroButton.style.display = "block";
-            submitButton.textContent = tipoField.value === "evento" ? "Subir Evento" : "Subir Actividad";
-            subirOtroButton.textContent = tipoField.value === "evento" ? "Subir otro evento" : "Subir otra actividad"; // Esta línea actualiza el texto
-            tituloDatos.textContent = tipoField.value === "evento" ? "Datos del Evento" : "Datos de la Actividad";
-    
-            // Mostrar horarios en ambos tipos
+            submitButton.textContent = "Subir Actividad";
+            subirOtroButton.textContent = "Subir otra actividad"; // Actualiza el texto
+            tituloDatos.textContent = "Datos de la Actividad";
+
+            // Mostrar horarios
             fechaInicioField.style.display = "block";
             fechaFinField.style.display = "block";
             horaInicioField.style.display = "block";
             horaFinField.style.display = "block";
-    
+
             tipoField.parentElement.style.display = "none";
         }
     });
-    
-if (submitButton) {
-    // Validación antes de enviar el formulario
-    submitButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        let allFieldsFilled = true;
-        const requiredFields = document.querySelectorAll("#formFields input, #formFields select, #formFields textarea");
 
-        requiredFields.forEach(field => {
-            if (field.value.trim() === "" && field.style.display !== "none") {
-                allFieldsFilled = false;
+    if (submitButton) {
+        // Validación antes de enviar el formulario
+        submitButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            let allFieldsFilled = true;
+            const requiredFields = document.querySelectorAll("#formFields input, #formFields select, #formFields textarea");
+
+            requiredFields.forEach(field => {
+                if (field.value.trim() === "" && field.style.display !== "none") {
+                    allFieldsFilled = false;
+                }
+            });
+
+            if (allFieldsFilled) {
+                errorMessage.style.display = "none";
+                alert("Actividad subida exitosamente.");
+            } else {
+                errorMessage.style.display = "block";
             }
         });
+    } else {
+        console.log("No se encontró el botón de submit");
+    }
 
-        if (allFieldsFilled) {
-            errorMessage.style.display = "none";
-            alert("Actividad subida exitosamente.");
-        } else {
-            errorMessage.style.display = "block";
-        }
-    });
-}else{
-    console.log("No se encontró el botón de submit");
-}
     // Validación en tiempo real al rellenar los campos
     formFields.addEventListener("input", function() {
-        let allFieldsFilled = true;
+        // let allFieldsFilled = true;
         const requiredFields = document.querySelectorAll("#formFields input, #formFields select, #formFields textarea");
-        
+
         requiredFields.forEach(field => {
             if (field.value.trim() === "" && field.style.display !== "none") {
                 allFieldsFilled = false;
             }
         });
-    
+
         // Mostrar/ocultar el mensaje de error durante la entrada de datos
         if (!allFieldsFilled) {
             errorMessage.style.display = "block";
         } else {
             errorMessage.style.display = "none";
         }
-
     });
-
-
 });
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const categoriaField = document.getElementById("categoria");
-//     const subcategoriaField = document.getElementById("subcategoria");
 
-//     // categoriaField.addEventListener("change", function() {
-//     //     const categoriaSeleccionada = categoriaField.value;
-//     //     subcategoriaField.innerHTML = '<option selected>Selecciona subcategoría...</option>';
 
-//     //     if (subcategorias[categoriaSeleccionada]) {
-//     //         subcategorias[categoriaSeleccionada].forEach(subcategoria => {
-//     //             const option = document.createElement("option");
-//     //             option.value = subcategoria.toLowerCase().replace(/\s+/g, '-');
-//     //             option.textContent = subcategoria;
-//     //             subcategoriaField.appendChild(option);
-//     //         });
-//     //     }
-//     // });
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const archivoInput = document.getElementById("archivo");
@@ -192,13 +187,12 @@ document.addEventListener("DOMContentLoaded", function() {
             imagen.style.maxWidth = "200px";
             imagen.style.borderRadius = "5px";
             previewContainer.appendChild(imagen);
-    
+
             // Ocultar el área de arrastre cuando se sube la imagen
             dragDropArea.style.display = "none";
         };
         reader.readAsDataURL(archivo);
     }
-    
 });
 
 document.getElementById("precio").addEventListener("input", function (e) {
@@ -212,7 +206,7 @@ function volverSeleccion() {
     const volverButton = document.querySelector('button[onclick="volverSeleccion()"]');
     const subirOtroButton = document.querySelector('button[onclick="subirOtroEvento()"]');
     const tituloDatos = document.querySelector("h1.text-white.mb-4");
-    const errorMessage = document.getElementById("error-message"); // Asegúrate de tener este elemento en tu HTML
+    const errorMessage = document.getElementById("error-message");
 
     // Mostrar el campo de selección de tipo
     tipoField.parentElement.style.display = "block";
@@ -230,8 +224,6 @@ function volverSeleccion() {
     // Ocultar el mensaje de error si está visible
     errorMessage.style.display = "none";
 }
-
-
 
 function subirOtroEvento() {
     document.getElementById("crearActividadForm").reset();
