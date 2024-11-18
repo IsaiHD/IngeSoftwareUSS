@@ -41,35 +41,10 @@
     </div>
     <!-- Spinner End -->
 
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="" class="navbar-brand p-0">
+            <a href="index.html" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
@@ -90,14 +65,17 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tu perfil</a>
                         <div class="dropdown-menu m-0">
                             <a href="crudactividad.html" class="dropdown-item">Tus Actividades</a>
-                            <a id="btncerrarseccion" href="#" class="dropdown-item">Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
-                <a href="Login.html" class="btn btn-primary rounded-pill py-2 px-4" id="loginbtn">Login</a>
-                    <div id="profileIcon">
-                            <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;" href="#" >
-                    </div>
+                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+                <div id="profileIcon" class="profile-container">
+                    <a href="perfil.html" id="profileIconLink">
+                        <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
+                    </a>
+                    <!-- Botón Cerrar sesión debajo del perfil -->
+                    <button id="logout-btn" class="btn btn-danger rounded-pill py-2 px-4 mt-2">Cerrar sesión</button>
+                </div>
             </div>
         </nav>
 
@@ -202,52 +180,24 @@
                                         <label for="fechaFin">Fecha de Fin</label>
                                     </div>
                                 </div>
-
+                  
                                 <div class="col-md-12 mb-4">
-                                    <p style="color: #ffffff; font-size: 1rem;">Horario del evento o actividad:</p>
-                                </div>
+                                    <!-- Mensaje de advertencia -->
+                                    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
+                                        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
+                                        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
+                                    </div>
 
-                                <div class="col-md-6 mb-4" id="horaInicioField" style="display: none;">
-                                    <div class="form-floating">
-                                        <input type="time" class="form-control bg-transparent" id="horaInicio" name="horaInicio" placeholder="Hora de inicio">
-                                        <label for="horaInicio">Desde</label>
+                                    <!-- Cuadro de arrastre para subir imagen -->
+                                    <div class="form-group">
+                                        <label for="archivo">Subir imagen</label>
+                                        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
+                                            Arrastra tu imagen aquí o haz clic para seleccionar
+                                        </div>
+                                        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
+                                        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-4" id="horaFinField" style="display: none;">
-                                    <div class="form-floating">
-                                        <input type="time" class="form-control bg-transparent" id="horaFin" name="horaFin" placeholder="Hora de fin">
-                                        <label for="horaFin">Hasta</label>
-                                    </div>
-                                </div>
-
-                                <!-- Precios -->
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control bg-transparent" id="precio" name="precio" placeholder="Precios">
-                                        <label for="precio">Precios (por ejemplo, variado según menú o show)</label>
-                                    </div>
-                                </div>
-
-                                <!-- Subir archivo -->
-                                 
-                                <!-- Subir imagen -->
-<div class="col-md-12 mb-4">
-    <!-- Mensaje de advertencia -->
-    <div class="alert alert-danger d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 10px; border-radius: 5px;">
-        <i class="fas fa-exclamation-circle" style="font-size: 1rem; margin-right: 10px;"></i>
-        <p style="margin: 0; font-weight: bold;">Solo se soportan imágenes en formato PNG o JPG.</p>
-    </div>
-
-    <!-- Cuadro de arrastre para subir imagen -->
-    <div class="form-group">
-        <label for="archivo">Subir imagen</label>
-        <div id="dragDropArea" class="border border-light rounded p-3 text-center" style="color: #fff; cursor: pointer;">
-            Arrastra tu imagen aquí o haz clic para seleccionar
-        </div>
-        <input type="file" class="form-control bg-transparent" id="archivo" name="archivo" accept=".png, .jpg, .jpeg" style="display: none;">
-        <p id="fileErrorMessage" style="display: none; color: red; font-size: 0.9rem; margin-top: 5px;">Archivo no soportado. Solo se permiten PNG o JPG.</p>
-    </div>
-</div>
 
                             </div>
 

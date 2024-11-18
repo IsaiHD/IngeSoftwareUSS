@@ -133,7 +133,6 @@
             $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
         });
 
-=======
         document.addEventListener('DOMContentLoaded', function() {
             // Función para obtener el valor de una clave de localStorage
             function getLocalStorageItem(key) {

@@ -49,7 +49,7 @@
 <!-- Navbar & Hero Start -->
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-        <a href="" class="navbar-brand p-0">
+        <a href="index.html" class="navbar-brand p-0">
             <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
             <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
@@ -70,14 +70,17 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tu perfil</a>
                     <div class="dropdown-menu m-0">
                         <a href="crudactividad.html" class="dropdown-item">Tus Actividades</a>
-                        <a id="btncerrarseccion" href="#" class="dropdown-item">Cerrar Sesión</a>
                     </div>
                 </div>
             </div>
-            <a href="Login.html" class="btn btn-primary rounded-pill py-2 px-4" id="loginbtn">Login</a>
-                <div id="profileIcon">
-                        <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;" href="#" >
-                </div>
+            <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+            <div id="profileIcon" class="profile-container">
+                <a href="perfil.html" id="profileIconLink">
+                    <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
+                </a>
+                <!-- Botón Cerrar sesión debajo del perfil -->
+                <button id="logout-btn" class="btn btn-danger rounded-pill py-2 px-4 mt-2">Cerrar sesión</button>
+            </div>
         </div>
     </nav>
     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
