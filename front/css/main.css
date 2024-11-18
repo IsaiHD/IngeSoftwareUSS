@@ -546,7 +546,36 @@ iframe {
   }
 }
 
+/* CREAR ACTIVIDAD */
+#crearActividadForm .form-control,
+#crearActividadForm .form-select {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+}
 
+#crearActividadForm .form-control:focus,
+#crearActividadForm .form-select:focus {
+    box-shadow: none;
+    border-color: #007bff;
+}
+
+#ubicacion {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-image: url('https://maps.gstatic.com/tactile/omnibox/directions-4.png'); /* Placeholder */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#archivo {
+    padding: 10px;
+}
+
+#crearActividadForm .form-floating {
+  margin-bottom: 25px; /* Ajusta el valor para el espacio necesario */
+}
 
 #crearActividadForm .form-control,
 #crearActividadForm .form-select {

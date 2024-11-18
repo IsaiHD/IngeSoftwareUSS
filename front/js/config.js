@@ -1,2 +1,2 @@
 // config.js
-export const apiUrl = 'https://hewlett-century-atlanta-or.trycloudflare.com';
+export const apiUrl = 'https://pit-striking-plants-attack.trycloudflare.com';

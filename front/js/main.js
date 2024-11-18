@@ -114,23 +114,55 @@
         }
     });
 
-    // Modal functionality
-    const modal = $('#modal');
-    const openModalLink = $('.package-item a');
-    const closeButtons = $('#closeModal, #closeBtn');
-
-    openModalLink.on('click', function (e) {
-        e.preventDefault();
-        modal.css({ display: 'block', opacity: 1 });
-        $('body').addClass('overflow-hidden');
-    });
-
-    closeButtons.on('click', function (e) {
-        e.preventDefault();
-        modal.css({ display: 'none', opacity: 0 });
-        $('body').removeClass('overflow-hidden');
-    });
-
+        // Seleccionamos los elementos necesarios
+        const modal = $('#modal'); // El modal
+        const openModalLink = $('.package-item a'); // El enlace en el contenedor
+        const closeButtons = $('#closeModal, #closeBtn'); // Botones de cierre
+    
+        // Abrir el modal
+        openModalLink.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'block', opacity: 1 }); // Mostrar el modal
+            $('body').addClass('overflow-hidden'); // Desactivar el scroll del body
+        });
+    
+        // Cerrar el modal
+        closeButtons.on('click', function (e) {
+            e.preventDefault(); // Prevenir navegación al hash
+            modal.css({ display: 'none', opacity: 0 }); // Ocultar el modal
+            $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
+        });
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para obtener el valor de una clave de localStorage
+            function getLocalStorageItem(key) {
+                return localStorage.getItem(key);
+            }
+        
+            // Obtener el valor de la clave 'auth_token' de localStorage
+            var authToken = getLocalStorageItem('authToken');
+            if (authToken) {
+                // Si hay un token, el usuario está logueado
+                console.log('Usuario logueado');
+            }else{
+                console.log('Usuario no logueado');
+            }
+        
+            // Obtener los elementos del DOM
+            var registerButton = document.getElementById('registrarbtn');
+            var profileIcon = document.getElementById('profileIcon');
+        
+            // Si hay un token en localStorage, el usuario está logueado
+            if (authToken) {
+                // Mostrar el icono de perfil y ocultar el botón de registro
+                registerButton.style.display = 'none';
+                profileIcon.style.display = 'block';
+            } else {
+                // Mostrar el botón de registro y ocultar el icono de perfil
+                registerButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+            }
+        });
 })(jQuery);
 
 

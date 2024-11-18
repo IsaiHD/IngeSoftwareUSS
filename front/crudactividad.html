@@ -43,7 +43,26 @@
 
 
     <!-- Topbar Start -->
-
+    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+        <div class="row gx-0">
+            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center" style="height: 45px;">
+                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
+                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-inline-flex align-items-center" style="height: 45px;">
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Topbar End -->
 
 
@@ -51,7 +70,7 @@
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
+                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -59,20 +78,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link ">Home</a>
-                    <a href="categorias.html" class="nav-item nav-link">Categorias</a>
+                    <a href="index.html" class="nav-item nav-link">Home</a>
                     <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
-                    <a href="restaurantes.html" class="nav-item nav-link" >Restaurantes</a>
+                    <a href="Restaurantes.html" class="nav-item nav-link">Restaurantes</a>
                     <a href="actividades.html" class="nav-item nav-link">Actividades</a>
-                    <a href="mapa.html" class="nav-item nav-link">Mapa</a>
+                    <a href="Categorias.html" class="nav-item nav-link">Categorias</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0">
-                            <a href="crudactividad.html" class="dropdown-item">Tus actividades</a>
+                            <a href="destination.html" class="dropdown-item">Destination</a>
+                            <a href="crudactividad.html" class="dropdown-item">Subir tu evento o actividad</a>
+                            <a href="team.html" class="dropdown-item">Travel Guides</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="404.html" class="dropdown-item">404 Page</a>
                         </div>
                     </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" >Registro</a>
+                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
             </div>
         </nav>
 
@@ -147,11 +170,8 @@
                                 <!-- Categoría y Subcategoría -->
                                 <div class="col-md-6 mb-4">
                                     <div class="form-floating">
-                                        <select class="form-select bg-transparent" id="categoria" name="categoria">
+                                        <select class="form-select bg-transparent" id="select1" name="categoria">
                                             <option selected>Selecciona categoría...</option>
-                                            <option value="comida">Comida</option>
-                                            <option value="entretenimiento">Entretenimiento</option>
-                                            <option value="cultura">Cultura</option>
                                         </select>
                                         <label for="categoria">Categoría</label>
                                     </div>
@@ -159,7 +179,7 @@
 
                                 <div class="col-md-6 mb-4">
                                     <div class="form-floating">
-                                        <select class="form-select bg-transparent" id="subcategoria" name="subcategoria">
+                                        <select class="form-select bg-transparent" id="select2" name="subcategoria">
                                             <!-- Estas opciones se actualizarán dinámicamente según la categoría seleccionada -->
                                             <option selected>Selecciona subcategoría...</option>
                                         </select>
@@ -231,7 +251,7 @@
 
                             <!-- Botón de envío -->
                             <div class="col-12">
-                                <button class="btn btn-outline-light w-100 py-3" type="submit" id="submitButton">Subir</button>
+                                <button class="btn btn-outline-light w-100 py-3" id="submitButton" type="button" onclick="crearActividad()">Subir</button>
                                 <p id="error-message" style="display: none; color: red; font-size: 0.9rem;">Todos los campos deben estar llenos antes de enviar.</p>
                             </div>
                             <div class="col-12 mt-3">
@@ -288,8 +308,9 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-    <script src="js/crear_acti.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/crear_acti.js"></script>
+    <script type="module" src="js/activities.js"></script>
     
 </body>
 
