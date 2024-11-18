@@ -716,6 +716,49 @@
     display: block; /* Muestra el botón solo cuando el contenedor recibe hover */
 }
 
+/* Estilos del Modal */
+.modal {
+    display: none; /* Inicialmente oculto */
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 1; /* Asegura que el modal esté sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Centra el modal */
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+/* Estilo de la X para cerrar el modal */
+.close {
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Botón de guardar cambios */
+#saveChangesBtn {
+    margin-top: 20px;
+}
 
 
 

@@ -114,7 +114,6 @@ async function obtenerActividadesPorUsuario() {
                 'Authorization': authToken
             }
         });
-        
 
         // Comprobar si la respuesta fue exitosa
         if (!response.ok) {
@@ -126,7 +125,7 @@ async function obtenerActividadesPorUsuario() {
         console.log(data); // Verificar la respuesta completa
 
         // Asegúrate de que 'Actividades' sea un arreglo
-        const actividades = data.Actividades; // Cambia 'data.Actividades' según la estructura de tu respuesta
+        const actividades = data.activities; // Cambia 'data.Actividades' según la estructura de tu respuesta
         if (!Array.isArray(actividades)) {
             throw new TypeError('La respuesta no es un arreglo.');
         }
@@ -135,7 +134,6 @@ async function obtenerActividadesPorUsuario() {
         carouselContent.innerHTML = ''; // Limpiar el carrusel
 
         // Iterar sobre las actividades y crear los elementos del carrusel
-        // Suponiendo que ya tienes el array de actividades
         for (const actividad of actividades) {
             try {
                 const itemDiv = document.createElement('div');
@@ -160,38 +158,30 @@ async function obtenerActividadesPorUsuario() {
                         </div>
                     </a>
                 `;
-        
                 // Agregar la tarjeta al contenedor principal (ImagesTextContent)
-                document.getElementById('ImagesTextContent').appendChild(itemDiv);
-        
+                carouselContent.appendChild(itemDiv);
+
                 itemDiv.querySelector('a').addEventListener('click', (event) => {
                     event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
                 
-                    // Verifica si los datos están presentes
-                    console.log(document.getElementById('modal')); // Verifica si está devolviendo el modal
-
-                
                     // Llenar el modal con la información de la actividad
                     document.getElementById('modalActivityName').innerText = actividad.name;
-                    document.getElementById('modalActivityImage').src = `data:image/png;base64,${actividad.image}`;
+                    document.getElementById('modalActivityImage').src = activityImage;
                     document.getElementById('modalActivityDescription').innerText = actividad.description;
-                    document.getElementById('modalStartDate').innerText = actividad.start_date;
-                    document.getElementById('modalEndDate').innerText = actividad.end_date;
+                    document.getElementById('modalStartDate').innerText = actividad.startDate;
+                    document.getElementById('modalEndDate').innerText = actividad.endDate;
                     document.getElementById('modalPlace').innerText = actividad.place;
                 
                     // Mostrar el modal
                     document.getElementById('modal').classList.add('show');
                     console.log(modal.classList); // Verifica las clases del modal en la consola
                 });
-                
-                
-                
+
             } catch (error) {
                 console.error('Error al convertir la imagen a Base64:', error);
             }
         }
 
-        
     } catch (error) {
         console.error('Error al obtener las actividades:', error);
         alert('Ocurrió un error al cargar las actividades. Por favor, intenta de nuevo más tarde.');
@@ -200,6 +190,7 @@ async function obtenerActividadesPorUsuario() {
         spinner.classList.remove('show');
     }
 }
+
 
 async function cargarCategorias() {
     try {

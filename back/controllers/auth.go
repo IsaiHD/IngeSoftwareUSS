@@ -24,9 +24,9 @@ func (ac *AuthController) InitRoutes(router *gin.Engine) {
 	routes.POST("/login", ac.Login())
 	routes.POST("/register", ac.Register())
 	routes.GET("/profile", middleware.CheckMiddleware, ac.Profile())
-	routes.PATCH("/profile", middleware.CheckMiddleware, ac.UpdateProfile())        // Ruta para actualizar perfil
-	routes.POST("/changepassword", middleware.CheckMiddleware, ac.ChangePassword()) // Ruta para cambiar la contraseña
-	routes.DELETE("/deleteaccount", middleware.CheckMiddleware, ac.DeleteAccount()) // Ruta para eliminar cuenta
+	routes.PATCH("/profile", middleware.CheckMiddleware, ac.UpdateProfile())              // Ruta para actualizar perfil
+	routes.POST("/changepassword", middleware.CheckMiddleware, ac.ChangePasswordLogged()) // Ruta para cambiar la contraseña
+	routes.DELETE("/deleteaccount", middleware.CheckMiddleware, ac.DeleteAccount())       // Ruta para eliminar cuenta
 }
 
 func (*AuthController) Nope() gin.HandlerFunc {
@@ -170,6 +170,7 @@ func (at *AuthController) UpdateProfile() gin.HandlerFunc {
 			Place       *string `json:"place"`
 			PhoneNumber *string `json:"phonenumber"`
 			Bio         *string `json:"bio"`
+			Image       *string `json:"image"`
 		}
 
 		var updateBody UpdateProfileBody
@@ -179,7 +180,7 @@ func (at *AuthController) UpdateProfile() gin.HandlerFunc {
 		}
 
 		// Llama al servicio para actualizar el perfil del usuario
-		user, err := at.authService.UpdateProfile(userID.(int), updateBody.Name, updateBody.Email, updateBody.Username, updateBody.Place, updateBody.PhoneNumber, updateBody.Bio)
+		user, err := at.authService.UpdateProfile(userID.(int), updateBody.Name, updateBody.Email, updateBody.Username, updateBody.Place, updateBody.PhoneNumber, updateBody.Bio, updateBody.Image)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
@@ -195,7 +196,7 @@ func (at *AuthController) UpdateProfile() gin.HandlerFunc {
 }
 
 // Método para cambiar la contraseña del usuario
-func (at *AuthController) ChangePassword() gin.HandlerFunc {
+func (at *AuthController) ChangePasswordLogged() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Obtiene el userID desde el contexto, que fue establecido en el middleware al verificar el token JWT
 		userID, exists := c.Get("userID")
@@ -219,7 +220,7 @@ func (at *AuthController) ChangePassword() gin.HandlerFunc {
 		}
 
 		// Llama al servicio para cambiar la contraseña
-		err := at.authService.ChangePassword(userID.(int), &changePasswordBody.CurrentPassword, &changePasswordBody.NewPassword)
+		err := at.authService.ChangePasswordLogged(userID.(int), &changePasswordBody.CurrentPassword, &changePasswordBody.NewPassword)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),

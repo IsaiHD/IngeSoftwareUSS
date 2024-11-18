@@ -55,10 +55,14 @@ async function getUserData() {
         console.log('Datos del usuario:', data.message);
 
         // Aquí actualizamos los elementos del DOM con los datos obtenidos
-        document.getElementById('username').textContent = data.message.username || 'Nombre de Usuario';
-        document.getElementById('email').textContent = `Email: ${data.message.email || 'usuario@example.com'}`;
-        document.getElementById('location').textContent = `Ubicación: ${data.message.location || 'Ciudad, País'}`;
-        document.getElementById('registration-date').textContent = `Fecha de Registro: ${data.message.registrationDate || 'Enero 2023'}`;
+        document.getElementById('username').textContent = data.message.username || '-';
+        document.getElementById('email').textContent = `Email: ${data.message.email || '-'}`;
+        document.getElementById('location').textContent = `Ubicación: ${data.message.place || '-dd'}`;
+        document.getElementById('registration-date').textContent = `Fecha de Registro: ${data.message.createdat || '-'}`;
+        
+        document.getElementById('editUsername').setAttribute('placeholder', data.message.username || '');
+        document.getElementById('editEmail').setAttribute('placeholder', data.message.email || '');
+        document.getElementById('editLocation').setAttribute('placeholder', data.message.place || '');
 
         // Si tienes una URL de imagen de perfil, puedes asignarla también
         // Si no, se usará una imagen predeterminada
@@ -114,6 +118,49 @@ async function registerUser(event) {
     }
 }
 
+async function EditProfile() {
+    const username = document.getElementById('editUsername').value;
+    const email = document.getElementById('editEmail').value;
+    const place = document.getElementById('editLocation').value;
+
+    try {
+        // Obtener el token de autenticación desde localStorage
+        const authToken = `Bearer ${localStorage.getItem('authToken')}`;
+        
+        // Realizar la solicitud para actualizar el perfil
+        const response = await fetch(`${apiUrl}/auth/profile`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authToken,
+            },
+            body: JSON.stringify({ username, email, location }),
+        });
+
+        // Verificar si la solicitud fue exitosa
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al actualizar el perfil.');
+        }
+
+        const data = await response.json();
+        alert('Perfil actualizado con éxito');
+
+        // Actualizar la información visible en la página
+        document.getElementById('username').innerText = username;
+        document.getElementById('email').innerText = `Email: ${email}`;
+        document.getElementById('location').innerText = `Ubicación: ${location}`;
+
+        // Cerrar el modal después de guardar los cambios
+        document.getElementById('myModal').style.display = "none";
+
+    } catch (error) {
+        console.error(error);
+        alert('Error al actualizar el perfil.');
+    }
+}
+
+
 async function logout() {
     // Elimina la cookie de sesión
     
@@ -143,6 +190,38 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function modal() {
+    const modal = document.getElementById("myModal");
+    const openModalBtn = document.getElementById("openModalBtn");
+    const closeModalBtn = document.getElementsByClassName("close")[0];
+    const saveProfileBtn = document.getElementById("saveChangesBtn");
+
+    // Abre el modal
+    openModalBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Cierra el modal cuando se hace clic en la "X"
+    closeModalBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Cierra el modal si se hace clic fuera del contenido del modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Agregar el evento para guardar cambios
+    if (saveProfileBtn) {
+        saveProfileBtn.onclick = function() {
+            EditProfile();
+        }
+    }
+}
+
+
 $(document).ready(function() {
     if (window.location.pathname === '/front/registrar.html') {
         document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
@@ -156,7 +235,16 @@ $(document).ready(function() {
     }
     if (window.location.pathname === '/front/perfil.html') {
         getUserData();
+        modal();  // Asegurarse de que el modal esté inicializado
+
+        const editProfileForm = document.getElementById('editarPerfilModal');
+        if (editProfileForm) {
+            const saveProfileBtn = document.getElementById('saveChangesBtn');  // Asegurarse de que este botón esté vinculado
+            if (saveProfileBtn) {
+                saveProfileBtn.addEventListener('click', async () => {
+                    EditProfile();  // Guardar cambios al hacer clic
+                });
+            }
+        }
     }
 });
-
-

@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/base64"
 	"errors"
 	"ingsoft/internal/models"
 	"ingsoft/internal/utils"
@@ -109,31 +110,34 @@ func (as *AuthService) Register(name *string, email *string, password *string, n
 	return &user, nil
 }
 
-func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string) (*models.User, error) {
+func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string, image *string) (*models.User, error) {
+	decodedImage, err := base64.StdEncoding.DecodeString(*image)
+	if err != nil {
+		return nil, err
+	}
+	imageStr := string(decodedImage)
+
 	// Buscar al usuario por el ID proporcionado
 	var user models.User
 	if err := as.db.First(&user, userID).Error; err != nil {
 		return nil, errors.New("user not found")
 	}
 
+	var userCheck models.User
+	if err := as.db.Where("email = ? OR username = ?", *email, *nickname).First(&userCheck).Error; err == nil && userCheck.UserID != userID {
+		return nil, errors.New("user already exists")
+	}
+
 	// Actualizar los campos proporcionados
-	if name != nil {
-		user.Name = *name
-	}
-	if email != nil {
-		user.Email = *email
-	}
-	if nickname != nil {
-		user.Username = *nickname
-	}
-	if place != nil {
-		user.Place = *place
-	}
-	if phoneNumber != nil {
-		user.PhoneNumber = *phoneNumber
-	}
-	if bio != nil {
-		user.Bio = *bio
+	user = models.User{
+		Name:        *name,
+		Email:       *email,
+		Username:    *nickname,
+		Place:       *place,
+		PhoneNumber: *phoneNumber,
+		Bio:         *bio,
+		Image:       imageStr,
+		UpdatedAt:   time.Now(),
 	}
 
 	// Guardar los cambios en la base de datos
@@ -144,7 +148,7 @@ func (as *AuthService) UpdateProfile(userID int, name *string, email *string, ni
 	return &user, nil
 }
 
-func (as *AuthService) ChangePassword(userID int, currentPassword *string, newPassword *string) error {
+func (as *AuthService) ChangePasswordLogged(userID int, currentPassword *string, newPassword *string) error {
 	// Buscar al usuario por el ID proporcionado
 	var user models.User
 	if err := as.db.First(&user, userID).Error; err != nil {
