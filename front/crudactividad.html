@@ -70,32 +70,34 @@
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1>
+                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="interes.html" class="nav-item nav-link">Lugares de interes</a>
-                    <a href="Restaurantes.html" class="nav-item nav-link">Restaurantes</a>
-                    <a href="actividades.html" class="nav-item nav-link">Actividades</a>
-                    <a href="Categorias.html" class="nav-item nav-link">Categorias</a>
+                    <a href="index.html" class="nav-item nav-link ">Home</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                    <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
                         <div class="dropdown-menu m-0">
-                            <a href="destination.html" class="dropdown-item">Destination</a>
-                            <a href="crudactividad.html" class="dropdown-item">Subir tu evento o actividad</a>
-                            <a href="team.html" class="dropdown-item">Travel Guides</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
+                            <a href="categorias.html" class="dropdown-item">Todas las categorias</a>
+                            <a href="interes.html" class="dropdown-item">Lugares de interes</a>
+                            <a href="restaurantes.html" class="dropdown-item">Restaurantes</a>
+                            <a href="actividades.html" class="dropdown-item">Actividades</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="mapa.html" class="nav-item nav-link">Mapa</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tu perfil</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="crudactividad.html" class="dropdown-item">Tus Actividades</a>
+                            <a id="btncerrarseccion" href="#" class="dropdown-item">Cerrar Sesión</a>
+                        </div>
+                    </div>
                 </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+                <a href="Login.html" class="btn btn-primary rounded-pill py-2 px-4" id="loginbtn">Login</a>
+                    <div id="profileIcon">
+                            <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;" href="#" >
+                    </div>
             </div>
         </nav>
 

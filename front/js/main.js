@@ -132,7 +132,8 @@
             modal.css({ display: 'none', opacity: 0 }); // Ocultar el modal
             $('body').removeClass('overflow-hidden'); // Reactivar el scroll del body
         });
-    
+
+=======
         document.addEventListener('DOMContentLoaded', function() {
             // Función para obtener el valor de una clave de localStorage
             function getLocalStorageItem(key) {
@@ -151,6 +152,7 @@
             // Obtener los elementos del DOM
             var registerButton = document.getElementById('registrarbtn');
             var profileIcon = document.getElementById('profileIcon');
+
         
             // Si hay un token en localStorage, el usuario está logueado
             if (authToken) {
