@@ -309,8 +309,6 @@ async function crearActividad() {
         const startDate = document.getElementById('fechaInicio').value;
         const endDate = document.getElementById('fechaFin').value;  
 
-        console.log('Datos del formulario:', name, place, description, category, subCategory, startDate, endDate);
-
         const imageFile = document.getElementById('archivo').files[0];
         // Convertir la imagen a base64
         const imageBase64 = await convertirImagenABase64(imageFile);
@@ -326,8 +324,6 @@ async function crearActividad() {
             endDate,
             place
         };
-        
-        console.log('Actividad a crear:', actividad);
 
         // Enviar la solicitud POST a la API
         const response = await fetch(`${apiUrl}/activities/`, {
@@ -356,14 +352,17 @@ async function crearActividad() {
 $(document).ready(function() {
     console.log(window.location.pathname);
     console.log(apiUrl);
-    if (window.location.pathname == '/front/index.html') {
+
+    const currentPage = window.location.pathname.split('/').pop();
+
+    if (currentPage == 'index.html') {
         obtenerActividades();
 
     }
-    if (window.location.pathname == '/front/perfil.html') {
+    if (currentPage == 'perfil.html') {
         obtenerActividadesPorUsuario();
     }
-    if (window.location.pathname == '/front/crudactividad.html') {
+    if (currentPage == 'crudactividad.html') {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
