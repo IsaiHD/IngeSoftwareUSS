@@ -325,6 +325,7 @@ async function crearActividad() {
             place
         };
 
+
         // Enviar la solicitud POST a la API
         const response = await fetch(`${apiUrl}/activities/`, {
             method: 'POST',
@@ -352,17 +353,15 @@ async function crearActividad() {
 $(document).ready(function() {
     console.log(window.location.pathname);
     console.log(apiUrl);
-
-    const currentPage = window.location.pathname.split('/').pop();
-
-    if (currentPage == 'index.html') {
+    const currentPath = window.location.pathname;
+    
+    if (currentPath === '/front/index.html' || currentPath === '/') {
         obtenerActividades();
-
     }
-    if (currentPage == 'perfil.html') {
+    if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
         obtenerActividadesPorUsuario();
     }
-    if (currentPage == 'crudactividad.html') {
+    if (currentPath == '/front/crudactividad.html' === '/crudactividad') {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
