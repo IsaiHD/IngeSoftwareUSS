@@ -223,6 +223,8 @@ function modal() {
 
 
 $(document).ready(function() {
+    console.log('Document ready');
+    console.log('Path:', window.location.pathname);
     const currentPath = window.location.pathname;
 
     if (currentPath === '/front/registrar.html' || currentPath === '/registro') {
@@ -230,7 +232,7 @@ $(document).ready(function() {
             registerUser(event);
         });
     }
-    if (currentPath === '/front/Login.html' || currentPath === '/login') {
+    if (currentPath === '/front/Login.html' || currentPath === '/Login') {
         document.getElementById('botonLogin').addEventListener('click', function(event) {
             loginUser(event);
         });
