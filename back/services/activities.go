@@ -3,6 +3,7 @@ package services
 import (
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"ingsoft/internal/models"
 	"log"
 	"time"
@@ -15,16 +16,16 @@ type ActivityService struct {
 }
 
 type Activity struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Category    int    `json:"type"`
-	SubCategory int    `json:"subtype"`
-	Image       []byte `json:"image"`
-	StartDate   string `json:"startDate"`
-	EndDate     string `json:"endDate"`
-	Place       string `json:"place"`
-	User        int    `json:"user"`
+	ID          int            `json:"id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Category    int            `json:"type"`
+	SubCategory int            `json:"subtype"`
+	Image       []byte         `json:"image"`
+	StartDate   string         `json:"startDate"`
+	EndDate     string         `json:"endDate"`
+	Place       string         `json:"place"`
+	User        []*models.User `json:"user"`
 }
 
 func (acti *ActivityService) InitService(database *gorm.DB) {
@@ -33,16 +34,22 @@ func (acti *ActivityService) InitService(database *gorm.DB) {
 }
 
 func (acti *ActivityService) GetActivitiesService() []Activity {
-
 	if acti.db == nil {
 		log.Fatal("Database connection is not initialized")
 	}
 
 	var activities []models.Activity
-	acti.db.Find(&activities)
+	// Preload para cargar los usuarios relacionados con cada actividad
+	err := acti.db.Preload("Users", func(db *gorm.DB) *gorm.DB {
+		return db.Select("UserID", "Username", "Name") // Solo los campos necesarios
+	}).Find(&activities).Error
+	if err != nil {
+		log.Fatalf("Error fetching activities: %v", err)
+	}
 
 	var activitiesResponse []Activity
 	for _, activity := range activities {
+		// Convertir la actividad a la respuesta esperada
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
@@ -50,9 +57,10 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 			SubCategory: activity.SubCategory,
 			Image:       activity.Image,
 			Description: activity.Description,
-			StartDate:   activity.StartDate.Format("2006-01-02"),
-			EndDate:     activity.EndDate.Format("2006-01-02"),
+			StartDate:   activity.StartDate.Format("2006-01-02"), // Asegurando que las fechas estén formateadas
+			EndDate:     activity.EndDate.Format("2006-01-02"),   // Asegurando que las fechas estén formateadas
 			Place:       activity.Place,
+			User:        activity.Users, // Los usuarios asociados ya están cargados
 		})
 	}
 
@@ -71,11 +79,21 @@ func (acti *ActivityService) GetActivitiesService() []Activity {
 // }
 
 func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity, error) {
-	var activities []models.Activity
-	if err := acti.db.Where("name LIKE ?", "%"+name+"%").Find(&activities).Error; err != nil {
-		return nil, err // Maneja el error de la consulta
+	// Verificar que la conexión a la base de datos esté inicializada
+	if acti.db == nil {
+		return nil, fmt.Errorf("database connection is not initialized")
 	}
 
+	var activities []models.Activity
+	// Realizar la consulta con un filtro por nombre y preload de usuarios
+	err := acti.db.Preload("Users", func(db *gorm.DB) *gorm.DB {
+		return db.Select("UserID", "Username", "Name") // Solo cargar campos necesarios de los usuarios
+	}).Where("name LIKE ?", "%"+name+"%").Find(&activities).Error
+	if err != nil {
+		return nil, fmt.Errorf("error fetching activities by name filter: %v", err)
+	}
+
+	// Construir la respuesta
 	activitiesResponse := make([]Activity, 0, len(activities))
 	for _, activity := range activities {
 		activitiesResponse = append(activitiesResponse, Activity{
@@ -85,9 +103,10 @@ func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity,
 			SubCategory: activity.SubCategory,
 			Image:       activity.Image,
 			Description: activity.Description,
-			StartDate:   activity.StartDate.Format("2006-01-02"),
-			EndDate:     activity.EndDate.Format("2006-01-02"),
+			StartDate:   activity.StartDate.Format("2006-01-02"), // Formato de fecha
+			EndDate:     activity.EndDate.Format("2006-01-02"),   // Formato de fecha
 			Place:       activity.Place,
+			User:        activity.Users, // Usuarios relacionados
 		})
 	}
 
@@ -122,7 +141,7 @@ func (acti *ActivityService) GetUserActivities(userID int) ([]models.Activity, e
 	var activities []models.Activity
 
 	if err := acti.db.Table("user_activities").
-		Select("activities.activity_id, activities.name, activities.Category, activities.description, activities.start_date, activities.end_date, activities.place").
+		Select("activities.activity_id, activities.name, activities.category, activities.sub_category, activities.description, activities.start_date, activities.end_date, activities.place, activities.image").
 		Joins("JOIN activities ON activities.activity_id = user_activities.activity_activity_id").
 		Where("user_activities.user_user_id = ?", userID).
 		Scan(&activities).Error; err != nil {

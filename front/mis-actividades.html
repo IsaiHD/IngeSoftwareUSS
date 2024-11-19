@@ -47,26 +47,39 @@
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="" class="navbar-brand p-0">
+            <a href="home.html" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Miuss Actividades</h1>
+                <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link ">Home</a>
+                    <a href="home.html" class="nav-item nav-link ">Home</a>
+                    <div class="nav-item dropdown">
+                    <a href="categorias.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categorias</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="categorias.html" class="dropdown-item">Todas las categorias</a>
+                            <a href="interes.html" class="dropdown-item">Lugares de interes</a>
+                            <a href="restaurantes.html" class="dropdown-item">Restaurantes</a>
+                            <a href="actividades.html" class="dropdown-item">Actividades</a>
+                        </div>
+                    </div>
                     <a href="mapa.html" class="nav-item nav-link">Mapa</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Paginas Extra</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tu perfil</a>
                         <div class="dropdown-menu m-0">
-                            <a href="crudactividad.html" class="dropdown-item">Tus actividades</a>
-                            <a href="mactividad.html" class="dropdown-item">Mis actividades</a>
-                            
+                            <a href="crear-actividad.html" class="dropdown-item">Crear Actividades</a>
+                            <a href="mis-actividades.html" class="dropdown-item">Mis actividades</a>
                         </div>
                     </div>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4">Registro</a>
+                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+                <div id="profileIcon" class="profile-container">
+                    <a href="perfil.html" id="profileIconLink">
+                        <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
+                    </a>
+                    <!-- Botón Cerrar sesión debajo del perfil -->
+                    <button id="logout-btn" class="btn btn-danger rounded-pill py-2 px-4 mt-2">Cerrar sesión</button>
+                </div>
             </div>
         </nav>
         <div class="container-fluid bg-primary py-5 mb-5 hero-header">
@@ -87,8 +100,9 @@
         <!-- Cards Section for Activities -->
         <div class="container my-5">
             <div class="row">
-                <!-- Card for Activity 1 -->
-                <div class="col-md-4">
+                <div id="ImagesTextContent" class="activity-container"></div>
+
+                <!-- <div class="col-md-4">
                     <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 1', 'Abierto', 'Dirección o ciudad', 'Breve descripción de la Actividad 1.', '9:00 AM - 5:00 PM', 'Cultura', 'Desde $10')">
                         <div class="card-body">
                             <h5 class="card-title">Actividad 1</h5>
@@ -96,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card for Activity 2 -->
+
                 <div class="col-md-4">
                     <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 2', 'Abierto', 'Otra dirección o ciudad', 'Breve descripción de la Actividad 2.', '10:00 AM - 6:00 PM', 'Deporte', 'Desde $15')">
                         <div class="card-body">
@@ -105,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card for Activity 3 -->
+
                 <div class="col-md-4">
                     <div class="card shadow-sm" style="cursor: pointer;" onclick="showActivity('Actividad 3', 'Abierto', 'Otra ubicación', 'Breve descripción de la Actividad 3.', '11:00 AM - 7:00 PM', 'Entretenimiento', 'Desde $20')">
                         <div class="card-body">
@@ -113,7 +127,7 @@
                             <p class="card-text">Breve descripción de la Actividad 3.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     
@@ -136,6 +150,8 @@
         </div>
     </div>
 </div>
+
+<script type="module" src="js/activities.js"></script>
 
 <script>
     let currentActivity = {}; // Object to store the current activity details

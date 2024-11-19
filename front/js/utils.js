@@ -1,25 +1,52 @@
-export function convertirImagenABase64(file) {
+export function convertirImagenABase64(file, calidad = 0.5) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
-        // Evento cuando la imagen ha sido leída y convertida
-        reader.onloadend = () => {
-            const base64String = reader.result.split(',')[1]; // Eliminar el prefijo "data:image/*;base64,"
-            resolve(base64String);
+        reader.onload = () => {
+            const img = new Image();
+
+            img.onload = () => {
+                // Crear un canvas para redimensionar la imagen
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Ajustar el tamaño del canvas al tamaño deseado (por defecto, tamaño original)
+                const maxWidth = 800; // Cambia esto si deseas limitar el tamaño
+                const maxHeight = 800;
+                let width = img.width;
+                let height = img.height;
+
+                // Mantener la proporción al redimensionar
+                if (width > maxWidth || height > maxHeight) {
+                    if (width / height > maxWidth / maxHeight) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    } else {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                // Dibujar la imagen en el canvas redimensionado
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Convertir el canvas a Base64 con una calidad específica
+                const base64String = canvas.toDataURL('image/jpeg', calidad).split(',')[1];
+                resolve(base64String);
+            };
+
+            img.onerror = error => reject(error);
+
+            // Cargar la imagen en el objeto Image
+            img.src = reader.result;
         };
 
-        // Evento para manejar errores de lectura
         reader.onerror = error => reject(error);
 
-        // Leer la imagen como DataURL (que incluye el prefijo y el contenido en Base64)
+        // Leer el archivo como DataURL
         reader.readAsDataURL(file);
     });
 }
-// export function formatearFecha(fecha) {
-//     const dateObj = new Date(fecha); // Convertir la cadena a un objeto Date
-//     const day = String(dateObj.getDate() + 1).padStart(2, '0'); // Obtener el día con 2 dígitos
-//     const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Obtener el mes con 2 dígitos
-//     const year = dateObj.getFullYear(); // Obtener el año
-
-//     return `${day}-${month}-${year}`; // Formato dd-mm-yyyy
-// }

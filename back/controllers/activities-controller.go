@@ -19,7 +19,7 @@ func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine
 
 	// Rutas para las listar todas las actividades
 	activities.GET("/", acti.GetActivities())
-	activities.GET("/name", acti.GetActivityByName())
+	activities.POST("/name", acti.GetActivityByName())
 	activities.GET("/type", acti.GetActivityByTypeFilter())
 	activities.Use(middleware.CheckMiddleware)
 

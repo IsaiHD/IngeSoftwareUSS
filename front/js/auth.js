@@ -22,7 +22,7 @@ async function loginUser(event) {
         if (response.ok && data.token) {
             // Almacenar el token y otros datos en localStorage
             localStorage.setItem('authToken', data.token);
-            window.location.href = '/front/index.html'; // Redirigir a la página principal //TODO: Cambiar en produccion
+            window.location.href = '/front/home.html'; // Redirigir a la página principal //TODO: Cambiar en produccion
             console.log('Inicio de sesión exitoso:', data);
         } else {
             alert('Error en el inicio de sesión: ' + (data.error || 'Desconocido'));
@@ -111,7 +111,7 @@ async function registerUser(event) {
         const data = await response.json();
         alert('Registro exitoso');
         console.log('Usuario registrado:', data);
-        window.location.href = 'Login.html';
+        window.location.href = 'login.html';
     } catch (error) {
         console.error('Error al enviar la solicitud:', error);
         alert('Hubo un problema al registrar al usuario');
@@ -174,7 +174,7 @@ async function logout() {
     localStorage.removeItem('authId');
     
     // Redirige al usuario a la página de login
-    window.location.href = "/front/index.html";
+    window.location.href = "/front/home.html";
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -232,7 +232,7 @@ $(document).ready(function() {
             registerUser(event);
         });
     }
-    if (currentPath === '/front/Login.html' || currentPath === '/Login') {
+    if (currentPath === '/front/login.html' || currentPath === '/Login') {
         document.getElementById('botonLogin').addEventListener('click', function(event) {
             loginUser(event);
         });
