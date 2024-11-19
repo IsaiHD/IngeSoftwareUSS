@@ -500,7 +500,7 @@
 
 
 .package-item {
-    position: relative; /* El modal se posiciona en relación a este contenedor */
+    position: relative;
 }
         /* Modal Styles */
         .btn {
@@ -509,7 +509,7 @@
             font-weight: 300;
             color: #fff;
             text-shadow: none;
-            border-radius: 0px;
+            border-radius: 5px;
             background: #86B817;
             box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.22);
             text-decoration: none;
@@ -611,7 +611,7 @@
 .activity-card img {
     width: 100%;
     height: 200px; /* Ajusta la altura de la imagen */
-    object-fit: contain; /* Mantiene la proporción de la imagen sin deformarla */
+    object-fit: inherit; /* Mantiene la relación de aspecto */
     border-radius: 10px;
 }
 
@@ -718,14 +718,14 @@
 
 /* Estilos del Modal */
 .modal {
-    display: none; /* Inicialmente oculto */
-    position: fixed; /* Fijo en la pantalla */
-    z-index: 1; /* Asegura que el modal esté sobre otros elementos */
+    display: none; 
+    position: fixed;
+    z-index: 9999999; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Estilo del contenido del modal */
@@ -734,7 +734,7 @@
     margin: 15% auto; /* Centra el modal */
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
+    width: 80%;
 }
 
 /* Estilo de la X para cerrar el modal */
@@ -760,6 +760,59 @@
     margin-top: 20px;
 }
 
+/* STYLES MACTIVIDAD */
 
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
+.container-fluid.foooter {
+    margin-top: auto; /* Empuja el footer al final */
+}
 
+.foooter {
+    background-color: #1c1c1c;
+    color: #ccc;
+    padding: 20px 0;
+}
+
+.foooter .copyright {
+    padding: 10px 0;
+    border-top: 1px solid #444;
+}
+
+.foooter .foooter-menu a {
+    color: #ccc;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.foooter .foooter-menu a:hover {
+    color: #ffffff;
+}
+
+.foooter .copyright div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.foooter .copyright .text-center {
+    margin-bottom: 10px;
+}
+
+.foooter .foooter-menu {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .foooter .copyright .text-center {
+        flex-direction: column;
+    }
+}

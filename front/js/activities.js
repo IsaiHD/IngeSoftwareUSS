@@ -387,6 +387,11 @@ $(document).ready(function() {
             crearActividad();
         });
     }
+
+    if (currentPath === '/front/mactividades.html' || currentPath === '/mactividades') {
+        
+
+    }
 });
 
 document.getElementById('modal').addEventListener('click', (event) => {
