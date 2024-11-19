@@ -223,17 +223,19 @@ function modal() {
 
 
 $(document).ready(function() {
-    if (window.location.pathname === '/front/registrar.html') {
+    const currentPath = window.location.pathname;
+
+    if (currentPath === '/front/registrar.html' || currentPath === '/registro') {
         document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
             registerUser(event);
         });
     }
-    if (window.location.pathname === '/front/Login.html') {
+    if (currentPath === '/front/Login.html' || currentPath === '/login') {
         document.getElementById('botonLogin').addEventListener('click', function(event) {
             loginUser(event);
         });
     }
-    if (window.location.pathname === '/front/perfil.html') {
+    if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
         getUserData();
         modal();  // Asegurarse de que el modal esté inicializado
 
