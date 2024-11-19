@@ -15,3 +15,11 @@ export function convertirImagenABase64(file) {
         reader.readAsDataURL(file);
     });
 }
+// export function formatearFecha(fecha) {
+//     const dateObj = new Date(fecha); // Convertir la cadena a un objeto Date
+//     const day = String(dateObj.getDate() + 1).padStart(2, '0'); // Obtener el día con 2 dígitos
+//     const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Obtener el mes con 2 dígitos
+//     const year = dateObj.getFullYear(); // Obtener el año
+
+//     return `${day}-${month}-${year}`; // Formato dd-mm-yyyy
+// }

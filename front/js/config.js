@@ -1,2 +1,2 @@
 // config.js
-export const apiUrl = 'https://sm-tunisia-debt-fair.trycloudflare.com';
+export const apiUrl = 'https://growing-sources-find-ciao.trycloudflare.com';

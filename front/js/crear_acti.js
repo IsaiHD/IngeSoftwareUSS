@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Asignar la función limpiarCampos a todos los botones, incluyendo el de "Subir"
     // document.querySelectorAll("button").forEach(button => {
     //     button.addEventListener("click", limpiarCampos);
-    // });
+    // }); 
 
     // Oculta los botones y el submit al cargar la página
     volverButton.style.display = "none";

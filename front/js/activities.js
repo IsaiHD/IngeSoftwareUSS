@@ -304,17 +304,14 @@ async function crearActividad() {
         const name = document.getElementById('nombre').value;
         const place = document.getElementById('place').value;
         const description = document.getElementById('descripcion').value;
-        const category = document.getElementById('select1').value;
-        const subCategory = document.getElementById('select2').value;
+        const category = document.getElementById('select1').options[document.getElementById('select1').selectedIndex].text;
+        const subCategory = document.getElementById('select2').options[document.getElementById('select2').selectedIndex].text;
         const startDate = document.getElementById('fechaInicio').value;
         const endDate = document.getElementById('fechaFin').value;  
 
         console.log('Datos del formulario:', name, place, description, category, subCategory, startDate, endDate);
 
         const imageFile = document.getElementById('archivo').files[0];
-
-
-
         // Convertir la imagen a base64
         const imageBase64 = await convertirImagenABase64(imageFile);
 
@@ -329,25 +326,27 @@ async function crearActividad() {
             endDate,
             place
         };
-
+        
+        console.log('Actividad a crear:', actividad);
 
         // Enviar la solicitud POST a la API
-        // const response = await fetch(`${apiUrl}/activities/`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(actividad)
-        // });
+        const response = await fetch(`${apiUrl}/activities/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer: ${localStorage.getItem('authToken')}`
+            },
+            body: JSON.stringify(actividad)
+        });
 
-        // // Verificar la respuesta
-        // if (!response.ok) {
-        //     throw new Error(`Error en la creación de la actividad: ${response.status}`);
-        // }
+        // Verificar la respuesta
+        if (!response.ok) {
+            throw new Error(`Error en la creación de la actividad: ${response.status}`);s
+        }
 
-        // const data = await response.json();
-        // console.log('Actividad creada exitosamente:', data);
-        // alert('Actividad creada exitosamente');
+        const data = await response.json();
+        console.log('Actividad creada exitosamente:', data);
+        alert('Actividad creada exitosamente');
     } catch (error) {
         console.error('Error al crear la actividad:', error);
         alert('Ocurrió un error al crear la actividad. Por favor, intenta de nuevo.');
