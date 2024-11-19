@@ -22,7 +22,7 @@ async function loginUser(event) {
         if (response.ok && data.token) {
             // Almacenar el token y otros datos en localStorage
             localStorage.setItem('authToken', data.token);
-            window.location.href = '/front/index.html'; // Redirigir a la página principal
+            window.location.href = '/'; // Redirigir a la página principal
             console.log('Inicio de sesión exitoso:', data);
         } else {
             alert('Error en el inicio de sesión: ' + (data.error || 'Desconocido'));
