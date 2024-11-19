@@ -361,7 +361,7 @@ $(document).ready(function() {
     if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
         obtenerActividadesPorUsuario();
     }
-    if (currentPath == '/front/crudactividad.html' === '/crudactividad') {
+    if (currentPath == '/front/crudactividad.html' || currentPath === '/crudactividad') {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
