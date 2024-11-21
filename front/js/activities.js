@@ -468,7 +468,7 @@ $(document).ready(function() {
     console.log(apiUrl);
     const currentPath = window.location.pathname;
     
-    if (currentPath === '/front/home.html' || currentPath === '/') {
+    if (currentPath === '/front/home.html' || currentPath === '/home') {
         obtenerActividades();
         document.getElementById('search-btn').addEventListener('click', async () => {
             const nombre = document.getElementById('search-input').value.trim();
@@ -482,10 +482,11 @@ $(document).ready(function() {
             }
           });
     }
+    
     if (currentPath === '/front/mis-actividades.html' || currentPath === '/mis-actividades') {
         obtenerActividadesPorUsuario();
     }
-    if (currentPath == '/front/crear-actividad.html' || currentPath === '/crudactividad') {
+    if (currentPath == '/front/crear-actividad.html' || currentPath === '/crear-actividad') {
         const tipoSelector = document.getElementById('tipo');
         const formFields = document.getElementById('formFields');
 
