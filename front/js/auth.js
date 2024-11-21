@@ -93,14 +93,9 @@ async function registerUser(event) {
     };
 
     const esEmailValido = esEmailValido(userData.email);
-    const esNumeroChilenoValido = esNumeroChilenoValido(userData.username);
 
     if (!esEmailValido) {
         alert('Por favor, ingresa un email válido');
-        return;
-    }
-    if (!esNumeroChilenoValido) {
-        alert('Por favor, ingresa un nombre de usuario válido');
         return;
     }
 
