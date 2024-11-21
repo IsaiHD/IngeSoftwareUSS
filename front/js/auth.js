@@ -1,5 +1,5 @@
 import { apiUrl } from './config.js';
-import { esEmailValido } from './utils.js';
+import { convertirImagenABase64, esEmailValido } from './utils.js';
 
 // Función para manejar el inicio de sesión
 async function loginUser(event) {
@@ -18,18 +18,18 @@ async function loginUser(event) {
         });
 
         const data = await response.json();
-        console.log('Respuesta del servidor:', data);
+        // console.log('Respuesta del servidor:', data);
 
         if (response.ok && data.token) {
             // Almacenar el token y otros datos en localStorage
             localStorage.setItem('authToken', data.token);
             window.location.href = '/front/home.html'; // Redirigir a la página principal //TODO: Cambiar en produccion
-            console.log('Inicio de sesión exitoso:', data);
+            // console.log('Inicio de sesión exitoso:', data);
         } else {
             alert('Error en el inicio de sesión: ' + (data.error || 'Desconocido'));
         }
     } catch (error) {
-        console.error('Error en la solicitud:', error);
+        // console.error('Error en la solicitud:', error);
         alert('Error en la solicitud de inicio de sesión.');
     }
 }
@@ -37,7 +37,7 @@ async function loginUser(event) {
 async function getUserData() {
     // console.log('Obteniendo datos del usuario...');
     const authToken = `bearer: ${localStorage.getItem('authToken')}`;
-    console.log('Token de autenticación:', authToken);
+    // console.log('Token de autenticación:', authToken);
     try {
         const response = await fetch(`${apiUrl}/auth/profile`, {
             headers: {
@@ -53,7 +53,7 @@ async function getUserData() {
         }
 
         const data = await response.json();
-        console.log('Datos del usuario:', data.message);
+        // console.log('Datos del usuario:', data.message);
 
         // Aquí actualizamos los elementos del DOM con los datos obtenidos
         document.getElementById('username').textContent = data.message.username || '-';
@@ -76,7 +76,7 @@ async function getUserData() {
         }
 
     } catch (error) {
-        console.error('Error en la solicitud:', error);
+        // console.error('Error en la solicitud:', error);
         alert('Error al obtener los datos del usuario.');
     }
 }
@@ -121,7 +121,7 @@ async function registerUser(event) {
 
         const data = await response.json();
         alert('Registro exitoso');
-        console.log('Usuario registrado:', data);
+        // console.log('Usuario registrado:', data);
         window.location.href = 'login.html';
     } catch (error) {
         console.error('Error al enviar la solicitud:', error);
@@ -129,55 +129,54 @@ async function registerUser(event) {
     }
 }
 
-async function EditProfile() {
+async function EditProfile(image) {
     const name = document.getElementById('editName').value;
     const email = document.getElementById('editEmail').value;
     const username = document.getElementById('editUsername').value;
     const place = document.getElementById('editLocation').value;
     const phoneNumber = document.getElementById('editPhoneNumber').value;
     const bio = document.getElementById('editBio').value;
-    const profileImage = document.getElementById('editProfileImage').files[0];
-    const profileImageBase64 = await getBase64FromFile(profileImage);
+    // const profileImageInput = document.getElementById('editProfileImage').files[0];
+    let profileImageBase64 = '';
 
-    const phoneNumberValid = esNumeroChilenoValido(phoneNumber);
-    const emailValid = esEmailValido(email);
+    if (image) {
+        profileImageBase64 = await convertirImagenABase64(image);
+    }
 
-    if (!emailValid) {
-        alert('Por favor, ingresa un email válido');
-        return;
-    }
-    if (!phoneNumberValid) {
-        alert('Por favor, ingresa un número de teléfono válido');
-        return;
-    }
+    const authToken = localStorage.getItem('authToken');
+    console.log('Token de autenticación:', authToken);
+
+    // Solo si hay cambios, enviar los datos correspondientes
+    const bodyData = {
+        name,
+        email,
+        username,
+        place,
+        phoneNumber,
+        bio,
+        profileImage: profileImageBase64 || undefined,  // Si profileImageBase64 es vacío, no lo incluir
+    };
 
     try {
-        // Obtener el token de autenticación desde localStorage
-        const authToken = `Bearer ${localStorage.getItem('authToken')}`;
-        
-        // Realizar la solicitud para actualizar el perfil
         const response = await fetch(`${apiUrl}/auth/profile`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': authToken,
+                'Authorization': `bearer: ${authToken}`, // Usar el encabezado correcto
             },
-            body: JSON.stringify({ name, emailValid, username, place, phoneNumberValid, bio, profileImageBase64 }),
+            body: JSON.stringify(bodyData),
         });
 
-        // Verificar si la solicitud fue exitosa
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Error al actualizar el perfil.');
         }
 
         const data = await response.json();
-        console.log('Perfil actualizado:', data);
+        // console.log('Perfil actualizado:', data);
 
-        // Actualizar la información visible en la página
-        document.getElementById('username').innerText = username;
-        document.getElementById('email').innerText = `Email: ${email}`;
-        document.getElementById('location').innerText = `Ubicación: ${location}`;
+        //refrescar la página para ver los cambios
+        window.location.reload();
 
         alert('Perfil actualizado con éxito');
         // Cerrar el modal después de guardar los cambios
@@ -188,6 +187,7 @@ async function EditProfile() {
         alert('Error al actualizar el perfil.');
     }
 }
+
 
 
 async function logout() {
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function () {
-            console.log('Cerrando sesión...');
+            // console.log('Cerrando sesión...');
             logout();
         });
     } else {
@@ -223,7 +223,7 @@ function modal() {
     const modal = document.getElementById("myModal");
     const openModalBtn = document.getElementById("openModalBtn");
     const closeModalBtn = document.getElementsByClassName("close")[0];
-    const saveProfileBtn = document.getElementById("saveChangesBtn");
+    // const saveProfileBtn = document.getElementById("saveChangesBtn");
 
     // Abre el modal
     openModalBtn.onclick = function() {
@@ -242,18 +242,16 @@ function modal() {
         }
     }
 
-    // Agregar el evento para guardar cambios
-    if (saveProfileBtn) {
-        saveProfileBtn.onclick = function() {
-            EditProfile();
-        }
-    }
+    // // Agregar el evento para guardar cambios
+    // if (saveProfileBtn) {
+    //     saveProfileBtn.onclick = function() {
+    //         EditProfile();
+    //     }
+    // }
 }
 
 
 $(document).ready(function() {
-    console.log('Document ready');
-    console.log('Path:', window.location.pathname);
     const currentPath = window.location.pathname;
 
     if (currentPath === '/front/registrar.html' || currentPath === '/registro') {
@@ -267,17 +265,68 @@ $(document).ready(function() {
         });
     }
     if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
+        if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
+            document.getElementById("profile-image").addEventListener("click", function() {
+                const profileImageInput = document.getElementById("profile-image-input");
+                const profileErrorMessage = document.getElementById("profile-error-message");
+                const confirmChangesButton = document.getElementById("confirm-changes-button");
+                
+                
+            
+                // Se asegura de que solo se añada un listener al evento change
+                profileImageInput.removeEventListener("change", handleFileChange); // Elimina el listener anterior, si existe.
+                profileImageInput.addEventListener("change", handleFileChange);
+            
+                // Función para manejar la selección de un archivo
+                function handleFileChange() {
+                    const archivo = profileImageInput.files[0];
+                    if (archivo) {
+                        validarArchivo(archivo, mostrarPrevisualizacion);
+                    }
+                }
+            
+                // Función para validar el archivo
+                function validarArchivo(archivo, callback) {
+                    const tiposPermitidos = ["image/png", "image/jpeg"];
+                    if (archivo && tiposPermitidos.includes(archivo.type)) {
+                        profileErrorMessage.style.display = "none";  // Ocultar el mensaje de error
+                        callback(archivo);
+                    } else {
+                        profileErrorMessage.style.display = "block";  // Mostrar el mensaje de error
+                        profileImageInput.value = "";  // Limpiar el input
+                    }
+                }
+            
+                // Función para mostrar la previsualización de la imagen
+                function mostrarPrevisualizacion(archivo) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById("profile-image").src = e.target.result; // Mostrar previsualización en la imagen
+                        confirmChangesButton.style.display = "block"; // Mostrar el botón de confirmar
+                    };
+                    reader.readAsDataURL(archivo);
+                }
+            
+                // Evento para confirmar los cambios
+                confirmChangesButton.addEventListener("click", function() {
+                    const archivo = profileImageInput.files[0];
+                    EditProfile(archivo); // Llamar a la función EditProfile cuando se confirma
+                });
+            });
+            
+        }
         getUserData();
         modal();  // Asegurarse de que el modal esté inicializado
 
-        const editProfileForm = document.getElementById('editarPerfilModal');
-        if (editProfileForm) {
-            const saveProfileBtn = document.getElementById('saveChangesBtn');  // Asegurarse de que este botón esté vinculado
-            if (saveProfileBtn) {
-                saveProfileBtn.addEventListener('click', async () => {
-                    EditProfile();  // Guardar cambios al hacer clic
-                });
-            }
-        }
+        const saveProfileBtn = document.getElementById('saveChangesBtn');  // Asegurarse de que este botón esté vinculado
+        saveProfileBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            EditProfile();
+        });
+
+        const confirmChangeImage = document.getElementById('confirm-changes-button-image');
+        confirmChangeImage.addEventListener('click', function() {
+            EditProfile();
+        });
     }
 });

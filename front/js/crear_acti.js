@@ -88,28 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
     const archivoInput = document.getElementById("archivo");
     const dragDropArea = document.getElementById("dragDropArea");

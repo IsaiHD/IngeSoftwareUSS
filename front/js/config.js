@@ -1,2 +1,2 @@
 // config.js
-export const apiUrl = 'https://maritime-worry-disputes-pediatric.trycloudflare.com';
+export const apiUrl = 'https://similar-golden-parent-actual.trycloudflare.com';

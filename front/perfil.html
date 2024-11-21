@@ -65,8 +65,22 @@
                 <h2 class="display-4 mb-3">Tu Perfil</h2>
                 <div class="profile-card">
                     <div class="d-flex align-items-center justify-content-center mb-4">
-                        <img src="images/icons/perfil.png" alt="Imagen de Perfil" class="rounded-circle" style="width: 150px; height: 150px;" id="profile-image">
+                        <img src="images/icons/perfil.png" alt="Imagen de Perfil" 
+                             class="rounded-circle" 
+                             style="width: 150px; height: 150px; cursor: pointer;" 
+                             id="profile-image">
                     </div>
+                    <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
+                    <div id="profile-error-message" style="color: red; display: none; margin-top: 10px;">Formato no permitido. Usa JPG o PNG.</div>
+                    
+                    <!-- Botón para confirmar cambios -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" id="confirm-changes-button" style="display: none;">Confirmar Cambios</button>
+                    </div>
+                    
+                    
+                    <input type="file" id="profile-image-input" accept="image/*" style="display: none;">
+                    <div id="profile-error-message" style="color: red; display: none; margin-top: 10px;">Formato no permitido. Usa JPG o PNG.</div>
                     <h3 class="mb-2" id="username">Nombre de Usuario</h3>
                     <p class="text muted mb-2" id="biografia">Biografia: </p>
                     <p class="text-muted mb-3" id="email">Email: -</p>
@@ -147,6 +161,7 @@
     <script type="module" src="js/activities.js"></script>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/utils.js"></script>
 
 
     
