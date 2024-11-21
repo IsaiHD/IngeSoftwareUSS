@@ -50,3 +50,15 @@ export function convertirImagenABase64(file, calidad = 0.5) {
         reader.readAsDataURL(file);
     });
 }
+
+export function esEmailValido(email) {
+    // Expresión regular para validar emails
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+export function esNumeroChilenoValido(numero) {
+    // Expresión regular para números chilenos válidos
+    const regex = /^(?:\+56)?(?:\s?)(9\d{8}|2\d{7}|[3-7]\d{7})$/;
+    return regex.test(numero);
+}

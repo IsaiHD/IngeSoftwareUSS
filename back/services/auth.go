@@ -111,34 +111,49 @@ func (as *AuthService) Register(name *string, email *string, password *string, n
 }
 
 func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string, image *string) (*models.User, error) {
-	decodedImage, err := base64.StdEncoding.DecodeString(*image)
-	if err != nil {
-		return nil, err
-	}
-	imageStr := string(decodedImage)
-
 	// Buscar al usuario por el ID proporcionado
 	var user models.User
 	if err := as.db.First(&user, userID).Error; err != nil {
 		return nil, errors.New("user not found")
 	}
 
+	// Verificar si email o username ya existen y pertenecen a otro usuario
 	var userCheck models.User
-	if err := as.db.Where("email = ? OR username = ?", *email, *nickname).First(&userCheck).Error; err == nil && userCheck.UserID != userID {
-		return nil, errors.New("user already exists")
+	if email != nil || nickname != nil {
+		if err := as.db.Where("email = ? OR username = ?", email, nickname).First(&userCheck).Error; err == nil && userCheck.UserID != userID {
+			return nil, errors.New("user with the same email or username already exists")
+		}
 	}
 
-	// Actualizar los campos proporcionados
-	user = models.User{
-		Name:        *name,
-		Email:       *email,
-		Username:    *nickname,
-		Place:       *place,
-		PhoneNumber: *phoneNumber,
-		Bio:         *bio,
-		Image:       imageStr,
-		UpdatedAt:   time.Now(),
+	// Actualizar los campos solo si no son nulos o vacíos
+	if name != nil && *name != "" {
+		user.Name = *name
 	}
+	if email != nil && *email != "" {
+		user.Email = *email
+	}
+	if nickname != nil && *nickname != "" {
+		user.Username = *nickname
+	}
+	if place != nil && *place != "" {
+		user.Place = *place
+	}
+	if phoneNumber != nil && *phoneNumber != "" {
+		user.PhoneNumber = *phoneNumber
+	}
+	if bio != nil && *bio != "" {
+		user.Bio = *bio
+	}
+	if image != nil && *image != "" {
+		decodedImage, err := base64.StdEncoding.DecodeString(*image)
+		if err != nil {
+			return nil, err
+		}
+		user.Image = string(decodedImage)
+	}
+
+	// Actualizar la fecha de modificación
+	user.UpdatedAt = time.Now()
 
 	// Guardar los cambios en la base de datos
 	if err := as.db.Save(&user).Error; err != nil {

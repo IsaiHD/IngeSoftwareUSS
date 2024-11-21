@@ -1,4 +1,5 @@
 import { apiUrl } from './config.js';
+import { esEmailValido } from './utils.js';
 
 // Función para manejar el inicio de sesión
 async function loginUser(event) {
@@ -57,9 +58,12 @@ async function getUserData() {
         // Aquí actualizamos los elementos del DOM con los datos obtenidos
         document.getElementById('username').textContent = data.message.username || '-';
         document.getElementById('email').textContent = `Email: ${data.message.email || '-'}`;
-        document.getElementById('location').textContent = `Ubicación: ${data.message.place || '-dd'}`;
+        document.getElementById('location').textContent = `Ubicación: ${data.message.place || '-'}`;
         document.getElementById('registration-date').textContent = `Fecha de Registro: ${data.message.createdat || '-'}`;
         
+        document.getElementById('editName').setAttribute('placeholder', data.message.name || '');
+        document.getElementById('editPhoneNumber').setAttribute('placeholder', data.message.phoneNumber || '');
+        document.getElementById('editBio').setAttribute('placeholder', data.message.bio || '');
         document.getElementById('editUsername').setAttribute('placeholder', data.message.username || '');
         document.getElementById('editEmail').setAttribute('placeholder', data.message.email || '');
         document.getElementById('editLocation').setAttribute('placeholder', data.message.place || '');
@@ -87,6 +91,18 @@ async function registerUser(event) {
         username: document.getElementById('registrarusername').value,
         password: document.getElementById('registrarcontrasena').value,
     };
+
+    const esEmailValido = esEmailValido(userData.email);
+    const esNumeroChilenoValido = esNumeroChilenoValido(userData.username);
+
+    if (!esEmailValido) {
+        alert('Por favor, ingresa un email válido');
+        return;
+    }
+    if (!esNumeroChilenoValido) {
+        alert('Por favor, ingresa un nombre de usuario válido');
+        return;
+    }
 
     if (!userData.name || !userData.email || !userData.username || !userData.password) {
         alert('Por favor, completa todos los campos');
@@ -119,9 +135,26 @@ async function registerUser(event) {
 }
 
 async function EditProfile() {
-    const username = document.getElementById('editUsername').value;
+    const name = document.getElementById('editName').value;
     const email = document.getElementById('editEmail').value;
+    const username = document.getElementById('editUsername').value;
     const place = document.getElementById('editLocation').value;
+    const phoneNumber = document.getElementById('editPhoneNumber').value;
+    const bio = document.getElementById('editBio').value;
+    const profileImage = document.getElementById('editProfileImage').files[0];
+    const profileImageBase64 = await getBase64FromFile(profileImage);
+
+    const phoneNumberValid = esNumeroChilenoValido(phoneNumber);
+    const emailValid = esEmailValido(email);
+
+    if (!emailValid) {
+        alert('Por favor, ingresa un email válido');
+        return;
+    }
+    if (!phoneNumberValid) {
+        alert('Por favor, ingresa un número de teléfono válido');
+        return;
+    }
 
     try {
         // Obtener el token de autenticación desde localStorage
@@ -134,7 +167,7 @@ async function EditProfile() {
                 'Content-Type': 'application/json',
                 'Authorization': authToken,
             },
-            body: JSON.stringify({ username, email, location }),
+            body: JSON.stringify({ name, emailValid, username, place, phoneNumberValid, bio, profileImageBase64 }),
         });
 
         // Verificar si la solicitud fue exitosa
@@ -144,13 +177,14 @@ async function EditProfile() {
         }
 
         const data = await response.json();
-        alert('Perfil actualizado con éxito');
+        console.log('Perfil actualizado:', data);
 
         // Actualizar la información visible en la página
         document.getElementById('username').innerText = username;
         document.getElementById('email').innerText = `Email: ${email}`;
         document.getElementById('location').innerText = `Ubicación: ${location}`;
 
+        alert('Perfil actualizado con éxito');
         // Cerrar el modal después de guardar los cambios
         document.getElementById('myModal').style.display = "none";
 
@@ -174,7 +208,7 @@ async function logout() {
     localStorage.removeItem('authId');
     
     // Redirige al usuario a la página de login
-    window.location.href = "/front/home.html";
+    window.location.href = "/front/home.html"; //TODO: Cambiar en produccion
 }
 
 document.addEventListener('DOMContentLoaded', function () {
