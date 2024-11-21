@@ -23,7 +23,7 @@ async function loginUser(event, route) {
         if (response.ok && data.token) {
             // Almacenar el token y otros datos en localStorage
             localStorage.setItem('authToken', data.token);
-            window.location.href = `/${route}`; // Redirigir a la página principal //TODO: Cambiar en produccion
+            window.location.href = `/${route}`; // Redirigir a la página principal 
             // console.log('Inicio de sesión exitoso:', data);
         } else {
             alert('Error en el inicio de sesión: ' + (data.error || 'Desconocido'));
@@ -257,6 +257,7 @@ function modal() {
 
 $(document).ready(function() {
     const currentPath = window.location.pathname;
+    console.log('Ruta actual:', currentPath);
 
     if (currentPath === '/front/registrar.html' || currentPath === '/registro') {
         document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
@@ -269,7 +270,7 @@ $(document).ready(function() {
         });
     }else if(currentPath === '/login'){
         document.getElementById('botonLogin').addEventListener('click', function(event) {
-            loginUser(event, '/home');
+            loginUser(event, 'home');
         });
     }
     if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {

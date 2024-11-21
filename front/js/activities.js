@@ -464,7 +464,7 @@ async function crearActividad() {
 }
 
 $(document).ready(function() {
-    // console.log(window.location.pathname);
+    console.log(window.location.pathname);
     // console.log(apiUrl);
     const currentPath = window.location.pathname;
     
