@@ -269,7 +269,6 @@ $(document).ready(function() {
         });
     }
     if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
-        if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
             document.getElementById("profile-image").addEventListener("click", function() {
                 const profileImageInput = document.getElementById("profile-image-input");
                 const profileErrorMessage = document.getElementById("profile-error-message");
@@ -319,7 +318,6 @@ $(document).ready(function() {
                 });
             });
             
-        }
         getUserData();
         modal();  // Asegurarse de que el modal esté inicializado
 
