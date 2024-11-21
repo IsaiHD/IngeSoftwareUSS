@@ -94,7 +94,7 @@ func (as *AuthService) Register(name *string, email *string, password *string, n
 		UpdatedAt:   time.Now(),
 		RoleID:      *roleID,
 		Active:      true,     // valor predeterminado
-		Image:       "",       // valor predeterminado (sin imagen por defecto)
+		Image:       []byte{}, // valor predeterminado (sin imagen por defecto)
 		Place:       "",       // valor predeterminado (sin ubicación por defecto)
 		PhoneNumber: "",       // valor predeterminado (sin teléfono por defecto)
 		Bio:         "",       // valor predeterminado (sin biografía por defecto)
@@ -110,7 +110,7 @@ func (as *AuthService) Register(name *string, email *string, password *string, n
 	return &user, nil
 }
 
-func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string, image *string) (*models.User, error) {
+func (as *AuthService) UpdateProfile(userID int, name *string, email *string, nickname *string, place *string, phoneNumber *string, bio *string, image string) (*models.User, error) {
 	// Buscar al usuario por el ID proporcionado
 	var user models.User
 	if err := as.db.First(&user, userID).Error; err != nil {
@@ -144,12 +144,12 @@ func (as *AuthService) UpdateProfile(userID int, name *string, email *string, ni
 	if bio != nil && *bio != "" {
 		user.Bio = *bio
 	}
-	if image != nil && *image != "" {
-		decodedImage, err := base64.StdEncoding.DecodeString(*image)
+	if image != "" {
+		imageData, err := base64.StdEncoding.DecodeString(image)
 		if err != nil {
 			return nil, err
 		}
-		user.Image = string(decodedImage)
+		user.Image = imageData
 	}
 
 	// Actualizar la fecha de modificación

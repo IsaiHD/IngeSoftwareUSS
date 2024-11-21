@@ -40,6 +40,7 @@ async function getUserData() {
     // console.log('Token de autenticación:', authToken);
     try {
         const response = await fetch(`${apiUrl}/auth/profile`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${authToken}`,
@@ -47,32 +48,39 @@ async function getUserData() {
         });
 
         if (!response.ok) {
-            // Si la respuesta no es exitosa, lanzamos un error
             const errorData = await response.json();
             throw new Error(errorData.error || 'Error al obtener los datos del usuario');
         }
 
         const data = await response.json();
-        // console.log('Datos del usuario:', data.message);
+        //mostrar imagen de perfil
+        console.log('Datos del usuario:', data.message.image);
 
-        // Aquí actualizamos los elementos del DOM con los datos obtenidos
+        // Actualizar datos del usuario en el DOM
         document.getElementById('username').textContent = data.message.username || '-';
         document.getElementById('email').textContent = `Email: ${data.message.email || '-'}`;
+        document.getElementById('phone-number').textContent = `Teléfono: ${data.message.phonenumber || '-'}`;
         document.getElementById('location').textContent = `Ubicación: ${data.message.place || '-'}`;
+        document.getElementById('biografia').textContent = `Bio: ${data.message.bio || '-'}`;
         document.getElementById('registration-date').textContent = `Fecha de Registro: ${data.message.createdat || '-'}`;
-        
+
+        // Actualizar los placeholders en los campos de edición
         document.getElementById('editName').setAttribute('placeholder', data.message.name || '');
-        document.getElementById('editPhoneNumber').setAttribute('placeholder', data.message.phoneNumber || '');
+        document.getElementById('editPhoneNumber').setAttribute('placeholder', data.message.phonenumber || '');
         document.getElementById('editBio').setAttribute('placeholder', data.message.bio || '');
         document.getElementById('editUsername').setAttribute('placeholder', data.message.username || '');
         document.getElementById('editEmail').setAttribute('placeholder', data.message.email || '');
         document.getElementById('editLocation').setAttribute('placeholder', data.message.place || '');
 
-        // Si tienes una URL de imagen de perfil, puedes asignarla también
-        // Si no, se usará una imagen predeterminada
+        // Obtener la imagen de perfil. Si no existe, asignar la imagen predeterminada
         const profileImage = document.getElementById('profile-image');
         if (data.message.profileImage) {
-            profileImage.src = data.message.profileImage;
+            // Si hay una imagen en los datos, usarla
+            profileImage.src = `data:image/png;base64,${data.message.image}`;
+            console.log('Imagen de perfil:', profileImage.src);
+        } else {
+            // Si no hay imagen, usar la imagen predeterminada
+            profileImage.src = `data:image/png;base64,${data.message.image}`;
         }
 
     } catch (error) {
@@ -137,14 +145,10 @@ async function EditProfile(image) {
     const phoneNumber = document.getElementById('editPhoneNumber').value;
     const bio = document.getElementById('editBio').value;
     // const profileImageInput = document.getElementById('editProfileImage').files[0];
-    let profileImageBase64 = '';
 
-    if (image) {
-        profileImageBase64 = await convertirImagenABase64(image);
-    }
+    const profileImageBase64 = await convertirImagenABase64(image);
 
     const authToken = localStorage.getItem('authToken');
-    console.log('Token de autenticación:', authToken);
 
     // Solo si hay cambios, enviar los datos correspondientes
     const bodyData = {
@@ -154,7 +158,7 @@ async function EditProfile(image) {
         place,
         phoneNumber,
         bio,
-        profileImage: profileImageBase64 || undefined,  // Si profileImageBase64 es vacío, no lo incluir
+        image: profileImageBase64,  // Si profileImageBase64 es vacío, no lo incluir
     };
 
     try {
@@ -309,8 +313,9 @@ $(document).ready(function() {
             
                 // Evento para confirmar los cambios
                 confirmChangesButton.addEventListener("click", function() {
-                    const archivo = profileImageInput.files[0];
-                    EditProfile(archivo); // Llamar a la función EditProfile cuando se confirma
+                    const imageFile = document.getElementById('profile-image-input').files[0];
+                    console.log('Imagen seleccionada:', imageFile);
+                    EditProfile(imageFile); // Llamar a la función EditProfile cuando se confirma
                 });
             });
             

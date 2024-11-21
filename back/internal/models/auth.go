@@ -13,7 +13,7 @@ type User struct {
 	UpdatedAt time.Time `json:"updatedat"`
 	// LastLogin       time.Time   `json:"lastlogin"`
 	Active      bool   `json:"active"`
-	Image       string `json:"image"`
+	Image       []byte `json:"image"`
 	Place       string `json:"place"`
 	PhoneNumber string `json:"phonenumber"`
 	Bio         string `json:"bio"`

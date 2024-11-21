@@ -170,7 +170,7 @@ func (at *AuthController) UpdateProfile() gin.HandlerFunc {
 			Place       *string `json:"place"`
 			PhoneNumber *string `json:"phonenumber"`
 			Bio         *string `json:"bio"`
-			Image       *string `json:"image"`
+			Image       string  `json:"image"`
 		}
 
 		var updateBody UpdateProfileBody
