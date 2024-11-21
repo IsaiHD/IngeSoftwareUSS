@@ -2,7 +2,7 @@ import { apiUrl } from './config.js';
 import { convertirImagenABase64, esEmailValido } from './utils.js';
 
 // Función para manejar el inicio de sesión
-async function loginUser(event) {
+async function loginUser(event, route) {
     event.preventDefault(); // Evita el envío del formulario tradicional
     const username = document.getElementById('loginnombre').value;
     const password = document.getElementById('logincontrasena').value;
@@ -23,7 +23,7 @@ async function loginUser(event) {
         if (response.ok && data.token) {
             // Almacenar el token y otros datos en localStorage
             localStorage.setItem('authToken', data.token);
-            window.location.href = '/front/home.html'; // Redirigir a la página principal //TODO: Cambiar en produccion
+            window.location.href = `/${route}`; // Redirigir a la página principal //TODO: Cambiar en produccion
             // console.log('Inicio de sesión exitoso:', data);
         } else {
             alert('Error en el inicio de sesión: ' + (data.error || 'Desconocido'));
@@ -263,9 +263,13 @@ $(document).ready(function() {
             registerUser(event);
         });
     }
-    if (currentPath === '/front/login.html' || currentPath === '/Login') {
+    if (currentPath === '/front/login.html') {
         document.getElementById('botonLogin').addEventListener('click', function(event) {
-            loginUser(event);
+            loginUser(event, 'home.html');
+        });
+    }else if(currentPath === '/login'){
+        document.getElementById('botonLogin').addEventListener('click', function(event) {
+            loginUser(event, '/home');
         });
     }
     if (currentPath === '/front/perfil.html' || currentPath === '/perfil') {
@@ -317,7 +321,7 @@ $(document).ready(function() {
                     EditProfile(imageFile); // Llamar a la función EditProfile cuando se confirma
                 });
             });
-            
+
         getUserData();
         modal();  // Asegurarse de que el modal esté inicializado
 
