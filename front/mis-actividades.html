@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="registrar.html" class="btn btn-primary rounded-pill py-2 px-4" id="registrarbtn">Registro</a>
+                <a href="login.html" class="btn btn-primary rounded-pill py-2 px-4" id="loginbtn">Login</a>
                 <div id="profileIcon" class="profile-container">
                     <a href="perfil.html" id="profileIconLink">
                         <img src="images/icons/perfil.png" alt="Perfil" class="rounded-circle" style="width: 40px; height: 40px;">
@@ -166,6 +166,7 @@ function showModal(activity) {
     // Mostrar el modal
     const modal = new bootstrap.Modal(document.getElementById('activityModal'));
     modal.show();
+    
 }
 
 let isEditMode = false; // Variable para rastrear si estamos en modo edición
@@ -242,7 +243,7 @@ document.getElementById('editButton').addEventListener('click', () => {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/main.js"></script>
     <script type="module" src="js/activities.js"></script>
-    
+    <script type="module" src="js/auth.js"></script>
 
 </body>
 

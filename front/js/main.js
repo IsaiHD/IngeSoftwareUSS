@@ -149,7 +149,7 @@
             }
         
             // Obtener los elementos del DOM
-            var registerButton = document.getElementById('registrarbtn');
+            var registerButton = document.getElementById('loginbtn');
             var profileIcon = document.getElementById('profileIcon');
 
         
