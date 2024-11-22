@@ -63,7 +63,6 @@
                     <div class="dropdown-menu m-0">
                         <a href="crear-actividad.html" class="dropdown-item">Crear Actividades</a>
                         <a href="mis-actividades.html" class="dropdown-item">Mis actividades</a>
-                        <a href="perfil.html" class="dropdown-item">Tu perfil</a>
                         
                     </div>
                 </div>
@@ -103,7 +102,7 @@
             <div class="row g-4" style="justify-content: center;">
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="ComidaCategoria">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-cutlery text-primary mb-4"></i>
@@ -114,7 +113,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="ComprasCategoria">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-shopping-cart text-primary mb-4"></i> 
@@ -125,7 +124,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="ServiciosCategoria">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-cogs text-primary mb-4"></i>
@@ -136,7 +135,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="HistoriaCategoria">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-university text-primary mb-4"></i>
@@ -147,7 +146,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="EntretenimientoCategoria">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-film text-primary mb-4"></i>
@@ -158,7 +157,7 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a href="actividades.html">
+                    <a href="" id="NaturalezaCategoria"">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-tree text-primary mb-4"></i>
@@ -167,6 +166,29 @@
                         </div>
                     </div> </a>
                 </div>
+            </div>
+            <div class="row g-4 justify-content-center" data-wow-delay="0.1s">
+                <h1 > Actividades Diponibles con la categoria: </h1> <h1 id="categoriaTitulo"> </h1>
+                <h6 class="section-title bg-white text-center text-primary px-3"></h6>
+                <!-- Inicio de Actividad -->
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" id="imagenactividades" src="img/feria_libro.png" alt="">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2" id="nombreactividades"></i>Nombre</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2" id="fechaactividades"></i>Fecha</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2" id="direccionactividades"></i>Direccion</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0" id="nombreactividades">Nombre</h3>
+                            <p id="descripción">descripción</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fin de Actividad -->
             </div>
         </div>
     </div>
