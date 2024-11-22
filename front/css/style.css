@@ -720,7 +720,7 @@
 .modal {
     display: none; 
     position: fixed;
-    z-index: 9999; 
+    z-index: 9998; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -833,4 +833,7 @@ body, html {
     border: none;
     font-size: 18px;
     cursor: pointer;
+}
+.swal-popup-custom {
+    z-index: 9999 !important; /* Un valor alto para que se muestre por encima de otros elementos */
 }

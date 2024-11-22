@@ -437,7 +437,11 @@ async function updateActivity(id) {
 
 async function eliminarActividad(id) {
     const authToken = localStorage.getItem('authToken');
-
+    
+    const modalElement = document.getElementById('activityModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);  // Obtener la instancia del modal actual
+    modal.hide();
+        
     // Mostrar alerta de confirmación
     const confirmar = await Swal.fire({
         title: '¿Estás seguro?',
@@ -445,7 +449,10 @@ async function eliminarActividad(id) {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'swal-popup-custom'
+        },
     });
 
     if (!confirmar.isConfirmed) {
@@ -559,6 +566,7 @@ $(document).ready(function() {
         eliminarActividadBtn.addEventListener('click', function() {
             const id = modalElement.dataset.id;
             eliminarActividad(id);
+            
         });
 
         const confirmarEdicion = document.getElementById('editButton');
