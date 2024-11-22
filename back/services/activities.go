@@ -229,41 +229,70 @@ func (acti *ActivityService) CreateActivityService(name string, description stri
 }
 
 func (acti *ActivityService) UpdateActivityService(id int, Name string, Description string, ActivityType string, StartDate time.Time, EndDate time.Time, Place string, SubCategory string, Image string) (*models.Activity, error) {
-	imageData, err := base64.StdEncoding.DecodeString(Image)
-	if err != nil {
-		return nil, err
-	}
-	var category models.Category
-	if err := acti.db.First(&models.Category{}, ActivityType).Error; err != nil {
-		return nil, errors.New("category not found")
-	}
-
-	var subcategory models.SubCategory
-	if err := acti.db.First(&models.SubCategory{}, SubCategory).Error; err != nil {
-		return nil, errors.New("subcategory not found")
-	}
-
-	if err := acti.db.First(&models.Activity{}, id).Error; err != nil {
+	// Recuperar la actividad existente para comparación
+	var activity models.Activity
+	if err := acti.db.First(&activity, id).Error; err != nil {
 		return nil, err
 	}
 
-	activity := &models.Activity{
-		ActivityID:  id,
-		Name:        Name,
-		Description: Description,
-		Category:    category.CategoryID,
-		SubCategory: subcategory.SubCategoryID,
-		Image:       imageData,
-		StartDate:   StartDate,
-		EndDate:     EndDate,
-		Place:       Place,
+	// Si la descripción no está vacía, actualizarla
+	if Description != "" {
+		activity.Description = Description
 	}
 
-	if err := acti.db.Save(activity).Error; err != nil {
+	// Si el nombre no está vacío, actualizarlo
+	if Name != "" {
+		activity.Name = Name
+	}
+
+	// Si la categoría no está vacía, actualizarla
+	if ActivityType != "" {
+		var category models.Category
+		if err := acti.db.First(&category, ActivityType).Error; err != nil {
+			return nil, errors.New("category not found")
+		}
+		activity.Category = category.CategoryID
+	}
+
+	// Si la subcategoría no está vacía, actualizarla
+	if SubCategory != "" {
+		var subcategory models.SubCategory
+		if err := acti.db.First(&subcategory, SubCategory).Error; err != nil {
+			return nil, errors.New("subcategory not found")
+		}
+		activity.SubCategory = subcategory.SubCategoryID
+	}
+
+	// Si la imagen no está vacía, actualizarla
+	if Image != "" {
+		imageData, err := base64.StdEncoding.DecodeString(Image)
+		if err != nil {
+			return nil, err
+		}
+		activity.Image = imageData
+	}
+
+	// Si la fecha de inicio no está vacía, actualizarla
+	if !StartDate.IsZero() {
+		activity.StartDate = StartDate
+	}
+
+	// Si la fecha de fin no está vacía, actualizarla
+	if !EndDate.IsZero() {
+		activity.EndDate = EndDate
+	}
+
+	// Si el lugar no está vacío, actualizarlo
+	if Place != "" {
+		activity.Place = Place
+	}
+
+	// Guardar la actividad actualizada en la base de datos
+	if err := acti.db.Save(&activity).Error; err != nil {
 		return nil, err
 	}
 
-	return activity, nil
+	return &activity, nil
 }
 
 func (acti *ActivityService) DeleteActivityService(id int) error {

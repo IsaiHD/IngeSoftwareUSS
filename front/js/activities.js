@@ -204,11 +204,9 @@ async function buscarActividadesPorNombre(nombre) {
     }
 }
 
-
 async function obtenerActividadesPorUsuario() {
     const spinner = document.getElementById('ImagesTextContent');
     const authToken = `bearer: ${localStorage.getItem('authToken')}`;
-    console.log(authToken);
     try {
         // Mostrar el spinner mientras se cargan las actividades
         spinner.classList.add('show');
@@ -268,30 +266,15 @@ async function obtenerActividadesPorUsuario() {
                 // Agregar la tarjeta al contenedor principal (ImagesTextContent)
                 document.getElementById('ImagesTextContent').appendChild(itemDiv);
         
+                // Agregar el evento click para mostrar el modal
                 itemDiv.querySelector('a').addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
-                
-                    // Verifica si los datos están presentes
-                    console.log(document.getElementById('modal')); // Verifica si está devolviendo el modal
-
-                
-                    // Llenar el modal con la información de la actividad
-                    document.getElementById('modalActivityName').innerText = actividad.name;
-                    document.getElementById('modalActivityImage').src = `data:image/png;base64,${actividad.image}`;
-                    document.getElementById('modalActivityDescription').innerText = actividad.description;
-                    document.getElementById('modalStartDate').innerText = actividad.start_date;
-                    document.getElementById('modalEndDate').innerText = actividad.end_date;
-                    document.getElementById('modalPlace').innerText = actividad.place;
-                
-                    // Mostrar el modal
-                    document.getElementById('modal').classList.add('show');
-                    console.log(modal.classList); // Verifica las clases del modal en la consola
+                    event.preventDefault();
+                    // Mostrar el modal con los datos de la actividad seleccionada
+                    showModal(actividad);
                 });
-                
-                
-                
+                   
             } catch (error) {
-                console.error('Error al convertir la imagen a Base64:', error);
+                console.error('Error al crear la tarjeta de actividad:', error);
             }
         }
 
@@ -303,7 +286,6 @@ async function obtenerActividadesPorUsuario() {
         spinner.classList.remove('show');
     }
 }
-
 
 async function cargarCategorias() {
     try {
@@ -346,7 +328,6 @@ async function cargarCategorias() {
         alert("Ocurrió un error al cargar las categorías. Por favor, intenta de nuevo más tarde.");
     }
 }
-
 
 async function cargarSubCategorias(idCategoria) {
     if (!idCategoria) {
@@ -409,6 +390,93 @@ async function inicializarCategoriasYSubcategorias() {
         }
     });
 }
+
+async function updateActivity(id) {
+    // Obtener los valores de los campos del formulario
+    const name = document.getElementById("modalActivityName").value;
+    const description = document.getElementById("modalActivityDescription").value;
+    const startDate = document.getElementById("modalStartDate").value;
+    const endDate = document.getElementById("modalEndDate").value;
+    const place = document.getElementById("modalPlace").value;
+
+    console.log(name, description, startDate, endDate, place);
+    // Crear un objeto con solo los valores no vacíos
+    const authToken = localStorage.getItem('authToken');
+
+    const bodyData = {
+        name,
+        description,
+        startDate,
+        endDate,
+        place,
+    };
+
+    try {
+        const response = await fetch(`${apiUrl}/activities/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `bearer: ${authToken}`, // Usar el encabezado correcto
+            },
+            body: JSON.stringify(bodyData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al actualizar la actividad');
+        }
+
+        const updatedActivity = await response.json();
+        console.log("Actividad actualizada:", updatedActivity);
+        window.location.reload();
+        // Puedes agregar un mensaje al usuario o redirigir a otra página si lo deseas
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Hubo un error al actualizar la actividad.");
+    }
+}
+
+async function eliminarActividad(id) {
+    const authToken = localStorage.getItem('authToken');
+
+    // Mostrar alerta de confirmación
+    const confirmar = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esta acción.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (!confirmar.isConfirmed) {
+        console.log('Eliminación cancelada.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${apiUrl}/activities/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        if (response.ok) {
+            Swal.fire('Eliminado', 'La actividad ha sido eliminada con éxito.', 'success');
+            // Aquí puedes actualizar la lista de actividades si es necesario
+            window.location.reload();
+        } else {
+            const errorData = await response.json();
+            Swal.fire('Error', `No se pudo eliminar la actividad: ${errorData.message}`, 'error');
+        }
+    } catch (error) {
+        Swal.fire('Error', 'Ocurrió un error al intentar eliminar la actividad.', 'error');
+        console.error(error);
+    }
+}
+
+
 
 
 async function crearActividad() {
@@ -484,7 +552,25 @@ $(document).ready(function() {
     }
     
     if (currentPath === '/front/mis-actividades.html' || currentPath === '/mis-actividades') {
+        const modalElement = document.getElementById('activityModal');
         obtenerActividadesPorUsuario();
+        const eliminarActividadBtn = document.getElementById('eliminaractividad');
+
+        eliminarActividadBtn.addEventListener('click', function() {
+            const id = modalElement.dataset.id;
+            eliminarActividad(id);
+        });
+
+        const confirmarEdicion = document.getElementById('editButton');
+        confirmarEdicion.addEventListener('click', function(event){
+
+            if (confirmarEdicion.innerText === 'Editar') {
+                const id = modalElement.dataset.id;
+                updateActivity(id);
+            }
+        });
+
+
     }
     if (currentPath == '/front/crear-actividad.html' || currentPath === '/crear-actividad') {
         const tipoSelector = document.getElementById('tipo');

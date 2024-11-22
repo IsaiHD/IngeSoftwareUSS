@@ -25,7 +25,7 @@ func (acti *ActivityController) InitActivityControllerRouters(router *gin.Engine
 
 	// activities.GET("/:id", acti.GetActivityById())
 	activities.POST("/", acti.CreateActivity())
-	activities.PUT("/:id", acti.UpdateActivity())
+	activities.PATCH("/:id", acti.UpdateActivity())
 	activities.DELETE("/:id", acti.DeleteActivity())
 
 	// Obtener actividades por usuario
