@@ -441,7 +441,7 @@ async function eliminarActividad(id) {
     const modalElement = document.getElementById('activityModal');
     const modal = bootstrap.Modal.getInstance(modalElement);  // Obtener la instancia del modal actual
     modal.hide();
-        
+
     // Mostrar alerta de confirmación
     const confirmar = await Swal.fire({
         title: '¿Estás seguro?',
@@ -530,7 +530,7 @@ async function crearActividad() {
         }
 
         const data = await response.json();
-        console.log('Actividad creada exitosamente:', data);
+        window.location.reload();
         alert('Actividad creada exitosamente');
     } catch (error) {
         console.error('Error al crear la actividad:', error);

@@ -87,21 +87,6 @@
      <!-- Crear Start -->
 <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
     <div class="container">
-        <!-- Mensaje Importante (rojo pastel) -->
-        <div class="alert alert-important d-flex align-items-center" style="background-color: #ffe5e5; color: #b30000; padding: 15px; border-radius: 5px;">
-            <i class="fas fa-exclamation-circle" style="font-size: 1.5rem; margin-right: 10px;"></i>
-            <p style="margin: 0; font-weight: bold;">Para empezar, elige si subirás un evento o actividad.</p>
-        </div>
-
-        <!-- Mensaje de Diferencias (amarillo pastel) -->
-        <div class="alert alert-difference d-flex align-items-center mt-3" style="background-color: #fff9e6; color: #b38f00; padding: 15px; border-radius: 5px;">
-            <i class="fas fa-lightbulb" style="font-size: 1.5rem; margin-right: 10px;"></i>
-            <p style="margin: 0;">
-                <strong>¿Cuál es la diferencia?</strong> 
-                <br> <strong>Evento:</strong> Actividad especial en una fecha específica, como una feria en la plaza, disponible solo en días determinados.
-                <br> <strong>Actividad:</strong> Lugares o establecimientos disponibles regularmente, como un restaurante o teatro.
-            </p>
-        </div>
 
         <!-- Formulario de Creación de Actividad -->
         <div class="booking p-5 mt-4">
@@ -202,10 +187,6 @@
                             <div class="col-12">
                                 <button class="btn btn-outline-light w-100 py-3" id="submitButton" type="button" onclick="crearActividad()">Subir</button>
                                 <p id="error-message" style="display: none; color: red; font-size: 0.9rem;">Todos los campos deben estar llenos antes de enviar.</p>
-                            </div>
-                            <div class="col-12 mt-3">
-                                <button class="btn btn-outline-light w-100 py-3" type="button" onclick="volverSeleccion()">Volver</button>
-                                <button class="btn btn-outline-light w-100 py-3 mt-2" type="button" onclick="subirOtroEvento()">Subir otro evento</button>
                             </div>
                             
                         </div>
