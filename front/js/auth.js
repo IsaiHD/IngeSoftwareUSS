@@ -100,9 +100,11 @@ async function registerUser(event) {
         password: document.getElementById('registrarcontrasena').value,
     };
 
-    const esEmailValido = esEmailValido(userData.email);
+    console.log('Datos del usuario:', userData);
 
-    if (!esEmailValido) {
+    const esEmailValidoA = esEmailValido(userData.email);
+    
+    if (!esEmailValidoA) {
         alert('Por favor, ingresa un email válido');
         return;
     }
