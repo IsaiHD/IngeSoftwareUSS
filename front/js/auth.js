@@ -103,7 +103,7 @@ async function registerUser(event) {
     console.log('Datos del usuario:', userData);
 
     const esEmailValidoA = esEmailValido(userData.email);
-    
+
     if (!esEmailValidoA) {
         alert('Por favor, ingresa un email válido');
         return;
@@ -261,7 +261,7 @@ $(document).ready(function() {
     const currentPath = window.location.pathname;
     console.log('Ruta actual:', currentPath);
 
-    if (currentPath === '/front/registrar.html' || currentPath === '/registro') {
+    if (currentPath === '/front/registrar.html' || currentPath === '/registrar') {
         document.getElementById('botonRegistrarse').addEventListener('click', function(event) {
             registerUser(event);
         });
