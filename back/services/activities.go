@@ -115,12 +115,19 @@ func (acti *ActivityService) GetActivitiesByNameFilter(name string) ([]Activity,
 
 func (acti *ActivityService) GetActivityByTypeFilter(Category string) ([]Activity, error) {
 	var activities []models.Activity
-	if err := acti.db.Where("Category = ?", Category).Find(&activities).Error; err != nil {
+
+	// Preload para cargar los usuarios relacionados con cada actividad
+	err := acti.db.Preload("Users", func(db *gorm.DB) *gorm.DB {
+		return db.Select("UserID", "Username", "Name") // Selecciona solo los campos necesarios
+	}).Where("Category = ?", Category).Find(&activities).Error
+
+	if err != nil {
 		return nil, err
 	}
 
 	activitiesResponse := make([]Activity, 0, len(activities))
 	for _, activity := range activities {
+		// Convertir cada actividad a la respuesta esperada
 		activitiesResponse = append(activitiesResponse, Activity{
 			ID:          activity.ActivityID,
 			Name:        activity.Name,
@@ -131,6 +138,7 @@ func (acti *ActivityService) GetActivityByTypeFilter(Category string) ([]Activit
 			StartDate:   activity.StartDate.Format("2006-01-02"),
 			EndDate:     activity.EndDate.Format("2006-01-02"),
 			Place:       activity.Place,
+			User:        activity.Users, // Los usuarios asociados ya están cargados
 		})
 	}
 
