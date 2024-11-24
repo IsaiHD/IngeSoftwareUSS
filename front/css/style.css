@@ -120,7 +120,7 @@
     .sticky-top.navbar-light .navbar-nav .nav-link {
         padding: 10px 0;
         margin-left: 0;
-        color: var(--dark) !important;
+        color: var(--light) !important;
     }
 
     .navbar-light .navbar-brand img {
@@ -128,14 +128,14 @@
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 92px) {
     .navbar-light {
         position: absolute;
         width: 100%;
         top: 0;
         left: 0;
         border-bottom: 1px solid rgba(256, 256, 256, .1);
-        z-index: 999;
+        z-index: 99;
     }
     
     .sticky-top.navbar-light {
