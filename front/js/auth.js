@@ -147,12 +147,16 @@ async function EditProfile(image) {
     const phoneNumber = document.getElementById('editPhoneNumber').value;
     const bio = document.getElementById('editBio').value;
     // const profileImageInput = document.getElementById('editProfileImage').files[0];
+    
+    let profileImageBase64 = null;
 
-    const profileImageBase64 = await convertirImagenABase64(image);
+    if (image) {
+        profileImageBase64 = await convertirImagenABase64(image);
+    }
 
     const authToken = localStorage.getItem('authToken');
 
-    // Solo si hay cambios, enviar los datos correspondientes
+    // Solo incluir la propiedad 'image' si tiene un valor válido
     const bodyData = {
         name,
         email,
@@ -160,7 +164,7 @@ async function EditProfile(image) {
         place,
         phoneNumber,
         bio,
-        image: profileImageBase64,  // Si profileImageBase64 es vacío, no lo incluir
+        ...(profileImageBase64 && { image: profileImageBase64 }), // Agregar 'image' solo si existe
     };
 
     try {
