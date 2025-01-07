@@ -1,2 +1,2 @@
 // config.js
-export const apiUrl = 'https://sodium-healthcare-ban-characteristic.trycloudflare.com';
+export const apiUrl = 'https://kind-mae-karl-sims.trycloudflare.com';
